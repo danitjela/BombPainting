@@ -62,56 +62,54 @@ Plataformas: PC.
 
 Boceto de la interfaz de inicio:
 
-![][image6]
+![](Bocetos/interfazInicio.jpg)
 
-Boceto de la interfaz de elección del modo de juego:![][image7]
+Boceto de la interfaz de elección del modo de juego:![](Bocetos/eleccionModo.png)
 
 Boceto de la interfaz de elección de personaje en el modo online:
 
-![][image8]
+![](Bocetos/eleccionPersonaje1.jpg)
 
-![][image9]
+![](Bocetos/eleccionPersonaje2.jpg)
 
 Boceto de la interfaz de elección de personaje en el modo offline:
 
-![][image10]
+![](Bocetos/eleccionPersonajes.jpg)
 
 Boceto del mapa sin obstáculos destructibles:
 
-![][image11]
+![](Bocetos/mapaSinDestruibles.png)
 
 Boceto del personaje que mostrará los tutoriales:
 
-![][image12]
+![](Bocetos/tutoriales.png)
 
 Boceto del storyboard para el cómic del inicio:
 
-![][image13] 
+![](Bocetos/storyboard.jpg)
 
 Bocetos de los personajes a color:
 
- ![][image14] 
-
-                        
-
+![Boceto personaje 1](Bocetos/acopColor.png)
 
 Bocetos de los personajes de colores apagados:
 
-![][image15]                           ![][image16]
+![](Bocetos/acopGrises.png)                           ![](Bocetos/chica1Grises.png)
 
-![][image17]                        ![][image18]
+![](Bocetos/chica2Grises.png)                        ![](Bocetos/chico1Grises.png)
 
 Bocetos de los boosts:
 
-![][image19]                    ![][image20]
+![](Bocetos/boostBombas.png)                    ![](Bocetos/boostVida.png)
 
-###Logotipo
+### Logotipo
 
 El logotipo del juego es el siguiente:
 
-             ![][image21]
+![](Bocetos/logo.png)
 
-###Descripción visual
+
+### Descripción visual
 
 El juego será una mezcla entre colores llamativos y otros más grisáceos.
 
@@ -119,47 +117,47 @@ En un principio, todo lo visible, es decir, tanto el mapa como los personajes se
 
 Cuando una bomba explote, el terreno donde ha tenido lugar esa explosión tomará color, y si dicha explosión también golpea a un jugador, éste cambiará su color mostrando que ha recibido daño y, por tanto, el nivel de su vida. 
 
-###Aspectos técnicos
+### Aspectos técnicos
 
 “Bombpainting” será un juego completamente en 2D, con una cámara fija y en top Down. El mapa estará organizado en casillas que no serán visibles para el usuario, pero por las que podrá avanzar a lo largo de la partida.
 
-###Diagrama de flujo
+### Diagrama de flujo
 
 ![][image22]
 
 Cuando se inicie el juego se verá el menú principal, desde el que se podrá acceder a otro menú para elegir el modo de juego, o si no, se podrá acceder a los créditos o salir. Si accedes a la interfaz de elección de modo de juego, luego se puede ir hasta la pantalla de elección de personaje. Si entras en partida, lo siguiente será la victoria de uno de los dos jugadores. Desde la victoria, se podrá volver a empezar otra partida, o volver al menú principal.
 
-###Estilo visual
+### Estilo visual
 
 El estilo visual del juego será todo Píxel Art, en un principio con colores apagados para seguir la historia del juego, y posteriormente, se irán obteniendo colores mucho más brillantes. 
 
-###Inspiración
+### Inspiración
 
 Juego “Bomberman”
 
 Imagen extraída de [https://heroe.fandom.com/es/wiki/Bomberman\_Blanco](https://heroe.fandom.com/es/wiki/Bomberman_Blanco)
 
-##4. Sonido
+## 4. Sonido
 
-###Música
+### Música
 
 Durante las partidas habrá música de tensión. Mientras se encuentren en el menú, la música será más calmada y alegre.
 
-###Efectos sonoros
+### Efectos sonoros
 
 Los efectos sonoros tendrán lugar al explotar una bomba, romper un ladrillo, al coger una mejora, cuando un jugador pierda una vida, cuando un jugador gane y cuando se interactúe con los botones del menú.
 
-##5. Jugabilidad
+## 5. Jugabilidad
 
-###Objetivo del juego
+### Objetivo del juego
 
 El objetivo del juego es eliminar al otro jugador mediante las bombas. Serán partidas de 2 jugadores. 
 
-###Controles
+### Controles
 
 Los controles son “W”, “A”, “S”, “D” para el movimiento del primer jugador, las flechas para el movimiento del segundo jugador, y en cuanto al posicionamiento de las bombas, el jugador 1 utilizará el “espacio”, y el jugador 2 el “0” del teclado numérico.
 
-###Mecánicas
+### Mecánicas
 
 La mecánica principal, será poner bombas. Mediante esas bombas, se puede destruir el terreno, o dañar al otro jugador. El jugador también se dañará a sí mismo si le golpea su propia bomba. Los jugadores tendrán 3 vidas, cada vez que se dañen, ganarán o perderán color, dependiendo del personaje que haya recibido el daño. Cuando se destruye el terreno, hay una probabilidad de que aparezca una mejora. Las mejoras son las siguientes:
 
@@ -170,17 +168,17 @@ La mecánica principal, será poner bombas. Mediante esas bombas, se puede destr
 
 Las bombas explotarán en forma de cruz e irán pintarán el suelo de color, de esta forma, habrá cambios visuales en el mapa, tanto por la destrucción del terreno, como por el cambio de color de este. 
 
-###Físicas
+### Físicas
 
 El jugador no podrá atravesar los bloques del mapa, aunque algunos de ellos podrán ser destruidos con bombas. Los jugadores se pueden atravesar entre ellos, pero las bombas no podrán ser atravesadas, y la explosión sobrepasará al jugador, es decir, si una explosión tiene un alcance de 5 casillas, y el jugador está en la 3, la casilla 4 y 5, también será afectada por la bomba.
 
-###Escenario
+### Escenario
 
 El escenario será un cuadrado donde habrá bloques, algunos de ellos destruibles, que separen a los jugadores. Cada uno empezará en una esquina y se deberán encontrar para poder eliminarse. Al comenzar el nivel, el escenario estará en colores grisáceos y con el efecto de las explosiones cambiará a colores brillantes. 
 
-##6. Narrativa
+## 6. Narrativa
 
-###Historia del juego
+### Historia del juego
 
 La historia del juego es la siguiente:
 
@@ -190,15 +188,15 @@ Con el tiempo, la situación solo empeoraba, hasta la llegada de Paca, quien pla
 
 ¿Lo logrará?
 
-###Desarrollo de personajes
+### Desarrollo de personajes
 
 ACOP: es el enemigo principal. Desde pequeño destacaba sobre el resto por sus colores apagados, lo que hacía que los otros niños le hiciesen el vacío. Con el tiempo fue creciendo y aislándose del resto hasta finalmente quedarse solo y roto. Sus colores se apagaron completamente convirtiéndose en tonalidades grises llenas de odio y rencor hacia todos y cada uno de los habitantes. Tal fue su odio, que decidió contagiar esos sentimientos a todos, y que así, sufriesen tanto como él lo hizo a lo largo de los años. Gracias a esto, Acop, se convertiría en el rey de un mundo lleno de tristeza y colores grises.
 
 PACA: es la principal heroína del juego. Ella es la hermana de Acop, al contrario que él, Paca siempre tuvo unos colores brillantes que llamaban la atención de todo el que la miraba. Todos los habitantes del reino la admiraban y querían ser sus amigos. Eso originó la ira y envidia de su hermano. Paca no sabía nada del plan de Acop de hacerse con el reino, y cuando quiso darse cuenta, ya era demasiado tarde. Acop se hizo con el poder, y ella fue la única en conservar sus colores y felicidad. Al ver a todos sus amigos, familia y conocidos con tanto dolor y sufrimiento, decidió plantarle cara a su hermano y por fin derrotarlo. 
 
-##7. Comuncación
+## 7. Comuncación
 
-###Marketing
+### Marketing
 
 La estrategia está centrada principalmente en las redes sociales, sobre todo en itch.io y otras como Reddit y X, donde se subirán posts para ir a la página de itch.io. Además, al ser un juego web, se subirá a distintas webs de juegos gratuitos en línea. Su monetización sería a través de anuncios cuando se entra al juego.
 

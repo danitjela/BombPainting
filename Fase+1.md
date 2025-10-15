@@ -58,6 +58,8 @@ Plataformas: PC.
 
 ## 3. Imagen y diseño visual
 
+El diseño visual del juego será pixelart, a color y en blanco y negro. Habrá progresión dentro de cada partida.
+
 ### Bocetos
 
 Boceto de la interfaz de inicio:
@@ -200,6 +202,8 @@ ACOP: es el enemigo principal. Desde pequeño destacaba sobre el resto por sus c
 PACA: es la principal heroína del juego. Ella es la hermana de Acop, al contrario que él, Paca siempre tuvo unos colores brillantes que llamaban la atención de todo el que la miraba. Todos los habitantes del reino la admiraban y querían ser sus amigos. Eso originó la ira y envidia de su hermano. Paca no sabía nada del plan de Acop de hacerse con el reino, y cuando quiso darse cuenta, ya era demasiado tarde. Acop se hizo con el poder, y ella fue la única en conservar sus colores y felicidad. Al ver a todos sus amigos, familia y conocidos con tanto dolor y sufrimiento, decidió plantarle cara a su hermano y por fin derrotarlo. 
 
 ## 7. Comuncación
+
+La comunicación podrá ser a través de foros o redes sociales.
 
 ### Marketing
 

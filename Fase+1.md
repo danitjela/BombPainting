@@ -1,4 +1,4 @@
-**Fase 1: BombPainting**
+# Fase 1
 
 Nombre:  **BombPainting**
 
@@ -17,61 +17,38 @@ Grupo 2:
 | :---: | :---: |
 | **Sandra Sáez Piña**  **Correo Universidad:** s.saezp.2023@alumnos.urjc.es  **Cuenta Github:**   SpolakK  | **Daniela Tocino Jiménez**  **Correo Universidad:**   d.tocino.2023@alumnos.urjc.es  **Cuenta Github:**   danitjela   |
 
-  **ÍNDICE**	
+## ÍNDICE	
 
-**[1\.](#introducción)**	[**INTRODUCCIÓN**	3](#introducción)
+1. [INTRODUCCIÓN](#introduccion)
+2. [ESPECIFICACIONES BÁSICAS](#especificaciones-basicas)
+3. [IMAGEN Y DISEÑO VISUAL](#imagen-y-disegno-visual)
+	- [BOCETOS](#bocetos)
+	- [LOGOTIPO](#logotipo)
+	- [DESCRIPCIÓN VISUAL](#descripcion-visual)
+	- [ASPECTOS TÉCNICOS](#aspectos-tecnicos)
+	- [DIAGRAMA DE FLUJO](#diagrama-de-flujo)
+	- [ESTILO VISUAL](#estilo-visual)
+	- [INSPIRACIÓN](#inspiracion)
+4. [SONIDO](#sonido)
+	- [MÚSICA](#musica)
+	- [EFECTOS SONOROS](#efectos-sonoros)
+5. [JUGABILIDAD](#jugabilidad)
+	- [OBJETIVO DEL JUEGO](#objetivo-del-juego)
+	- [CONTROLES](#controles)
+	- [MECÁNICAS](#mecanicas)
+	- [FÍSICAS](#fisicas)
+	- [ESCENARIO](#escenario)
+6. [NARRATIVA](#narrativa)
+	- [HISTORIA DEL JUEGO](#historia-del-juego)
+	- [DESARROLLO DE PERSONAJES](#desarrollo-de-personajes)
+7. [COMUNICACIÓN](#comunicacion)
+	- [MARKETING](#marketing)
 
-[**2\.**	**ESPECIFICACIONES BÁSICAS**	3](#especificaciones-básicas)
-
-[**3\.**	**IMAGEN Y DISEÑO VISUAL**	3](#imagen-y-diseño-visual)
-
-[**3.1.**	**BOCETOS**	3](#bocetos)
-
-[**3.2.**	**LOGOTIPO**	10](#logotipo)
-
-[**3.3.**	**DESCRIPCIÓN VISUAL**	10](#descripción-visual)
-
-[**3.4.**	**ASPECTOS TÉCNICOS**	10](#aspectos-técnicos)
-
-[**3.5.**	**DIAGRAMA DE FLUJO**	11](#diagrama-de-flujo)
-
-[**3.6.**	**ESTILO VISUAL**	11](#estilo-visual)
-
-[**3.7.**	**INSPIRACIÓN**	11](#inspiración)
-
-[**4\.**	**SONIDO**	12](#sonido)
-
-[**4.1.**	**MÚSICA**	12](#música)
-
-[**4.2.**	**EFECTOS SONOROS**	12](#efectos-sonoros)
-
-[**5\.**	**JUGABILIDAD**	12](#jugabilidad)
-
-[**5.1.**	**OBJETIVO DEL JUEGO**	12](#objetivo-del-juego)
-
-[**5.2.**	**CONTROLES**	12](#controles)
-
-[**5.3.**	**MECÁNICAS**	12](#mecánicas)
-
-[**5.4.**	**FÍSICAS**	13](#físicas)
-
-[**5.5.**	**ESCENARIO**	13](#escenario)
-
-[**6\.**	**NARRATIVA**	13](#narrativa)
-
-[**6.1.**	**HISTORIA DEL JUEGO**	13](#historia-del-juego)
-
-[**6.2.**	**DESARROLLO DE PERSONAJES**	13](#desarrollo-de-personajes)
-
-[**7\.**	**COMUNICACIÓN**	14](#comunicación)
-
-[**7.1.**	**MARKETING**	14](#marketing)
-
-1. # **INTRODUCCIÓN** {#introducción}
+## 1. Introducción
 
 En este documento se especificará todo lo relacionado con las decisiones tanto conceptuales, como técnicas, del juego BombPainting para la asignatura de Juegos en red. 
 
-2. # **ESPECIFICACIONES BÁSICAS** {#especificaciones-básicas}
+## 2. Especificaciones básicas
 
 El género de este juego es principalmente de tipo social, aunque se puede relacionar con otros muchos géneros como: la estrategia ligera, casual y competitivo.
 
@@ -79,9 +56,9 @@ Debido a la naturaleza casual del propio juego, el público objetivo es muy ampl
 
 Plataformas: PC.
 
-3. # **IMAGEN Y DISEÑO VISUAL** {#imagen-y-diseño-visual}
+## 3. Imagen y diseño visual
 
-   1. ## **BOCETOS** {#bocetos}
+### Bocetos
 
 Boceto de la interfaz de inicio:
 
@@ -128,13 +105,13 @@ Bocetos de los boosts:
 
 ![][image19]                    ![][image20]
 
-2. ## **LOGOTIPO** {#logotipo}
+###Logotipo
 
 El logotipo del juego es el siguiente:
 
              ![][image21]
 
-3. ## **DESCRIPCIÓN VISUAL** {#descripción-visual}
+###Descripción visual
 
 El juego será una mezcla entre colores llamativos y otros más grisáceos.
 
@@ -142,47 +119,47 @@ En un principio, todo lo visible, es decir, tanto el mapa como los personajes se
 
 Cuando una bomba explote, el terreno donde ha tenido lugar esa explosión tomará color, y si dicha explosión también golpea a un jugador, éste cambiará su color mostrando que ha recibido daño y, por tanto, el nivel de su vida. 
 
-4. ## **ASPECTOS TÉCNICOS** {#aspectos-técnicos}
+###Aspectos técnicos
 
 “Bombpainting” será un juego completamente en 2D, con una cámara fija y en top Down. El mapa estará organizado en casillas que no serán visibles para el usuario, pero por las que podrá avanzar a lo largo de la partida.
 
-5. ## **DIAGRAMA DE FLUJO** {#diagrama-de-flujo}
+###Diagrama de flujo
 
 ![][image22]
 
 Cuando se inicie el juego se verá el menú principal, desde el que se podrá acceder a otro menú para elegir el modo de juego, o si no, se podrá acceder a los créditos o salir. Si accedes a la interfaz de elección de modo de juego, luego se puede ir hasta la pantalla de elección de personaje. Si entras en partida, lo siguiente será la victoria de uno de los dos jugadores. Desde la victoria, se podrá volver a empezar otra partida, o volver al menú principal.
 
-6. ## **ESTILO VISUAL** {#estilo-visual}
+###Estilo visual
 
 El estilo visual del juego será todo Píxel Art, en un principio con colores apagados para seguir la historia del juego, y posteriormente, se irán obteniendo colores mucho más brillantes. 
 
-7. ## **INSPIRACIÓN** {#inspiración}
+###Inspiración
 
 Juego “Bomberman”
 
 Imagen extraída de [https://heroe.fandom.com/es/wiki/Bomberman\_Blanco](https://heroe.fandom.com/es/wiki/Bomberman_Blanco)
 
-4. # **SONIDO** {#sonido}
+##4. Sonido
 
-   1. # **MÚSICA**  {#música}
+###Música
 
 Durante las partidas habrá música de tensión. Mientras se encuentren en el menú, la música será más calmada y alegre.
 
-2. # **EFECTOS SONOROS** {#efectos-sonoros}
+###Efectos sonoros
 
 Los efectos sonoros tendrán lugar al explotar una bomba, romper un ladrillo, al coger una mejora, cuando un jugador pierda una vida, cuando un jugador gane y cuando se interactúe con los botones del menú.
 
-5. # **JUGABILIDAD** {#jugabilidad}
+##5. Jugabilidad
 
-   1. # **OBJETIVO DEL JUEGO** {#objetivo-del-juego}
+###Objetivo del juego
 
 El objetivo del juego es eliminar al otro jugador mediante las bombas. Serán partidas de 2 jugadores. 
 
-2. # **CONTROLES** {#controles}
+###Controles
 
 Los controles son “W”, “A”, “S”, “D” para el movimiento del primer jugador, las flechas para el movimiento del segundo jugador, y en cuanto al posicionamiento de las bombas, el jugador 1 utilizará el “espacio”, y el jugador 2 el “0” del teclado numérico.
 
-3. # **MECÁNICAS** {#mecánicas}
+###Mecánicas
 
 La mecánica principal, será poner bombas. Mediante esas bombas, se puede destruir el terreno, o dañar al otro jugador. El jugador también se dañará a sí mismo si le golpea su propia bomba. Los jugadores tendrán 3 vidas, cada vez que se dañen, ganarán o perderán color, dependiendo del personaje que haya recibido el daño. Cuando se destruye el terreno, hay una probabilidad de que aparezca una mejora. Las mejoras son las siguientes:
 
@@ -193,17 +170,17 @@ La mecánica principal, será poner bombas. Mediante esas bombas, se puede destr
 
 Las bombas explotarán en forma de cruz e irán pintarán el suelo de color, de esta forma, habrá cambios visuales en el mapa, tanto por la destrucción del terreno, como por el cambio de color de este. 
 
-4. # **FÍSICAS** {#físicas}
+###Físicas
 
 El jugador no podrá atravesar los bloques del mapa, aunque algunos de ellos podrán ser destruidos con bombas. Los jugadores se pueden atravesar entre ellos, pero las bombas no podrán ser atravesadas, y la explosión sobrepasará al jugador, es decir, si una explosión tiene un alcance de 5 casillas, y el jugador está en la 3, la casilla 4 y 5, también será afectada por la bomba.
 
-5. ## **ESCENARIO** {#escenario}
+###Escenario
 
 El escenario será un cuadrado donde habrá bloques, algunos de ellos destruibles, que separen a los jugadores. Cada uno empezará en una esquina y se deberán encontrar para poder eliminarse. Al comenzar el nivel, el escenario estará en colores grisáceos y con el efecto de las explosiones cambiará a colores brillantes. 
 
-6. # **NARRATIVA** {#narrativa}
+##6. Narrativa
 
-   1. # **HISTORIA DEL JUEGO** {#historia-del-juego}
+###Historia del juego
 
 La historia del juego es la siguiente:
 
@@ -213,15 +190,15 @@ Con el tiempo, la situación solo empeoraba, hasta la llegada de Paca, quien pla
 
 ¿Lo logrará?
 
-2. # **DESARROLLO DE PERSONAJES** {#desarrollo-de-personajes}
+###Desarrollo de personajes
 
 ACOP: es el enemigo principal. Desde pequeño destacaba sobre el resto por sus colores apagados, lo que hacía que los otros niños le hiciesen el vacío. Con el tiempo fue creciendo y aislándose del resto hasta finalmente quedarse solo y roto. Sus colores se apagaron completamente convirtiéndose en tonalidades grises llenas de odio y rencor hacia todos y cada uno de los habitantes. Tal fue su odio, que decidió contagiar esos sentimientos a todos, y que así, sufriesen tanto como él lo hizo a lo largo de los años. Gracias a esto, Acop, se convertiría en el rey de un mundo lleno de tristeza y colores grises.
 
 PACA: es la principal heroína del juego. Ella es la hermana de Acop, al contrario que él, Paca siempre tuvo unos colores brillantes que llamaban la atención de todo el que la miraba. Todos los habitantes del reino la admiraban y querían ser sus amigos. Eso originó la ira y envidia de su hermano. Paca no sabía nada del plan de Acop de hacerse con el reino, y cuando quiso darse cuenta, ya era demasiado tarde. Acop se hizo con el poder, y ella fue la única en conservar sus colores y felicidad. Al ver a todos sus amigos, familia y conocidos con tanto dolor y sufrimiento, decidió plantarle cara a su hermano y por fin derrotarlo. 
 
-7. # **COMUNICACIÓN** {#comunicación}
+##7. Comuncación
 
-   1. # **MARKETING** {#marketing}
+###Marketing
 
 La estrategia está centrada principalmente en las redes sociales, sobre todo en itch.io y otras como Reddit y X, donde se subirán posts para ir a la página de itch.io. Además, al ser un juego web, se subirá a distintas webs de juegos gratuitos en línea. Su monetización sería a través de anuncios cuando se entra al juego.
 

@@ -3,19 +3,25 @@
 Nombre:  **BombPainting**
 
 Temática: **Arcade**  
+
 Enlace repositorio de GitHub: [BombPainting](https://github.com/danitjela/BombPainting)
 
 Grupo 2:
 
 **INTEGRANTES DEL EQUIPO**
 
-| ![](Bocetos/ester.png) | ![](Bocetos/raul.png) | ![](Bocetos/aroa.png) |
-| ----- | ----- | ----- |
-| **Ester Díaz Monzonis** **Correo Universidad:**  [e.diazm.2023@alumnos.urjc.es](mailto:e.diazm.2023@alumnos.urjc.es)**Cuenta Github:**  aester22  | **Raúl Benítez Tiburón Correo Universidad:** [r.benitez.2023@alumnos.urjc.es](mailto:r.benitez.2023@alumnos.urjc.es)**Cuenta Github:**  Raul-BT | **Aroa Quiroga Martínez Correo Universidad:** [a.quiroga.2023@alumnos.urjc.es](mailto:a.quiroga.2023@alumnos.urjc.es)**Cuenta Github:**  aroa181  |
+| ![](Bocetos/ester.png) | ![](Bocetos/raul.png) | ![](Bocetos/aroa.png)|
+|-----|-----|-----|
+| **Ester Díaz Monzonis** | **Raúl Benítez Tiburón** | **Aroa Quiroga Martínez** |
+| **Correo Universidad:**  [e.diazm.2023@alumnos.urjc.es](mailto:e.diazm.2023@alumnos.urjc.es) | **Correo Universidad:** [r.benitez.2023@alumnos.urjc.es](mailto:r.benitez.2023@alumnos.urjc.es) | **Correo Universidad:** [a.quiroga.2023@alumnos.urjc.es](mailto:a.quiroga.2023@alumnos.urjc.es) |
+| **Cuenta Github:** aester22 | **Cuenta Github:** Raul-BT | **Cuenta Github:** aroa181 |
 
-| ![](Bocetos/sandra.png)  | ![](Bocetos/daniela.png)  |
-| :---: | :---: |
-| **Sandra Sáez Piña**  **Correo Universidad:** s.saezp.2023@alumnos.urjc.es  **Cuenta Github:**   SpolakK  | **Daniela Tocino Jiménez**  **Correo Universidad:**   d.tocino.2023@alumnos.urjc.es  **Cuenta Github:**   danitjela   |
+| ![](Bocetos/sandra.png) | ![](Bocetos/daniela.png) |
+|-----|-----|
+| **Sandra Sáez Piña** | **Daniela Tocino Jiménez** |
+| **Correo Universidad:**  [s.saezp.2023@alumnos.urjc.es](mailto:s.saezp.2023@alumnos.urjc.es) | **Correo Universidad:** [d.tocino.2023@alumnos.urjc.es](mailto:d.tocino.2023@alumnos.urjc.es) |
+| **Cuenta Github:** SpolakK | **Cuenta Github:** danitjela |
+
 
 ## ÍNDICE	
 
@@ -64,57 +70,57 @@ El diseño visual del juego será pixelart, a color y en blanco y negro. Habrá 
 
 Boceto de la interfaz de inicio:
 
-![](Bocetos/interfazInicio.jpg)
+<img src = "Bocetos/interfazInicio.jpg" width="500">
 
-Boceto de la interfaz de elección del modo de juego:![](Bocetos/eleccionModo.png)
+Boceto de la interfaz de elección del modo de juego:
+
+<img src = "Bocetos/eleccionModo.png" width="500">
 
 Boceto de la interfaz de elección de personaje en el modo online:
 
-![](Bocetos/eleccionPersonaje1.jpg)
+<img src = "Bocetos/eleccionPersonaje1.jpg" width="500">
 
-![](Bocetos/eleccionPersonaje2.jpg)
+<img src = "Bocetos/eleccionPersonaje2.jpg" width="500">
 
 Boceto de la interfaz de elección de personaje en el modo offline:
 
-![](Bocetos/eleccionPersonajes.jpg)
+<img src = "Bocetos/eleccionPersonajes.jpg" width="500">
 
 Boceto del mapa sin obstáculos destructibles:
 
-![](Bocetos/mapaSinDestruibles.png)
+<img src = "Bocetos/mapaSinDestruibles.png" width="500">
 
 Boceto del personaje que mostrará los tutoriales:
 
-![](Bocetos/tutoriales.png)
+<img src = "Bocetos/tutoriales.png" width="300">
 
 Boceto del storyboard para el cómic del inicio:
 
-![](Bocetos/storyboard.jpg)
+<img src = "Bocetos/storyboard.jpg" width="800">
 
 Bocetos de los personajes a color:
 
+<img src = "Bocetos/acopColor.png" width="250">                  <img src = "Bocetos/chica1Color.png" width="250">
 
-![](Bocetos/acopColor.png)                           ![](Bocetos/chica1Color.png)
-
-![](Bocetos/chica2Color.png)                        ![](Bocetos/chico1Color.png)
+<img src = "Bocetos/chica2Color.png" width="250">                  <img src = "Bocetos/chico1Color.png" width="250">
 
 Bocetos de los personajes de colores apagados:
 
-![](Bocetos/acopGrises.png)                           ![](Bocetos/chica1Grises.png)
+<img src = "Bocetos/acopGrises.png" width="250">                  <img src = "Bocetos/chica1Grises.png" width="250">
 
-![](Bocetos/chica2Grises.png)                        ![](Bocetos/chico1Grises.png)
+<img src = "Bocetos/chica2Grises.png" width="250">                  <img src = "Bocetos/chico1Grises.png" width="250">
 
 Bocetos de los boosts:
 
-![](Bocetos/boostBombas.png)                    ![](Bocetos/boostVida.png)
+<img src = "Bocetos/boostBombas.png" width="250">                  <img src = "Bocetos/boostVida.png" width="250">
 
-![](Bocetos/boostExploxionRapida.png)                    ![](Bocetos/boostExplosionGrande.png)
+<img src = "Bocetos/boostExploxionRapida.png" width="250">                  <img src = "Bocetos/boostExplosionGrande.png" width="250">
 
 ### Logotipo
 
 El logotipo del juego es el siguiente:
 
-![](Bocetos/logo.png)
-
+<img src = "Bocetos/logo.png" width="400">
 
 ### Descripción visual
 
@@ -130,7 +136,7 @@ Cuando una bomba explote, el terreno donde ha tenido lugar esa explosión tomar�
 
 ### Diagrama de flujo
 
-![](Bocetos/diagramaFlujo.png)
+<img src = "Bocetos/diagramaFlujo.png" width="800">
 
 Cuando se inicie el juego se verá el menú principal, desde el que se podrá acceder a otro menú para elegir el modo de juego, o si no, se podrá acceder a los créditos o salir. Si accedes a la interfaz de elección de modo de juego, luego se puede ir hasta la pantalla de elección de personaje. Si entras en partida, lo siguiente será la victoria de uno de los dos jugadores. Desde la victoria, se podrá volver a empezar otra partida, o volver al menú principal.
 
@@ -142,7 +148,9 @@ El estilo visual del juego será todo Píxel Art, en un principio con colores ap
 
 Juego “Bomberman”
 
-Imagen extraída de [https://heroe.fandom.com/es/wiki/Bomberman\_Blanco](https://heroe.fandom.com/es/wiki/Bomberman_Blanco)
+<img src = "Bocetos/bomberman.png" width="400">
+
+Imagen extraída de [https://videojuegos.fandom.com/es/wiki/Bomberman_(saga)](https://videojuegos.fandom.com/es/wiki/Bomberman_(saga))
 
 ## 4. Sonido
 

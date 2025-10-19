@@ -64,7 +64,7 @@ Plataformas: PC.
 
 ## 3. Imagen y diseño visual
 
-El diseño visual del juego será pixelart, a color y en blanco y negro. Habrá progresión dentro de cada partida.
+El diseño visual del juego será "Píxel Art", con colores más apagados y otros más saturados. Habrá progresión dentro de cada partida.
 
 ### Bocetos
 

@@ -12,6 +12,19 @@ export class MenuPause extends Phaser.Scene {
             color: '#ffffff'
         }).setOrigin(0.5);
 
+        //Botón reaunudar
+        const resumeBtn = this.add.text(400, 300, 'Reanudar', {
+            fontSize: '24px',
+            color: '#00ff00',
+        }).setOrigin(0.5)
+        .setInteractive({useHandCursor: true});
+        resumeBtn.on('pointerover',() => resumeBtn.setColor('#00ff88'))
+        .on('pointerout', () => localBtn.setColor('#00ff00'))
+        .on('pointerdown', () => {
+            this.scene.stop();
+            this.scene.resume('GameScene');
+        });
+
         const localBtn = this.add.text(400, 320, 'Local 2 Player', {
             fontSize: '24px',
             color: '#00ff00',

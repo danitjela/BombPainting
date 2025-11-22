@@ -1,9 +1,9 @@
 import Phaser from 'phaser';
 
 
-export class MenuScene extends Phaser.Scene {
+export class MenuPause extends Phaser.Scene {
     constructor() {
-        super('MenuScene');
+        super('MenuPause');
     }
 
     create() {

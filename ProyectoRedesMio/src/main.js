@@ -1,11 +1,13 @@
 import Phaser from 'phaser';
 import { MenuScene } from './scenes/MenuScene.js';
 import { GameScene } from './scenes/GameScene.js';
+import { MenuPause } from './scenes/MenuPause.js';
+import { MenuCredits } from './scenes/MenuCredits.js';
 
 const config = {
     type: Phaser.AUTO,
-    width: 800,
-    height: 600,
+    width: 1024,
+    height: 768,
     parent: 'game-container',
     physics: {
         default: 'arcade',
@@ -14,7 +16,7 @@ const config = {
             debug: false
         }
     },
-    scene: [MenuScene, GameScene],
+    scene: [MenuScene, GameScene, MenuPause, MenuCredits],
     backgroundColor: '#1a1a2e',
 }
 

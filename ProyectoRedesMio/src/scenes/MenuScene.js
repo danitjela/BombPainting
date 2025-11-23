@@ -32,7 +32,7 @@ export class MenuScene extends Phaser.Scene {
         this.add.image(540, 384, 'gameTitle'); //Cargar imagen título
 
         //Boton jugar modo offline
-        const offlineBtn = this.add.image(512, 384, 'offline').setInteractive({ useHandCursor: true });
+        const offlineBtn = this.add.image(512, 300, 'offline').setInteractive({ useHandCursor: true });
         offlineBtn.on('pointerover', () => {
             offlineBtn.setTexture('offlineHover')
         })
@@ -45,7 +45,7 @@ export class MenuScene extends Phaser.Scene {
         })
 
         //Botón jugar modo online
-        const onlineBtn = this.add.image(512, 384, 'online');//.setInteractive({ useHandCursor: true });
+        const onlineBtn = this.add.image(512, 420, 'online').setInteractive({ useHandCursor: true });
         onlineBtn.on('pointerover', () => {
             onlineBtn.setTexture('onlineHover')
         })
@@ -57,7 +57,7 @@ export class MenuScene extends Phaser.Scene {
         })
 
         //Botón jugar modo online
-        const creditsBtn = this.add.image(512, 384, 'credits');//.setInteractive({ useHandCursor: true });
+        const creditsBtn = this.add.image(512, 540, 'credits').setInteractive({ useHandCursor: true });
         creditsBtn.on('pointerover', () => {
             creditsBtn.setTexture('creditsHover')
         })
@@ -70,7 +70,7 @@ export class MenuScene extends Phaser.Scene {
         })
 
         //Botón jugar modo online
-        const exitBtm = this.add.image(512, 384, 'exit');//.setInteractive({ useHandCursor: true });;
+        const exitBtm = this.add.image(512, 660, 'exit').setInteractive({ useHandCursor: true });;
         exitBtm.on('pointerover', () => {
             exitBtm.setTexture('exitHover')
         })

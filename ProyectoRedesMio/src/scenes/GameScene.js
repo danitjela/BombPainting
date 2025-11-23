@@ -14,7 +14,6 @@ export class GameScene extends Phaser.Scene {
         this.players = new Map();
         this.inputMappings = [];
         this.isPaused = false;
-        this.escWasDown = false;
     }
 
     preload() {
@@ -58,10 +57,17 @@ export class GameScene extends Phaser.Scene {
         this.mapManager = new MapManager(this);
         this.mapManager.createMap();
 
+        this.escapeKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
+
+        this.events.on('resume', () => {
+            this.isPaused = false;
+        });
+        
+
         //this.physics.add.collider(player.sprite, this.mapManager.exteriorWalls);
     }
 
-    /*setUpPlayers() {
+    setUpPlayers() {
         const paca = new Player(this, 'player1', 50, 300);
         const acop = new Player(this, 'player2', 750, 300); 
 
@@ -96,8 +102,21 @@ export class GameScene extends Phaser.Scene {
                 bombKeyObj: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes[config.bombKey]),
             }
         });
-    }*/
+    }
 
     update() {
+
+        if (Phaser.Input.Keyboard.JustDown(this.escapeKey)) {
+            if (!this.isPaused) {
+                this.scene.launch('MenuPause');
+                this.scene.pause();
+                this.isPaused = true;
+        }
+        }
+
+    }
+
+    setPause(pause){
+        this.isPaused = pause;
     }
 }

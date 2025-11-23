@@ -92,5 +92,5 @@ export class MapManager{
     wall.setDisplaySize(this.baseTileSize, this.baseTileSize);
     wall.setImmovable(true);
     this.exteriorWalls.push(wall);
-}
+    }
 }

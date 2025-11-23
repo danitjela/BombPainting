@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import { GameScene } from './GameScene';
 
 
 export class MenuPause extends Phaser.Scene {
@@ -6,39 +7,47 @@ export class MenuPause extends Phaser.Scene {
         super('MenuPause');
     }
 
-    create() {
-        this.add.text(400, 100, 'PONG GAME', {
-            fontSize: '64px',
-            color: '#ffffff'
-        }).setOrigin(0.5);
+    preload(){
+        this.load.image('background', 'assets/MenuPausa/ManchaPausa.png');
+        this.load.image('title', 'assets/MenuPausa/letrasPausa.png');
 
-        //Botón reaunudar
-        const resumeBtn = this.add.text(400, 300, 'Reanudar', {
-            fontSize: '24px',
-            color: '#00ff00',
-        }).setOrigin(0.5)
-        .setInteractive({useHandCursor: true});
-        resumeBtn.on('pointerover',() => resumeBtn.setColor('#00ff88'))
-        .on('pointerout', () => localBtn.setColor('#00ff00'))
-        .on('pointerdown', () => {
+        this.load.image('resumeBtn', 'assets/MenuPausa/botonContinuarSinPulsar.png');
+        this.load.image('resumeBtnHover', 'assets/MenuPausa/botonContinuarPulsado.png');
+
+        this.load.image('menuBtn', 'assets/MenuPausa/botonInicioSinPulsar.png');
+        this.load.image('menuBtnHover', 'assets/MenuPausa/botonInicioPulsado.png');
+    }
+
+    create() {
+
+        this.add.image(512, 378, 'background');
+        this.add.image(512, 400, 'title');
+
+        const resumeBtn = this.add.image(512, 400, 'resumeBtn').setInteractive({ useHandCursor: true });
+        resumeBtn.on('pointerover', () => {
+            resumeBtn.setTexture('resumeBtnHover');
+        })
+        resumeBtn.on('pointerout', () => {
+            resumeBtn.setTexture('resumeBtn');
+        })
+        resumeBtn.on('pointerdown', () => {
+            console.log('Game Init');
             this.scene.stop();
             this.scene.resume('GameScene');
-        });
+        })
 
-        const localBtn = this.add.text(400, 320, 'Local 2 Player', {
-            fontSize: '24px',
-            color: '#00ff00',
-        }).setOrigin(0.5)
-        .setInteractive({useHandCursor: true})
-        .on('pointerover', () => localBtn.setColor('#00ff88'))
-        .on('pointerout', () => localBtn.setColor('#00ff00'))
-        .on('pointerdown', () => {
-            this.scene.start('GameScene');
-        });
-
-        const onlineBtn = this.add.text(400, 390, 'Online Multiplayer (Not available)', {
-            fontSize: '24px',
-            color: '#ff6666',
-        }).setOrigin(0.5);
+        const menuBtn = this.add.image(512, 500, 'menuBtn').setInteractive({ useHandCursor: true });
+        menuBtn.on('pointerover', () => {
+            menuBtn.setTexture('menuBtnHover');
+        })
+        menuBtn.on('pointerout', () => {
+            menuBtn.setTexture('menuBtn');
+        })
+        menuBtn.on('pointerdown', () => {
+            console.log('BACK To Menu');
+            this.scene.stop();
+            this.scene.stop('GameScene');
+            this.scene.start('MenuScene');
+        })
     }
 }

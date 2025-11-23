@@ -7,46 +7,31 @@ export class MenuCredits extends Phaser.Scene {
         super('MenuCredits');
     }
 
+    preload(){
+        this.load.image('wallpaper', 'assets/fondoInicio.png')
+
+        this.load.image('returnBtnHover', 'assets/menuCreditos/botonVolverPulsado.png');
+        this.load.image('returnBtn', 'assets/menuCreditos/botonVolverSinPulsar.png');
+
+        this.load.image('title', 'assets/menuCreditos/creditosLetras.png');
+        this.load.image('participants', 'assets/menuCreditos/cuadroGente.png');
+
+    }
+
     create() {
-        this.add.text(512, 100, 'Juego hecho por:', {
-            fontSize: '64px',
-            color: '#ffffff'
-        }).setOrigin(0.5);
+        const wallpaper = this.add.image(512, 384, 'wallpaper'); //Cargar imagen del fondo
+        wallpaper.setScale(2.0);
 
-        this.add.text(512, 200, 'Ester Díaz Monzonis',{
-            fontSize: '42px',
-            color: '#ffffff'
-        }).setOrigin(0.5);
+        this.add.image(512, 100, 'title');
 
-        this.add.text(512, 300, 'Aroa Quiroga Martínez',{
-            fontSize: '42px',
-            color: '#ffffff'
-        }).setOrigin(0.5);
+        this.add.image(512, 400, 'participants')
 
-        this.add.text(512, 400, 'Sandra Saez Piña',{
-            fontSize: '42px',
-            color: '#ffffff'
-        }).setOrigin(0.5);
-
-        this.add.text(512, 500, 'Daniela Tocino Jiménez',{
-            fontSize: '42px',
-            color: '#ffffff'
-        }).setOrigin(0.5);
-
-        this.add.text(512, 600, 'Raúl Benítez Tiburón',{
-            fontSize: '42px',
-            color: '#ffffff'
-        }).setOrigin(0.5);
-
-        const volverBtn = this.add.text(100, 700, 'Volver',{
-            fontSize: '32px',
-            color: '#ffffff'
-        }).setInteractive({ useHandCursor: true });
+        const volverBtn = this.add.image(200, 700, 'returnBtn').setInteractive({ useHandCursor: true });
         volverBtn.on('pointerover', () => {
-            volverBtn.setColor('#00ff00')
+            volverBtn.setTexture('returnBtnHover');
         })
         volverBtn.on('pointerout', () => {
-            volverBtn.setColor('#ffffff')
+            volverBtn.setTexture('returnBtn');
         })
         volverBtn.on('pointerdown', () => {
             console.log('Return Menu');

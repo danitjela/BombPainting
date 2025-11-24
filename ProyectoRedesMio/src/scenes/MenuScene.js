@@ -23,6 +23,10 @@ export class MenuScene extends Phaser.Scene {
         this.load.image('exit', 'assets/spritesInterfaz/botonSalir.png') //Imagen botón salir
         this.load.image('exitHover', 'assets/spritesInterfaz/botonSalirAbierto.png') //Imagen botón salir hover
 
+        this.load.image('comicButton', 'assets/botonComic/comicLibroCerrado.png') //Imagen botón comic 
+        this.load.image('comicButtonHover', 'assets/botonComic/comicLibroAbierto.png') //Imagen botón comic hover
+
+
     }
 
     create() {
@@ -30,6 +34,22 @@ export class MenuScene extends Phaser.Scene {
         wallpaper.setScale(2.0);
 
         this.add.image(540, 384, 'gameTitle'); //Cargar imagen título
+        // Botón del cómic (arriba derecha)
+        const comicBtn = this.add.image(this.scale.width - 50, 50, 'comicButton')
+            .setInteractive({ useHandCursor: true })
+            .setScale(0.5); 
+
+        comicBtn.on('pointerover', () => {
+        comicBtn.setTexture('comicButtonHover');
+        });
+        comicBtn.on('pointerout', () => {
+        comicBtn.setTexture('comicButton');
+        });
+        comicBtn.on('pointerdown', () => {
+        this.scene.stop('ComicScene');   // asegurarte de parar cualquier instancia anterior
+        this.scene.start('ComicScene');  // iniciar una nueva desde cero
+
+        });
 
         //Boton jugar modo offline
         const offlineBtn = this.add.image(512, 300, 'offline').setInteractive({ useHandCursor: true });

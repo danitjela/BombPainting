@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import { ComicScene } from './scenes/ComicScene.js';
 import { MenuScene } from './scenes/MenuScene.js';
 import { GameScene } from './scenes/GameScene.js';
 import { MenuPause } from './scenes/MenuPause.js';
@@ -12,11 +13,11 @@ const config = {
     physics: {
         default: 'arcade',
         arcade: {
-            gravity: { y: 0 },
+            gravity: { x:0, y: 0 },
             debug: false
         }
     },
-    scene: [MenuScene, GameScene, MenuPause, MenuCredits],
+    scene: [ComicScene, MenuScene, GameScene, MenuPause, MenuCredits],
     backgroundColor: '#1a1a2e',
 }
 

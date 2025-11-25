@@ -13,7 +13,7 @@ export class MenuCredits extends Phaser.Scene {
         this.load.image('returnBtnHover', 'assets/menuCreditos/botonVolverPulsado.png');
         this.load.image('returnBtn', 'assets/menuCreditos/botonVolverSinPulsar.png');
 
-        this.load.image('title', 'assets/menuCreditos/creditosLetras.png');
+        this.load.image('titleC', 'assets/menuCreditos/creditosLetras.png');
         this.load.image('participants', 'assets/menuCreditos/cuadroGente.png');
 
     }
@@ -22,7 +22,7 @@ export class MenuCredits extends Phaser.Scene {
         const wallpaper = this.add.image(512, 384, 'wallpaper'); //Cargar imagen del fondo
         wallpaper.setScale(2.0);
 
-        this.add.image(512, 100, 'title');
+        this.add.image(512, 100, 'titleC');
 
         this.add.image(512, 400, 'participants')
 

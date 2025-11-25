@@ -105,7 +105,31 @@ export class GameScene extends Phaser.Scene {
         //Idle
         this.load.image('acopIdle1', 'assets/personajes/sprites_Acop/Gris/idle/frente/acopGrisAbajo.png');
         this.load.image('acopIdle2', 'assets/personajes/sprites_Acop/Gris/idle/frente/acopGrisArriba.png');
-    
+    //Personaje2
+        //Movimiento
+         //Arriba
+        this.load.image('personaje2UpMove1', 'assets/personajes/sprites_personaje2/Gris/walk/atras/personaje2GrisDerecha.png');
+        this.load.image('personaje2UpMove2', 'assets/personajes/sprites_personaje2/Gris/walk/atras/personaje2GrisMedio.png');
+        this.load.image('personaje2UpMove3', 'assets/personajes/sprites_personaje2/Gris/walk/atras/personaje2GrisIzquierda.png');
+
+        //Abajo
+        this.load.image('personaje2DownMove1', 'assets/personajes/sprites_personaje2/Gris/walk/frente/personaje2GrisDerecha.png');
+        this.load.image('personaje2DownMove2', 'assets/personajes/sprites_personaje2/Gris/walk/frente/personaje2GrisMedio.png');
+        this.load.image('personaje2DownMove3', 'assets/personajes/sprites_personaje2/Gris/walk/frente/personaje2GrisIzquierda.png');
+        
+        //Derecha
+        this.load.image('personaje2RightMove1', 'assets/personajes/sprites_personaje2/Gris/walk/derecha/personaje2GrisAndar1.png');
+        this.load.image('personaje2RightMove2', 'assets/personajes/sprites_personaje2/Gris/walk/derecha/personaje2GrisAndarMedio.png');
+        this.load.image('personaje2RightMove3', 'assets/personajes/sprites_personaje2/Gris/walk/derecha/personaje2GrisAndar2.png');
+
+        //Izquierda
+        this.load.image('personaje2LeftMove1', 'assets/personajes/sprites_personaje2/Gris/walk/izquierda/personaje2GrisAndar1.png');
+        this.load.image('personaje2LeftMove2', 'assets/personajes/sprites_personaje2/Gris/walk/izquierda/personaje2GrisAndarMedio.png');
+        this.load.image('personaje2LeftMove3', 'assets/personajes/sprites_personaje2/Gris/walk/izquierda/personaje2GrisAndar2.png');
+
+        //Idle
+        this.load.image('personaje2Idle1', 'assets/personajes/sprites_personaje2/Gris/idle/frente/personaje2GrisArriba.png');
+        this.load.image('personaje2Idle2', 'assets/personajes/sprites_personaje2/Gris/idle/frente/personaje2GrisAbajo.png');
     }
 
     create() {
@@ -127,14 +151,32 @@ export class GameScene extends Phaser.Scene {
     }
 
     setUpPlayers() {
-        const posPaca = this.mapManager.fromGridToPos(1,1)
-        const paca = new Player(this, 'player1', posPaca.x, posPaca.y, 'pacaIdle1', "paca");
-        const posAcop = this.mapManager.fromGridToPos(14,10)
-        const acop = new Player(this, 'player2', posAcop.x, posAcop.y, 'acopIdle1', "acop"); 
+        // Recuperar personajes seleccionados en CharacterSelectScene
+        const pj1Seleccion = this.registry.get('jugador1'); // ej: 'pacaC'
+        const pj2Seleccion = this.registry.get('jugador2'); // ej: 'acopC'
 
-        this.players.set('player1', paca);
-        this.players.set('player2', acop);
+        // Mapeo cabeza -> tipo de personaje y animación idle
+        const personajesMap = {
+            'pacaC': { tipo: 'paca', idle: 'pacaIdle1' },
+            'per3C': { tipo: 'per3', idle: 'per3Idle1' }, // debes agregar sprites/animaciones de per3
+            'acopC': { tipo: 'acop', idle: 'acopIdle1' },
+            'per2C': { tipo: 'personaje2', idle: 'personaje2Idle1' } // debes agregar sprites/animaciones de per2
+        };
 
+        const posP1 = this.mapManager.fromGridToPos(1,1);
+        const posP2 = this.mapManager.fromGridToPos(14,10);
+
+        // Crear jugadores dinámicamente según selección
+        const datosP1 = personajesMap[pj1Seleccion];
+        const datosP2 = personajesMap[pj2Seleccion];
+
+        const jugador1 = new Player(this, 'player1', posP1.x, posP1.y, datosP1.idle, datosP1.tipo);
+        const jugador2 = new Player(this, 'player2', posP2.x, posP2.y, datosP2.idle, datosP2.tipo);
+
+        this.players.set('player1', jugador1);
+        this.players.set('player2', jugador2);
+
+        // Configuración de controles
         const InputConfig = [
             {
                 playerId: 'player1',
@@ -142,7 +184,7 @@ export class GameScene extends Phaser.Scene {
                 downKey : 'S',
                 leftKey: 'A',
                 rightKey: 'D',
-                bombKey: 'ESPACE'
+                bombKey: 'SPACE'
             },
             {
                 playerId: 'player2',
@@ -152,7 +194,7 @@ export class GameScene extends Phaser.Scene {
                 rightKey: 'RIGHT',
                 bombKey: 'NUMPAD_ZERO'
             }
-        ]
+        ];
         this.inputMappings = InputConfig.map(config => {
             return {
                 playerId : config.playerId,
@@ -297,6 +339,63 @@ export class GameScene extends Phaser.Scene {
             frameRate: 4,
             repeat: -1
         });
+
+        //Personaje 2
+
+        this.anims.create({
+            key: 'personaje2_walk_up',
+            frames: [
+                { key: 'personaje2UpMove1' },
+                { key: 'personaje2UpMove2' },
+                { key: 'personaje2UpMove3' }
+            ],
+            frameRate: 8,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: 'personaje2_walk_down',
+                frames: [
+                { key: 'personaje2DownMove1' },
+                { key: 'personaje2DownMove2' },
+                { key: 'personaje2DownMove3' }
+            ],
+            frameRate: 8,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: 'personaje2_walk_right',
+            frames: [
+                { key: 'personaje2RightMove1' },
+                { key: 'personaje2RightMove2' },
+                { key: 'personaje2RightMove3' }
+            ],
+            frameRate: 8,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: 'personaje2_walk_left',
+            frames: [
+                { key: 'personaje2LeftMove1' },
+                { key: 'personaje2LeftMove2' },
+                { key: 'personaje2LeftMove3' }
+            ],
+            frameRate: 8,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: 'personaje2_idle',
+            frames: [
+                { key: 'personaje2Idle1' },
+                { key: 'personaje2Idle2' }
+            ],
+            frameRate: 4,
+            repeat: -1
+        });
+    
     }
     
 

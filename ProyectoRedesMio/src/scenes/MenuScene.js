@@ -61,7 +61,7 @@ export class MenuScene extends Phaser.Scene {
         })
         offlineBtn.on('pointerdown', () => {
             console.log('Game Init');
-            this.scene.start('GameScene');
+            this.scene.start('CharacterSelectScene');
         })
 
         //Botón jugar modo online

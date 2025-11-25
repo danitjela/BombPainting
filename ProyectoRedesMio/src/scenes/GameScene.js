@@ -53,6 +53,33 @@ export class GameScene extends Phaser.Scene {
 
 
         //Personajes
+        //Paca
+        //Movimiento
+        //Arriba
+        this.load.image('pacaUpMove1', 'assets/personajes/sprites_Paca/PacaColor/walk/Paca_At1.png');
+        this.load.image('pacaUpMove2', 'assets/personajes/sprites_Paca/PacaColor/walk/Paca_At2.png');
+        this.load.image('pacaUpMove3', 'assets/personajes/sprites_Paca/PacaColor/walk/Paca_At2.png');
+
+        //Abajo
+        this.load.image('pacaDownMove1', 'assets/personajes/sprites_Paca/PacaColor/walk/Paca_Arr1.png');
+        this.load.image('pacaDownMove2', 'assets/personajes/sprites_Paca/PacaColor/walk/Paca_Arr2.png');
+        this.load.image('pacaDownMove3', 'assets/personajes/sprites_Paca/PacaColor/walk/Paca_Arr2.png');
+        
+        //Derecha
+        this.load.image('pacaRightMove1', 'assets/personajes/sprites_Paca/PacaColor/walk/Paca_Dch1.png');
+        this.load.image('pacaRightMove2', 'assets/personajes/sprites_Paca/PacaColor/walk/Paca_Dch2.png');
+        this.load.image('pacaRightMove3', 'assets/personajes/sprites_Paca/PacaColor/walk/Paca_Dch3.png');
+
+        //Izquierda
+        this.load.image('pacaLeftMove1', 'assets/personajes/sprites_Paca/PacaColor/walk/Paca_Izq1.png');
+        this.load.image('pacaLeftMove2', 'assets/personajes/sprites_Paca/PacaColor/walk/Paca_Izq2.png');
+        this.load.image('pacaLeftMove3', 'assets/personajes/sprites_Paca/PacaColor/walk/Paca_Izq3.png');
+
+        //Idle
+        this.load.image('pacaIdle1', 'assets/personajes/sprites_Paca/PacaColor/idle/PacaArrA.png');
+        this.load.image('pacaIdle2', 'assets/personajes/sprites_Paca/PacaColor/idle/PacaArrB.png');
+    
+
         //Acop
         //Movimiento
         //Arriba
@@ -94,13 +121,16 @@ export class GameScene extends Phaser.Scene {
             this.isPaused = false;
         });
         
-
-        //this.physics.add.collider(player.sprite, this.mapManager.exteriorWalls);
+        this.players.forEach(player => {
+            this.physics.add.collider(player.sprite, this.mapManager.exteriorWalls);
+        });
     }
 
     setUpPlayers() {
-        const paca = new Player(this, 'player1', 50, 300);
-        const acop = new Player(this, 'player2', 750, 300, 'acopIdle1'); 
+        const posPaca = this.mapManager.fromGridToPos(1,1)
+        const paca = new Player(this, 'player1', posPaca.x, posPaca.y, 'pacaIdle1', "paca");
+        const posAcop = this.mapManager.fromGridToPos(14,10)
+        const acop = new Player(this, 'player2', posAcop.x, posAcop.y, 'acopIdle1', "acop"); 
 
         this.players.set('player1', paca);
         this.players.set('player2', acop);
@@ -156,58 +186,119 @@ export class GameScene extends Phaser.Scene {
 
     createAnimations(){
 
+        //Paca
         this.anims.create({
-        key: 'acop_walk_up',
-        frames: [
-            { key: 'acopUpMove1' },
-            { key: 'acopUpMove2' },
-            { key: 'acopUpMove3' }
-        ],
-        frameRate: 8,
-        repeat: -1
-    });
+            key: 'paca_walk_up',
+            frames: [
+                { key: 'pacaUpMove1' },
+                { key: 'pacaUpMove2' },
+                { key: 'pacaUpMove3' }
+            ],
+            frameRate: 8,
+            repeat: -1
+        });
 
-    this.anims.create({
-        key: 'acop_walk_down',
-        frames: [
-            { key: 'acopDownMove1' },
-            { key: 'acopDownMove2' },
-            { key: 'acopDownMove3' }
-        ],
-        frameRate: 8,
-        repeat: -1
-    });
+        this.anims.create({
+            key: 'paca_walk_down',
+                frames: [
+                { key: 'pacaDownMove1' },
+                { key: 'pacaDownMove2' },
+                { key: 'pacaDownMove3' }
+            ],
+            frameRate: 8,
+            repeat: -1
+        });
 
-    this.anims.create({
-        key: 'acop_walk_right',
-        frames: [
-            { key: 'acopRightMove1' },
-            { key: 'acopRightMove2' },
-            { key: 'acopRightMove3' }
-        ],
-        frameRate: 8,
-        repeat: -1
-    });
+        this.anims.create({
+            key: 'paca_walk_right',
+            frames: [
+                { key: 'pacaRightMove1' },
+                { key: 'pacaRightMove2' },
+                { key: 'pacaRightMove3' }
+            ],
+            frameRate: 8,
+            repeat: -1
+        });
 
-    this.anims.create({
-        key: 'acop_walk_left',
-        frames: [
-            { key: 'acopLeftMove1' },
-            { key: 'acopLeftMove2' },
-            { key: 'acopLeftMove3' }
-        ],
-        frameRate: 8,
-        repeat: -1
-    });
+        this.anims.create({
+            key: 'paca_walk_left',
+            frames: [
+                { key: 'pacaLeftMove1' },
+                { key: 'pacaLeftMove2' },
+                { key: 'pacaLeftMove3' }
+            ],
+            frameRate: 8,
+            repeat: -1
+        });
 
-    this.anims.create({
-        key: 'acop_idle',
-        frames: [
-            { key: 'acopIdle1' },
-            { key: 'acopIdle2' }
-        ],
-        frameRate: 4,
-        repeat: -1
-    });
+        this.anims.create({
+            key: 'paca_idle',
+            frames: [
+                { key: 'pacaIdle1' },
+                { key: 'pacaIdle2' }
+            ],
+            frameRate: 4,
+            repeat: -1
+        });
+
+
+        //Acop
+
+        this.anims.create({
+            key: 'acop_walk_up',
+            frames: [
+                { key: 'acopUpMove1' },
+                { key: 'acopUpMove2' },
+                { key: 'acopUpMove3' }
+            ],
+            frameRate: 8,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: 'acop_walk_down',
+                frames: [
+                { key: 'acopDownMove1' },
+                { key: 'acopDownMove2' },
+                { key: 'acopDownMove3' }
+            ],
+            frameRate: 8,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: 'acop_walk_right',
+            frames: [
+                { key: 'acopRightMove1' },
+                { key: 'acopRightMove2' },
+                { key: 'acopRightMove3' }
+            ],
+            frameRate: 8,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: 'acop_walk_left',
+            frames: [
+                { key: 'acopLeftMove1' },
+                { key: 'acopLeftMove2' },
+                { key: 'acopLeftMove3' }
+            ],
+            frameRate: 8,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: 'acop_idle',
+            frames: [
+                { key: 'acopIdle1' },
+                { key: 'acopIdle2' }
+            ],
+            frameRate: 4,
+            repeat: -1
+        });
     }
+    
+
+    
 }

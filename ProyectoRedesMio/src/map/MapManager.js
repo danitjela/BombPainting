@@ -7,7 +7,7 @@ export class MapManager{
         this.baseHeight = 12;
 
         this.ground = Array.from({ length: this.baseWidth }, () => []);
-        this.exteriorWalls = [];
+        this.exteriorWalls = this.scene.physics.add.staticGroup();
         this.interiorWalls = [];
         this.destructibleWalls = [];
 
@@ -84,13 +84,19 @@ export class MapManager{
 
     //Método para crear los bordes de forma más sencilla
     addWall(x, y, textureKey) {
-    const wall = this.scene.physics.add.staticImage(
+    const wall = this.exteriorWalls.create(
         x * this.baseTileSize + this.baseTileSize / 2,
         y * this.baseTileSize + this.baseTileSize / 2,
         textureKey
     );
     wall.setDisplaySize(this.baseTileSize, this.baseTileSize);
     wall.setImmovable(true);
-    this.exteriorWalls.push(wall);
+    wall.refreshBody();
+    }
+
+    fromGridToPos(x, y){
+        const worldX = x * this.baseTileSize + this.baseTileSize / 2;
+        const worldY = y * this.baseTileSize + this.baseTileSize / 2;
+        return { x: worldX, y: worldY };
     }
 }

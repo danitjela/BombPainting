@@ -1,13 +1,14 @@
 export class Player {
 
-    constructor(scene, id, x, y, playerSprite){
+    constructor(scene, id, x, y, playerSprite, name){
 
         this.id = id;
         this.x = x;
         this.y = y;
+        this.name = name;
 
         this.baseLifes = 3;
-        this.baseSpeed = 10;
+        this.baseSpeed = 100;
         this.baseQuantityUpgrade = 1;
         this.baseBombActivationUpgrade = 1;
         this.baseExplosionRange = 1;
@@ -22,17 +23,16 @@ export class Player {
 
         if (cursors.leftKeyObj.isDown)  { vx = -speed; this.facing = 'left'; }
         else if (cursors.rightKeyObj.isDown) { vx = speed; this.facing = 'right'; }
-
-        if (cursors.upKeyObj.isDown)    { vy = -speed; this.facing = 'up'; }
+        else if (cursors.upKeyObj.isDown)    { vy = -speed; this.facing = 'up'; }
         else if (cursors.downKeyObj.isDown)  { vy = speed; this.facing = 'down'; }
 
         this.sprite.setVelocity(vx, vy);
 
         // Animaciones
         if (vx !== 0 || vy !== 0) {
-            this.sprite.anims.play(`acop_walk_${this.facing}`, true);
+            this.sprite.anims.play(`${this.name}_walk_${this.facing}`, true);
         } else {
-            this.sprite.anims.play(`acop_idle_${this.facing}`, true);
+            this.sprite.anims.play(`${this.name}_idle`, true);
         }
     }
 

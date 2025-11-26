@@ -40,15 +40,14 @@ export class MenuScene extends Phaser.Scene {
             .setScale(0.5); 
 
         comicBtn.on('pointerover', () => {
-        comicBtn.setTexture('comicButtonHover');
+            comicBtn.setTexture('comicButtonHover');
         });
         comicBtn.on('pointerout', () => {
-        comicBtn.setTexture('comicButton');
+            comicBtn.setTexture('comicButton');
         });
         comicBtn.on('pointerdown', () => {
-        this.scene.stop('ComicScene');   // asegurarte de parar cualquier instancia anterior
-        this.scene.start('ComicScene');  // iniciar una nueva desde cero
-
+            this.scene.stop('ComicScene');   // asegurarte de parar cualquier instancia anterior
+            this.scene.start('ComicScene');  // iniciar una nueva desde cero
         });
 
         //Boton jugar modo offline

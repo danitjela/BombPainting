@@ -3,6 +3,7 @@ import { Player } from '../entities/Player';
 import { Bomb } from '../entities/Bomb';
 
 import { MapManager } from '../map/MapManager';
+import { DestructibleWall } from '../map/DestructibleWall';
 
 export class GameScene extends Phaser.Scene {
 
@@ -50,6 +51,33 @@ export class GameScene extends Phaser.Scene {
         //Inferior
         this.load.image('BColumn1', 'assets/spritesFondo/Sprites_muros/M_EspSup3.png');
         this.load.image('BColumn2', 'assets/spritesFondo/Sprites_muros/M_EspSup4.png');
+
+        //Arbustos irrompibles
+        //this.load.image('Bush1', 'assets/spritesFondo/Sprites_otros/Muro_color002');
+        this.load.image('Bush2', 'assets/spritesFondo/Sprites_otros/Muro_color002.png');
+        this.load.image('Bush3', 'assets/spritesFondo/Sprites_otros/Muro_color003.png');
+        this.load.image('Bush4', 'assets/spritesFondo/Sprites_otros/Muro_color004.png');
+        this.load.image('Bush5', 'assets/spritesFondo/Sprites_otros/Muro_color005.png');
+        this.load.image('Bush6', 'assets/spritesFondo/Sprites_otros/Muro_color006.png');
+        this.load.image('Bush7', 'assets/spritesFondo/Sprites_otros/Muro_color007.png');
+        this.load.image('Bush8', 'assets/spritesFondo/Sprites_otros/Muro_color008.png');
+        this.load.image('Bush9', 'assets/spritesFondo/Sprites_otros/Muro_color009.png');
+        this.load.image('Bush10', 'assets/spritesFondo/Sprites_otros/Muro_color010.png');
+        this.load.image('Bush11', 'assets/spritesFondo/Sprites_otros/Muro_color011.png');
+        this.load.image('Bush12', 'assets/spritesFondo/Sprites_otros/Muro_color012.png');
+        this.load.image('Bush13', 'assets/spritesFondo/Sprites_otros/Muro_color013.png');
+        this.load.image('Bush14', 'assets/spritesFondo/Sprites_otros/Muro_color014.png');
+        this.load.image('Bush15', 'assets/spritesFondo/Sprites_otros/Muro_color015.png');
+        this.load.image('Bush16', 'assets/spritesFondo/Sprites_otros/Muro_color016.png');
+        this.load.image('Bush17', 'assets/spritesFondo/Sprites_otros/Muro_color017.png');
+        this.load.image('Bush18', 'assets/spritesFondo/Sprites_otros/Muro_color018.png');
+        this.load.image('Bush19', 'assets/spritesFondo/Sprites_otros/Muro_color019.png');
+        this.load.image('Bush20', 'assets/spritesFondo/Sprites_otros/Muro_color020.png');
+        this.load.image('Bush21', 'assets/spritesFondo/Sprites_otros/Muro_color021.png');
+        this.load.image('Bush22', 'assets/spritesFondo/Sprites_otros/Muro_color022.png');
+
+        //Caja destructible
+        this.load.image('Box', 'assets/spritesFondo/Sprites_otros/Caja.png')
 
 
         //Personajes
@@ -130,6 +158,28 @@ export class GameScene extends Phaser.Scene {
         //Idle
         this.load.image('personaje2Idle1', 'assets/personajes/sprites_personaje2/Gris/idle/frente/personaje2GrisArriba.png');
         this.load.image('personaje2Idle2', 'assets/personajes/sprites_personaje2/Gris/idle/frente/personaje2GrisAbajo.png');
+
+
+        //Bombas
+        //Parpadeo
+        this.load.image('bomb1', 'assets/bombas/animacion2/animacion1Grande.png');
+        this.load.image('bomb2', 'assets/bombas/animacion2/animacion2Grande.png');
+
+        //Explosion
+        this.load.image('explosion1', 'assets/bombas/explosion/explosion1.png');
+        this.load.image('explosion2', 'assets/bombas/explosion/explosion2.png');
+        this.load.image('explosion3', 'assets/bombas/explosion/explosion3.png');
+        this.load.image('explosion4', 'assets/bombas/explosion/explosion4.png');
+        this.load.image('explosion5', 'assets/bombas/explosion/explosion5.png');
+        this.load.image('explosion6', 'assets/bombas/explosion/explosion6.png');
+
+        //Manchas
+        this.load.image('stain1', 'assets/manchas/manchaAmarilla.png');
+        this.load.image('decolored_stain1', 'assets/manchas/manchaAmarillaGris.png');
+        this.load.image('stain2', 'assets/manchas/manchaNaranja.png');
+        this.load.image('decolored_stain2', 'assets/manchas/manchaNaranjaGris.png');
+        this.load.image('stain3', 'assets/manchas/manchaRoja.png');
+        this.load.image('decolored_stain3', 'assets/manchas/manchaRojaGris.png');
     }
 
     create() {
@@ -147,7 +197,14 @@ export class GameScene extends Phaser.Scene {
         
         this.players.forEach(player => {
             this.physics.add.collider(player.sprite, this.mapManager.exteriorWalls);
+            this.physics.add.collider(player.sprite, this.mapManager.interiorWalls);
+            this.mapManager.destructibleWalls.forEach(wall => {
+                this.physics.add.collider(player.sprite, wall.sprite);
+            });
         });
+
+        this.physics.world.createDebugGraphic();
+        this.physics.world.drawDebug = true;
     }
 
     setUpPlayers() {
@@ -192,7 +249,7 @@ export class GameScene extends Phaser.Scene {
                 downKey : 'DOWN',
                 leftKey: 'LEFT',
                 rightKey: 'RIGHT',
-                bombKey: 'NUMPAD_ZERO'
+                bombKey: 'ENTER'
             }
         ];
         this.inputMappings = InputConfig.map(config => {
@@ -220,7 +277,7 @@ export class GameScene extends Phaser.Scene {
         this.inputMappings.forEach(mapping => {
             const player = this.players.get(mapping.playerId);
             if (player) {
-                player.move(mapping);
+                player.controls(mapping);
             }
         });
 
@@ -396,6 +453,33 @@ export class GameScene extends Phaser.Scene {
             repeat: -1
         });
     
+
+
+        //Bombas
+        this.anims.create({
+            key: 'prepBomb',
+            frames: [
+                { key: 'bomb1' },
+                { key: 'bomb2' }
+            ],
+            frameRate: 8,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: 'explosionBomb',
+            frames: [
+                { key: 'explosion1' },
+                { key: 'explosion2' },
+                { key: 'explosion3' },
+                { key: 'explosion4' },
+                { key: 'explosion5' },
+                { key: 'explosion6' }
+            ],
+            frameRate: 12,
+            repeat: 0,
+            hideOnComplete: true
+        });
     }
     
 

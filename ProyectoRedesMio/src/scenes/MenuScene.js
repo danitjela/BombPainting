@@ -27,9 +27,17 @@ export class MenuScene extends Phaser.Scene {
         this.load.image('comicButtonHover', 'assets/botonComic/comicLibroAbierto.png') //Imagen botón comic hover
 
 
+        this.load.audio('menuMusic', 'assets/efectosDeSonido/musicaMenu.mp3');
+        this.load.audio('button', 'assets/efectosDeSonido/boton.mp3');
+        this.load.audio('buttonClick', 'assets/efectosDeSonido/botonClick.mp3');
     }
 
     create() {
+        if (!this.sound.get('menuMusic')) {
+            this.mainTheme = this.sound.add('menuMusic', { loop: true, volume: 0.4 });
+            this.mainTheme.play();
+        }
+
         let wallpaper = this.add.image(512, 384, 'wallpaper'); //Cargar imagen del fondo
         wallpaper.setScale(2.0);
 
@@ -41,11 +49,13 @@ export class MenuScene extends Phaser.Scene {
 
         comicBtn.on('pointerover', () => {
             comicBtn.setTexture('comicButtonHover');
+            this.sound.play('button');
         });
         comicBtn.on('pointerout', () => {
             comicBtn.setTexture('comicButton');
         });
         comicBtn.on('pointerdown', () => {
+            this.sound.play('buttonClick', {volume:0.5});
             this.scene.stop('ComicScene');   // asegurarte de parar cualquier instancia anterior
             this.scene.start('ComicScene');  // iniciar una nueva desde cero
         });
@@ -53,51 +63,59 @@ export class MenuScene extends Phaser.Scene {
         //Boton jugar modo offline
         const offlineBtn = this.add.image(512, 300, 'offline').setInteractive({ useHandCursor: true });
         offlineBtn.on('pointerover', () => {
-            offlineBtn.setTexture('offlineHover')
+            offlineBtn.setTexture('offlineHover');
+            this.sound.play('button');
         })
         offlineBtn.on('pointerout', () => {
-            offlineBtn.setTexture('offline')
+            offlineBtn.setTexture('offline');
         })
         offlineBtn.on('pointerdown', () => {
             console.log('Game Init');
+            this.sound.play('buttonClick', {volume:0.5});
             this.scene.start('CharacterSelectScene');
         })
 
         //Botón jugar modo online
         const onlineBtn = this.add.image(512, 420, 'online').setInteractive({ useHandCursor: true });
         onlineBtn.on('pointerover', () => {
-            onlineBtn.setTexture('onlineHover')
+            onlineBtn.setTexture('onlineHover');
+            this.sound.play('button');
         })
         onlineBtn.on('pointerout', () => {
-            onlineBtn.setTexture('online')
+            onlineBtn.setTexture('online');
         })
         onlineBtn.on('pointerdown', () => {
+            this.sound.play('buttonClick', {volume:0.5});
             console.log('No disponible');
         })
 
-        //Botón jugar modo online
+        //Botón créditos
         const creditsBtn = this.add.image(512, 540, 'credits').setInteractive({ useHandCursor: true });
         creditsBtn.on('pointerover', () => {
-            creditsBtn.setTexture('creditsHover')
+            creditsBtn.setTexture('creditsHover');
+            this.sound.play('button');
         })
         creditsBtn.on('pointerout', () => {
-            creditsBtn.setTexture('credits')
+            creditsBtn.setTexture('credits');
         })
         creditsBtn.on('pointerdown', () => {
             console.log('Credits Menu');
+            this.sound.play('buttonClick', {volume:0.5});
             this.scene.start('MenuCredits');
         })
 
-        //Botón jugar modo online
+        //Botón salir del juego
         const exitBtm = this.add.image(512, 660, 'exit').setInteractive({ useHandCursor: true });;
         exitBtm.on('pointerover', () => {
-            exitBtm.setTexture('exitHover')
+            exitBtm.setTexture('exitHover');
+            this.sound.play('button');
         })
         exitBtm.on('pointerout', () => {
-            exitBtm.setTexture('exit')
+            exitBtm.setTexture('exit');
         })
         exitBtm.on('pointerdown', () => {
             console.log('Exit game');
+            this.sound.play('buttonClick', {volume:0.5});
             this.game.destroy(true);
         })
     }

@@ -22,6 +22,9 @@ export class GameScene extends Phaser.Scene {
         this.load.image('floor1', 'assets/spritesFondo/Sprites_cesped/C_1.png');
         this.load.image('floor2', 'assets/spritesFondo/Sprites_cesped/C_2.png');
 
+        this.load.image('floor1G', 'assets/spritesFondo/Sprites_cesped/GC_1.png');
+        this.load.image('floor2G', 'assets/spritesFondo/Sprites_cesped/GC_2.png');
+
         //Muros laterales
         //Esquinas
         this.load.image('LTCorner', 'assets/spritesFondo/Sprites_muros/M_EsqSI.png');
@@ -133,7 +136,8 @@ export class GameScene extends Phaser.Scene {
         //Idle
         this.load.image('acopIdle1', 'assets/personajes/sprites_Acop/Gris/idle/frente/acopGrisAbajo.png');
         this.load.image('acopIdle2', 'assets/personajes/sprites_Acop/Gris/idle/frente/acopGrisArriba.png');
-    //Personaje2
+    
+        //Personaje2
         //Movimiento
          //Arriba
         this.load.image('personaje2UpMove1', 'assets/personajes/sprites_personaje2/Gris/walk/atras/personaje2GrisDerecha.png');
@@ -159,6 +163,32 @@ export class GameScene extends Phaser.Scene {
         this.load.image('personaje2Idle1', 'assets/personajes/sprites_personaje2/Gris/idle/frente/personaje2GrisArriba.png');
         this.load.image('personaje2Idle2', 'assets/personajes/sprites_personaje2/Gris/idle/frente/personaje2GrisAbajo.png');
 
+        //Personaje3
+        //Movimiento
+         //Arriba
+        this.load.image('personaje3UpMove1', 'assets/personajes/sprites_personaje3/ChicoColor/Walk/Chico_At1.png');
+        this.load.image('personaje3UpMove2', 'assets/personajes/sprites_personaje3/ChicoColor/Walk/Chico_At2.png');
+        this.load.image('personaje3UpMove3', 'assets/personajes/sprites_personaje3/ChicoColor/Walk/Chico_At3.png');
+
+        //Abajo
+        this.load.image('personaje3DownMove1', 'assets/personajes/sprites_personaje3/ChicoColor/Walk/Chico_Arr1.png');
+        this.load.image('personaje3DownMove2', 'assets/personajes/sprites_personaje3/ChicoColor/Walk/Chico_Arr2.png');
+        this.load.image('personaje3DownMove3', 'assets/personajes/sprites_personaje3/ChicoColor/Walk/Chico_Arr3.png');
+        
+        //Derecha
+        this.load.image('personaje3RightMove1', 'assets/personajes/sprites_personaje3/ChicoColor/Walk/Chico_Dch1.png');
+        this.load.image('personaje3RightMove2', 'assets/personajes/sprites_personaje3/ChicoColor/Walk/Chico_Dch2.png');
+        this.load.image('personaje3RightMove3', 'assets/personajes/sprites_personaje3/ChicoColor/Walk/Chico_Dch3.png');
+
+        //Izquierda
+        this.load.image('personaje3LeftMove1', 'assets/personajes/sprites_personaje3/ChicoColor/Walk/Chico_Izq1.png');
+        this.load.image('personaje3LeftMove2', 'assets/personajes/sprites_personaje3/ChicoColor/Walk/Chico_Izq2.png');
+        this.load.image('personaje3LeftMove3', 'assets/personajes/sprites_personaje3/ChicoColor/Walk/Chico_Izq3.png');
+
+        //Idle
+        this.load.image('personaje3Idle1', 'assets/personajes/sprites_personaje3/ChicoColor/Idle/ChicoArrA.png');
+        this.load.image('personaje3Idle2', 'assets/personajes/sprites_personaje3/ChicoColor/Idle/ChicoArrB.png');
+
 
         //Bombas
         //Parpadeo
@@ -180,9 +210,29 @@ export class GameScene extends Phaser.Scene {
         this.load.image('decolored_stain2', 'assets/manchas/manchaNaranjaGris.png');
         this.load.image('stain3', 'assets/manchas/manchaRoja.png');
         this.load.image('decolored_stain3', 'assets/manchas/manchaRojaGris.png');
+
+        //Corazones
+        this.load.image('heart', 'assets/spriteCorazones/corazonColor.png');
+        this.load.image('emptyHeart', 'assets/spriteCorazones/corazonVacio.png');
+
+        //PowerUps
+        this.load.image('boostMoreBombs', 'assets/boost/boostBombas.png');
+        this.load.image('boostBiggerExplosion', 'assets/boost/boostExplosionGrande.png');
+        this.load.image('boostFasterExplosion', 'assets/boost/boostExploxionRapida.png');
+        this.load.image('boostMoreLife', 'assets/boost/boostVida.png');
+
+        this.load.audio('gameMusic', 'assets/efectosDeSonido/musicaGamePlay.mp3');
+        this.load.audio('explosion', 'assets/efectosDeSonido/explosion2.mp3');
+        this.load.audio('loseLife', 'assets/efectosDeSonido/perderVida.mp3');
+        this.load.audio('bomb', 'assets/efectosDeSonido/ponerBomba.mp3');
+        this.load.audio('specialBomb', 'assets/efectosDeSonido/ponerBombaEspecial.mp3');
+        this.load.audio('powerUp', 'assets/efectosDeSonido/powerUp.mp3');
     }
 
     create() {
+        this.gameplayMusic = this.sound.add('gameMusic', { loop: true, volume: 0.1 });
+        this.gameplayMusic.play();
+
         this.mapManager = new MapManager(this);
         this.mapManager.createMap();
 
@@ -193,6 +243,7 @@ export class GameScene extends Phaser.Scene {
 
         this.events.on('resume', () => {
             this.isPaused = false;
+            this.gameplayMusic.resume();
         });
         
         this.players.forEach(player => {
@@ -202,6 +253,16 @@ export class GameScene extends Phaser.Scene {
                 this.physics.add.collider(player.sprite, wall.sprite);
             });
         });
+
+        const player1Life = this.add.text(20, 16, 'Vida Jugador 1: ');
+        player1Life.setFontSize('32px');
+        player1Life.setStroke('#000000',3);
+        player1Life.setColor('#ff0000ff');
+
+        const player2Life = this.add.text(532, 16, 'Vida Jugador 2: ');
+        player2Life.setFontSize('32px');
+        player2Life.setStroke('#000000',3);
+        player2Life.setColor('#ff0000ff');
 
         this.physics.world.createDebugGraphic();
         this.physics.world.drawDebug = true;
@@ -215,15 +276,14 @@ export class GameScene extends Phaser.Scene {
         // Mapeo cabeza -> tipo de personaje y animación idle
         const personajesMap = {
             'pacaC': { tipo: 'paca', idle: 'pacaIdle1' },
-            'per3C': { tipo: 'per3', idle: 'per3Idle1' }, // debes agregar sprites/animaciones de per3
+            'per3C': { tipo: 'personaje3', idle: 'personaje3Idle1' },
             'acopC': { tipo: 'acop', idle: 'acopIdle1' },
-            'per2C': { tipo: 'personaje2', idle: 'personaje2Idle1' } // debes agregar sprites/animaciones de per2
+            'per2C': { tipo: 'personaje2', idle: 'personaje2Idle1' }
         };
 
         const posP1 = this.mapManager.fromGridToPos(1,1);
         const posP2 = this.mapManager.fromGridToPos(14,10);
 
-        // Crear jugadores dinámicamente según selección
         const datosP1 = personajesMap[pj1Seleccion];
         const datosP2 = personajesMap[pj2Seleccion];
 
@@ -271,6 +331,7 @@ export class GameScene extends Phaser.Scene {
                 this.scene.launch('MenuPause');
                 this.scene.pause();
                 this.isPaused = true;
+                this.gameplayMusic.pause();
             }
         }
 
@@ -448,6 +509,62 @@ export class GameScene extends Phaser.Scene {
             frames: [
                 { key: 'personaje2Idle1' },
                 { key: 'personaje2Idle2' }
+            ],
+            frameRate: 4,
+            repeat: -1
+        });
+
+        //Personaje 3
+
+        this.anims.create({
+            key: 'personaje3_walk_up',
+            frames: [
+                { key: 'personaje3UpMove1' },
+                { key: 'personaje3UpMove2' },
+                { key: 'personaje3UpMove3' }
+            ],
+            frameRate: 8,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: 'personaje3_walk_down',
+                frames: [
+                { key: 'personaje3DownMove1' },
+                { key: 'personaje3DownMove2' },
+                { key: 'personaje3DownMove3' }
+            ],
+            frameRate: 8,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: 'personaje3_walk_right',
+            frames: [
+                { key: 'personaje3RightMove1' },
+                { key: 'personaje3RightMove2' },
+                { key: 'personaje3RightMove3' }
+            ],
+            frameRate: 8,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: 'personaje3_walk_left',
+            frames: [
+                { key: 'personaje3LeftMove1' },
+                { key: 'personaje3LeftMove2' },
+                { key: 'personaje3LeftMove3' }
+            ],
+            frameRate: 8,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: 'personaje3_idle',
+            frames: [
+                { key: 'personaje3Idle1' },
+                { key: 'personaje3Idle2' }
             ],
             frameRate: 4,
             repeat: -1

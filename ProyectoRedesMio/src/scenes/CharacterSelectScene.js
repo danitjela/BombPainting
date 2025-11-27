@@ -19,9 +19,17 @@ export class CharacterSelectScene extends Phaser.Scene {
 
         this.load.image('pinturas', 'assets/eleccionPersonaje/InterfazEleccionPersonajes.png');
         this.load.image('sele', 'assets/eleccionPersonaje/seleccionado.png');
+
+        this.load.audio('button', 'assets/efectosDeSonido/boton.mp3');
+        this.load.audio('buttonClick', 'assets/efectosDeSonido/botonClick.mp3');
     }
 
     create() {
+        if (!this.sound.get('menuMusic')) {
+        this.mainTheme = this.sound.add('menuMusic', { loop: true });
+        this.mainTheme.play();
+        }
+
         const centerX = this.scale.width / 2;
         const centerY = this.scale.height / 2;
 
@@ -73,6 +81,7 @@ export class CharacterSelectScene extends Phaser.Scene {
         if (this.jugador1Confirmado) return; // bloqueo si ya confirmó
         this.sel1 = (this.sel1 + dir + this.pjsJugador1.length) % this.pjsJugador1.length;
         this.head1.setTexture(this.pjsJugador1[this.sel1]);
+        this.sound.play('button');
     }
 
     // Cambio personaje jugador 2
@@ -80,6 +89,7 @@ export class CharacterSelectScene extends Phaser.Scene {
         if (this.jugador2Confirmado) return; // bloqueo si ya confirmó
         this.sel2 = (this.sel2 + dir + this.pjsJugador2.length) % this.pjsJugador2.length;
         this.head2.setTexture(this.pjsJugador2[this.sel2]);
+        this.sound.play('button');
     }
 
     // Confirmar jugador 1 (ESPACIO)
@@ -87,6 +97,7 @@ export class CharacterSelectScene extends Phaser.Scene {
         if (this.jugador1Confirmado) return;
         this.jugador1Confirmado = true;
         this.selCartel1.setVisible(true);
+        this.sound.play('buttonClick', {volume:0.5});
         this.comprobarInicio();
     }
 
@@ -95,6 +106,7 @@ export class CharacterSelectScene extends Phaser.Scene {
         if (this.jugador2Confirmado) return;
         this.jugador2Confirmado = true;
         this.selCartel2.setVisible(true);
+        this.sound.play('buttonClick', {volume:0.5});
         this.comprobarInicio();
     }
 
@@ -107,6 +119,7 @@ export class CharacterSelectScene extends Phaser.Scene {
 
             // Delay para que el jugador vea los carteles
             this.time.delayedCall(600, () => {
+                this.sound.stopAll();
                 this.scene.start('GameScene');
             });
         }

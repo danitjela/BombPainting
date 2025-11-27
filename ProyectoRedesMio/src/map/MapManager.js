@@ -24,21 +24,21 @@ export class MapManager{
     }
 
     createGround() {
-    for (let x = 0; x < this.baseWidth; x++) {
-        for (let y = 0; y < this.baseHeight; y++) {
-            const textureKey = (x + y) % 2 === 0 ? 'floor1' : 'floor2';
+        for (let x = 0; x < this.baseWidth; x++) {
+            for (let y = 0; y < this.baseHeight; y++) {
+                const textureKey = (x + y) % 2 === 0 ? 'floor1' : 'floor2';
 
-            const tile = this.scene.add.image(
-                x * this.baseTileSize + this.baseTileSize / 2,
-                y * this.baseTileSize + this.baseTileSize / 2,
-                textureKey
-            );
-            tile.setDisplaySize(this.baseTileSize, this.baseTileSize);
+                const tile = this.scene.add.image(
+                    x * this.baseTileSize + this.baseTileSize / 2,
+                    y * this.baseTileSize + this.baseTileSize / 2,
+                    textureKey
+                );
+                tile.setDisplaySize(this.baseTileSize, this.baseTileSize);
 
-            this.ground[x][y] = tile;
+                this.ground[x][y] = tile;
+            }   
         }
     }
-}
 
 
     //Get del tile del suelo, para poder cambiar el color
@@ -172,14 +172,14 @@ export class MapManager{
 
     //Método para crear los muros irrompibles de forma más sencilla
     addWall(x, y, textureKey, list) {
-    const wall = list.create(
-        x * this.baseTileSize + this.baseTileSize / 2,
-        y * this.baseTileSize + this.baseTileSize / 2,
-        textureKey
-    );
-    wall.setDisplaySize(this.baseTileSize, this.baseTileSize);
-    wall.setImmovable(true);
-    wall.refreshBody();
+        const wall = list.create(
+            x * this.baseTileSize + this.baseTileSize / 2,
+            y * this.baseTileSize + this.baseTileSize / 2,
+            textureKey
+        );
+        wall.setDisplaySize(this.baseTileSize, this.baseTileSize);
+        wall.setImmovable(true);
+        wall.refreshBody();
     }
 
     addDestructibleWall(x, y){
@@ -198,6 +198,6 @@ export class MapManager{
     fromPosToGrid(x, y) {
         const gridX = Math.floor(x / this.baseTileSize);
         const gridY = Math.floor(y / this.baseTileSize);
-    return { x: gridX, y: gridY };
+        return { x: gridX, y: gridY };
     }
 }

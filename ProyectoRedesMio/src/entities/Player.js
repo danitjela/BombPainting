@@ -15,6 +15,19 @@ export class Player {
         this.baseQuantityUpgrade = 1;
         this.baseBombActivationUpgrade = 1;
         this.baseExplosionRange = 1;
+        this.lifes = [];
+        this.invulnerable = false;
+        if(this.id == 'player1'){
+            for(let i = 0; i < this.baseLifes; i++){
+                this.createLifes(5 + i,0);
+            }
+        }else{
+            for(let i = 0; i < this.baseLifes; i++){
+                this.createLifes(13 + i,0);
+            }
+
+        }
+
 
         this.bombsPlaced = 0;
 
@@ -36,6 +49,7 @@ export class Player {
 
         if (Phaser.Input.Keyboard.JustDown(cursors.bombKeyObj) && this.bombsPlaced < this.baseQuantityUpgrade) {
             this.bombsPlaced++;
+            (Math.random() < 1/20 ? this.scene.sound.play('specialBomb') : this.scene.sound.play('bomb'));
             this.gridPos = this.scene.mapManager.fromPosToGrid(this.sprite.x, this.sprite.y);
             new Bomb(this.scene, this.gridPos.x, this.gridPos.y, this.baseBombActivationUpgrade, this.baseExplosionRange, this);
         }
@@ -51,6 +65,40 @@ export class Player {
     }
 
     takeDamage(){
+        if(this.invulnerable){
+            return;
+        }
+        this.scene.sound.play('loseLife', { volume: 0.3 });
+        this.lifes[this.baseLifes - 1].setTexture('emptyHeart');
         this.baseLifes--;
+
+        if(this.baseLifes <= 0){
+            const music = this.scene.sound.get('gameMusic');
+                if (music) {
+                    music.stop();
+                }
+            if(this.id == 'player1'){
+                this.scene.scene.start('Player2VictoryScene');
+            }else{
+                this.scene.scene.start('Player1VictoryScene')
+            }
+        }
+
+        this.invulnerable = true;
+
+        this.scene.time.delayedCall(1000, () => {
+            this.invulnerable = false;
+        });
+    }
+
+    addLife(){
+        this.baseLifes++;
+        this.lifes[this.baseLifes - 1].setTexture('heart');
+    }
+
+    createLifes(x, y){
+        this.gridPos = this.scene.mapManager.fromGridToPos(x, y);
+        this.heart = this.scene.add.image(this.gridPos.x, this.gridPos.y, 'heart');
+        this.lifes.push(this.heart);
     }
 }

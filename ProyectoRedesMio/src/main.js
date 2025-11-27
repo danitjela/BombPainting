@@ -5,6 +5,8 @@ import { CharacterSelectScene } from './scenes/CharacterSelectScene.js';
 import { GameScene } from './scenes/GameScene.js';
 import { MenuPause } from './scenes/MenuPause.js';
 import { MenuCredits } from './scenes/MenuCredits.js';
+import { Player1VictoryScene } from './scenes/Player1VictoryScene.js';
+import { Player2VictoryScene } from './scenes/Player2VictoryScene.js';
 
 const config = {
     type: Phaser.AUTO,
@@ -19,7 +21,7 @@ const config = {
             
         }
     },
-    scene: [ComicScene, MenuScene, CharacterSelectScene, GameScene, MenuPause, MenuCredits],
+    scene: [ComicScene, MenuScene, CharacterSelectScene, GameScene, MenuPause, MenuCredits, Player1VictoryScene, Player2VictoryScene],
     backgroundColor: '#1a1a2e',
 }
 

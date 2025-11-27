@@ -16,6 +16,9 @@ export class MenuCredits extends Phaser.Scene {
         this.load.image('titleC', 'assets/menuCreditos/creditosLetras.png');
         this.load.image('participants', 'assets/menuCreditos/cuadroGente.png');
 
+        this.load.audio('button', 'assets/efectosDeSonido/boton.mp3');
+        this.load.audio('buttonClick', 'assets/efectosDeSonido/botonClick.mp3');
+
     }
 
     create() {
@@ -28,6 +31,7 @@ export class MenuCredits extends Phaser.Scene {
 
         const volverBtn = this.add.image(200, 700, 'returnBtn').setInteractive({ useHandCursor: true });
         volverBtn.on('pointerover', () => {
+            this.sound.play('button');
             volverBtn.setTexture('returnBtnHover');
         })
         volverBtn.on('pointerout', () => {
@@ -35,6 +39,7 @@ export class MenuCredits extends Phaser.Scene {
         })
         volverBtn.on('pointerdown', () => {
             console.log('Return Menu');
+            this.sound.play('buttonClick', {volume:0.5});
             this.scene.start('MenuScene');
         })
     }

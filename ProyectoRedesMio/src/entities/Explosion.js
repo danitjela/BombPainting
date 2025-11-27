@@ -34,6 +34,23 @@ export class Explosion {
         this.scene.time.delayedCall(2000, () => {
             stain.destroy();
         });
+
+        const gridPos = this.scene.mapManager.fromPosToGrid(x, y);
+
+        if (this.player.id == 'player1') 
+        {
+            if(this.scene.mapManager.ground[gridPos.x][gridPos.y].texture.key === 'floor1G'){
+                this.scene.mapManager.ground[gridPos.x][gridPos.y].setTexture('floor1');
+            }else if(this.scene.mapManager.ground[gridPos.x][gridPos.y].texture.key === 'floor2G'){
+                this.scene.mapManager.ground[gridPos.x][gridPos.y].setTexture('floor2');
+            }
+        } else {
+            if(this.scene.mapManager.ground[gridPos.x][gridPos.y].texture.key === 'floor1'){
+                this.scene.mapManager.ground[gridPos.x][gridPos.y].setTexture('floor1G');
+            }else if(this.scene.mapManager.ground[gridPos.x][gridPos.y].texture.key === 'floor2'){
+                this.scene.mapManager.ground[gridPos.x][gridPos.y].setTexture('floor2G');
+            }
+        }
     }
 
     propagate(x, y, range, dx, dy) {
@@ -44,20 +61,22 @@ export class Explosion {
         );
         const worldPos = this.scene.mapManager.fromGridToPos(gridPos.x, gridPos.y);
 
-        // 🔹 Comprobar indestructibles
-        const indestructible = this.scene.physics.overlapRect(worldPos.x, worldPos.y, 1, 1, true);
-        if (indestructible.some(obj => this.scene.mapManager.exteriorWalls.contains(obj) || this.scene.mapManager.interiorWalls.contains(obj))) {
-            break; // cortar propagación
+        const isIndestructible = this.scene.mapManager.exteriorWalls.getChildren().some(wall =>
+            wall.x === worldPos.x && wall.y === worldPos.y
+        ) || this.scene.mapManager.interiorWalls.getChildren().some(wall =>
+            wall.x === worldPos.x && wall.y === worldPos.y
+        );
+
+        if (isIndestructible) {
+            break;
         }
 
-        // 🔹 Comprobar destructibles
         const wall = this.scene.mapManager.destructibleWalls.find(w => w.sprite.x === worldPos.x && w.sprite.y === worldPos.y);
         if (wall) {
             wall.destroy();
-            break; // cortar propagación después de destruir
+            break;
         }
 
-        // 🔹 Crear mancha
         this.createStain(worldPos.x, worldPos.y);
     }
 }

@@ -18,9 +18,16 @@ export class ComicScene extends Phaser.Scene {
     this.load.image('siguiente_on', 'assets/comic/botonSiguientePulsado.png');
     this.load.image('volver_off', 'assets/comic/botonVolverSinPulsar.png');
     this.load.image('volver_on', 'assets/comic/botonVolverPulsado.png');
+
+    
+    this.load.audio('button', 'assets/efectosDeSonido/boton.mp3');
+    this.load.audio('buttonClick', 'assets/efectosDeSonido/botonClick.mp3');
   }
 
   create() {
+    this.buttonClickSound = this.sound.add('buttonClick', {volume:0.5});
+    this.buttonHoverSound = this.sound.add('button');
+
     const { width, height } = this.scale;
 
     // Reiniciar página al crear la escena
@@ -65,9 +72,15 @@ export class ComicScene extends Phaser.Scene {
   }
 
   _setupButtonEvents(button, normalKey, hoverKey, callback) {
-    button.on('pointerover', () => button.setTexture(hoverKey));
+    button.on('pointerover', () => {
+      this.buttonHoverSound.play();
+      button.setTexture(hoverKey);
+    });
     button.on('pointerout', () => button.setTexture(normalKey));
-    button.on('pointerdown', callback);
+    button.on('pointerdown', () => {
+      this.buttonClickSound.play();
+      callback();
+    });
   }
 
   _updateButtons() {

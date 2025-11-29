@@ -273,8 +273,8 @@ export class GameScene extends Phaser.Scene {
         player2Life.setStroke('#000000',3);
         player2Life.setColor('#ff0000ff');
 
-        this.physics.world.createDebugGraphic();
-        this.physics.world.drawDebug = true;
+        //this.physics.world.createDebugGraphic();
+        //this.physics.world.drawDebug = true;
     }
 
     setUpPlayers() {

@@ -26,7 +26,6 @@ export class MenuScene extends Phaser.Scene {
         this.load.image('comicButton', 'assets/botonComic/comicLibroCerrado.png') //Imagen botón comic 
         this.load.image('comicButtonHover', 'assets/botonComic/comicLibroAbierto.png') //Imagen botón comic hover
 
-
         this.load.audio('menuMusic', 'assets/efectosDeSonido/musicaMenu.mp3');
         this.load.audio('button', 'assets/efectosDeSonido/boton.mp3');
         this.load.audio('buttonClick', 'assets/efectosDeSonido/botonClick.mp3');
@@ -42,6 +41,7 @@ export class MenuScene extends Phaser.Scene {
         wallpaper.setScale(2.0);
 
         this.add.image(540, 384, 'gameTitle'); //Cargar imagen título
+
         // Botón del cómic (arriba derecha)
         const comicBtn = this.add.image(this.scale.width - 50, 50, 'comicButton')
             .setInteractive({ useHandCursor: true })

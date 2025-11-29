@@ -20,6 +20,9 @@ export class CharacterSelectScene extends Phaser.Scene {
         this.load.image('pinturas', 'assets/eleccionPersonaje/InterfazEleccionPersonajes.png');
         this.load.image('sele', 'assets/eleccionPersonaje/seleccionado.png');
 
+        this.load.image('tuto1', 'assets/eleccionPersonaje/tutorial/tutoJugador1.png');
+        this.load.image('tuto2', 'assets/eleccionPersonaje/tutorial/tutoJugador2.png');
+
         this.load.audio('button', 'assets/efectosDeSonido/boton.mp3');
         this.load.audio('buttonClick', 'assets/efectosDeSonido/botonClick.mp3');
     }
@@ -57,6 +60,9 @@ export class CharacterSelectScene extends Phaser.Scene {
         // Cabezas
         this.head1 = this.add.image(centerX - 250, centerY + 200, this.pjsJugador1[this.sel1]).setDepth(4);
         this.head2 = this.add.image(centerX + 280, centerY + 220, this.pjsJugador2[this.sel2]).setDepth(4);
+
+        this.add.image(420, 380,'tuto1');
+        this.add.image(920, 380,'tuto2');
 
         // Controles por teclado para cambiar selección
         // Jugador 1: A/D y W/S (opcional)

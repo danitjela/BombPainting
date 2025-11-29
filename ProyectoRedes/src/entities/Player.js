@@ -50,7 +50,8 @@ export class Player {
         if (Phaser.Input.Keyboard.JustDown(cursors.bombKeyObj) && this.bombsPlaced < this.baseQuantityUpgrade) {
             this.bombsPlaced++;
             (Math.random() < 1/20 ? this.scene.sound.play('specialBomb') : this.scene.sound.play('bomb'));
-            this.gridPos = this.scene.mapManager.fromPosToGrid(this.sprite.x, this.sprite.y);
+            this.gridPos = this.scene.mapManager.fromPosToGrid(this.sprite.body.x, this.sprite.body.y);
+
             new Bomb(this.scene, this.gridPos.x, this.gridPos.y, this.baseBombActivationUpgrade, this.baseExplosionRange, this);
         }
 

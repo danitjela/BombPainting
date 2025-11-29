@@ -221,6 +221,9 @@ export class GameScene extends Phaser.Scene {
         this.load.image('boostFasterExplosion', 'assets/boost/boostExploxionRapida.png');
         this.load.image('boostMoreLife', 'assets/boost/boostVida.png');
 
+        //Tutorial
+        this.load.image('tuto', 'assets/tutorialJuego/tutorialJuegoRelleno.png');
+
         this.load.audio('gameMusic', 'assets/efectosDeSonido/musicaGamePlay.mp3');
         this.load.audio('explosion', 'assets/efectosDeSonido/explosion2.mp3');
         this.load.audio('loseLife', 'assets/efectosDeSonido/perderVida.mp3');
@@ -240,6 +243,12 @@ export class GameScene extends Phaser.Scene {
 
         this.createAnimations();
         this.setUpPlayers();
+
+        this.tutorial = this.add.image(512,378, 'tuto');
+        this.tutorial.setScale(1.5);
+        this.tutorial.setDepth(20);
+
+        this.gameStarted = false;
 
         this.events.on('resume', () => {
             this.isPaused = false;
@@ -327,20 +336,28 @@ export class GameScene extends Phaser.Scene {
     update() {
 
         if (Phaser.Input.Keyboard.JustDown(this.escapeKey)) {
-            if (!this.isPaused) {
+            if (!this.isPaused && this.gameStarted) {
                 this.scene.launch('MenuPause');
                 this.scene.pause();
                 this.isPaused = true;
                 this.gameplayMusic.pause();
             }
+
+            if(!this.gameStarted){
+                this.tutorial.destroy();
+                this.gameStarted = true;
+            }
         }
 
-        this.inputMappings.forEach(mapping => {
-            const player = this.players.get(mapping.playerId);
-            if (player) {
-                player.controls(mapping);
-            }
-        });
+
+        if(this.gameStarted){
+            this.inputMappings.forEach(mapping => {
+                const player = this.players.get(mapping.playerId);
+                if (player) {
+                    player.controls(mapping);
+                }
+            });
+        }
 
     }
 

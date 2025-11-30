@@ -1,3 +1,4 @@
+// IMPORTA PHASER Y ENTIDADES NECESARIAS (PLAYER, BOMB) Y GESTORES DE MAPA
 import Phaser from 'phaser';
 import { Player } from '../entities/Player';
 import { Bomb } from '../entities/Bomb';
@@ -5,58 +6,64 @@ import { Bomb } from '../entities/Bomb';
 import { MapManager } from '../map/MapManager';
 import { DestructibleWall } from '../map/DestructibleWall';
 
+// FUNCIÓN QUE SIRVE PARA GESTIONAR LA LÓGICA PRINCIPAL DEL JUEGO 
 export class GameScene extends Phaser.Scene {
 
+    // FUNCIÓN QUE SIRVE PARA INICIALIZAR LA ESCENA Y SU KEY
     constructor() {
+        // LLAMA A CONSTRUCTOR PADRE Y ASIGNA KEY
         super('GameScene');
     }
 
+    // FUNCIÓN QUE SIRVE PARA INICIALIZAR ESTRUCTURAS ANTES DE CARGAR RECURSOS
     init() {
+        // CREA MAPA DE JUGADORES
         this.players = new Map();
+        // ARRAY DE MAPEOS DE INPUT
         this.inputMappings = [];
+        // FLAG PAUSA
         this.isPaused = false;
     }
 
+    // FUNCIÓN QUE SIRVE PARA CARGAR RECURSOS GRAFICOS Y SONIDOS
     preload() {
-        //Suelo
-        this.load.image('floor1', 'assets/spritesFondo/Sprites_cesped/C_1.png');
-        this.load.image('floor2', 'assets/spritesFondo/Sprites_cesped/C_2.png');
+        // SUELO
+        this.load.image('floor1', 'assets/spritesFondo/Sprites_cesped/C_1.png'); // CARGA floor1
+        this.load.image('floor2', 'assets/spritesFondo/Sprites_cesped/C_2.png'); // CARGA floor2
 
-        this.load.image('floor1G', 'assets/spritesFondo/Sprites_cesped/GC_1.png');
-        this.load.image('floor2G', 'assets/spritesFondo/Sprites_cesped/GC_2.png');
+        this.load.image('floor1G', 'assets/spritesFondo/Sprites_cesped/GC_1.png'); // CARGA variante
+        this.load.image('floor2G', 'assets/spritesFondo/Sprites_cesped/GC_2.png'); // CARGA variante
 
-        //Muros laterales
-        //Esquinas
+        // MUROS LATERALES - ESQUINAS
         this.load.image('LTCorner', 'assets/spritesFondo/Sprites_muros/M_EsqSI.png');
         this.load.image('RTCorner', 'assets/spritesFondo/Sprites_muros/M_EsqSD.png');
         this.load.image('LBCorner', 'assets/spritesFondo/Sprites_muros/M_EsqII.png');
         this.load.image('RBCorner', 'assets/spritesFondo/Sprites_muros/M_EsqID.png');
 
-        //Bordes
+        // MUROS LATERALES - BORDES
         this.load.image('LBorder', 'assets/spritesFondo/Sprites_muros/M_LatI.png');
         this.load.image('RBorder', 'assets/spritesFondo/Sprites_muros/M_LatD.png');
         this.load.image('TBorder', 'assets/spritesFondo/Sprites_muros/M_Sup.png');
         this.load.image('BBorder', 'assets/spritesFondo/Sprites_muros/M_Inf.png');
 
-        //Columnas
-        //Izquierda
+        // COLUMNAS 
+        // IZQUIERDA
         this.load.image('LColumn1', 'assets/spritesFondo/Sprites_muros/M_LatEsp3.png');
         this.load.image('LColumn2', 'assets/spritesFondo/Sprites_muros/M_LatEsp4.png');
 
-        //Derecha
+        // DERECHA
         this.load.image('RColumn1', 'assets/spritesFondo/Sprites_muros/M_LatEsp1.png');
         this.load.image('RColumn2', 'assets/spritesFondo/Sprites_muros/M_LatEsp2.png');
 
-        //Superior
+        // SUPERIOR
         this.load.image('TColumn1', 'assets/spritesFondo/Sprites_muros/M_EspSup1.png');
         this.load.image('TColumn2', 'assets/spritesFondo/Sprites_muros/M_EspSup2.png');
 
-        //Inferior
+        // INFERIOR
         this.load.image('BColumn1', 'assets/spritesFondo/Sprites_muros/M_EspSup3.png');
         this.load.image('BColumn2', 'assets/spritesFondo/Sprites_muros/M_EspSup4.png');
 
-        //Arbustos irrompibles
-        //this.load.image('Bush1', 'assets/spritesFondo/Sprites_otros/Muro_color002');
+        // ARBUSTOS INROMPIBLES (ARRAY DE TEXTURAS)
         this.load.image('Bush2', 'assets/spritesFondo/Sprites_otros/Muro_color002.png');
         this.load.image('Bush3', 'assets/spritesFondo/Sprites_otros/Muro_color003.png');
         this.load.image('Bush4', 'assets/spritesFondo/Sprites_otros/Muro_color004.png');
@@ -79,123 +86,114 @@ export class GameScene extends Phaser.Scene {
         this.load.image('Bush21', 'assets/spritesFondo/Sprites_otros/Muro_color021.png');
         this.load.image('Bush22', 'assets/spritesFondo/Sprites_otros/Muro_color022.png');
 
-        //Caja destructible
-        this.load.image('Box', 'assets/spritesFondo/Sprites_otros/Caja.png')
+        // CAJA DESTRUCTIBLE
+        this.load.image('Box', 'assets/spritesFondo/Sprites_otros/Caja.png');
 
-
-        //Personajes
-        //Paca
-        //Movimiento
-        //Arriba
+        // PERSONAJES - PACA (SPRITES DE MOVIMIENTO E IDLE)
+        // ARRIBA
         this.load.image('pacaUpMove1', 'assets/personajes/sprites_Paca/PacaColor/walk/Paca_At1.png');
         this.load.image('pacaUpMove2', 'assets/personajes/sprites_Paca/PacaColor/walk/Paca_At2.png');
         this.load.image('pacaUpMove3', 'assets/personajes/sprites_Paca/PacaColor/walk/Paca_At2.png');
 
-        //Abajo
+        // ABAJO
         this.load.image('pacaDownMove1', 'assets/personajes/sprites_Paca/PacaColor/walk/Paca_Arr1.png');
         this.load.image('pacaDownMove2', 'assets/personajes/sprites_Paca/PacaColor/walk/Paca_Arr2.png');
         this.load.image('pacaDownMove3', 'assets/personajes/sprites_Paca/PacaColor/walk/Paca_Arr2.png');
-        
-        //Derecha
+
+        // DERECHA
         this.load.image('pacaRightMove1', 'assets/personajes/sprites_Paca/PacaColor/walk/Paca_Dch1.png');
         this.load.image('pacaRightMove2', 'assets/personajes/sprites_Paca/PacaColor/walk/Paca_Dch2.png');
         this.load.image('pacaRightMove3', 'assets/personajes/sprites_Paca/PacaColor/walk/Paca_Dch3.png');
 
-        //Izquierda
+        // IZQUIERDA
         this.load.image('pacaLeftMove1', 'assets/personajes/sprites_Paca/PacaColor/walk/Paca_Izq1.png');
         this.load.image('pacaLeftMove2', 'assets/personajes/sprites_Paca/PacaColor/walk/Paca_Izq2.png');
         this.load.image('pacaLeftMove3', 'assets/personajes/sprites_Paca/PacaColor/walk/Paca_Izq3.png');
 
-        //Idle
+        // IDLE
         this.load.image('pacaIdle1', 'assets/personajes/sprites_Paca/PacaColor/idle/PacaArrA.png');
         this.load.image('pacaIdle2', 'assets/personajes/sprites_Paca/PacaColor/idle/PacaArrB.png');
-    
 
-        //Acop
-        //Movimiento
-        //Arriba
+        // ACOP (SPRITES)
+        // ARRIBA
         this.load.image('acopUpMove1', 'assets/personajes/sprites_Acop/Gris/walk/atras/acopGrisDerecha.png');
         this.load.image('acopUpMove2', 'assets/personajes/sprites_Acop/Gris/walk/atras/acopGrisMedio.png');
         this.load.image('acopUpMove3', 'assets/personajes/sprites_Acop/Gris/walk/atras/acopGrisIzquierda.png');
 
-        //Abajo
+        // ABAJO
         this.load.image('acopDownMove1', 'assets/personajes/sprites_Acop/Gris/walk/frente/acopGrisDerecha.png');
         this.load.image('acopDownMove2', 'assets/personajes/sprites_Acop/Gris/walk/frente/acopGrisMedio.png');
         this.load.image('acopDownMove3', 'assets/personajes/sprites_Acop/Gris/walk/frente/acopGrisIzquierda.png');
-        
-        //Derecha
+
+        // DERECHA
         this.load.image('acopRightMove1', 'assets/personajes/sprites_Acop/Gris/walk/derecha/acopGrisAndar1.png');
         this.load.image('acopRightMove2', 'assets/personajes/sprites_Acop/Gris/walk/derecha/acopGrisAndarMedio.png');
         this.load.image('acopRightMove3', 'assets/personajes/sprites_Acop/Gris/walk/derecha/acopGrisAndar2.png');
 
-        //Izquierda
+        // IZQUIERDA
         this.load.image('acopLeftMove1', 'assets/personajes/sprites_Acop/Gris/walk/izquierda/acopGrisAndar1.png');
         this.load.image('acopLeftMove2', 'assets/personajes/sprites_Acop/Gris/walk/izquierda/acopGrisAndarMedio.png');
         this.load.image('acopLeftMove3', 'assets/personajes/sprites_Acop/Gris/walk/izquierda/acopGrisAndar2.png');
 
-        //Idle
+        // IDLE
         this.load.image('acopIdle1', 'assets/personajes/sprites_Acop/Gris/idle/frente/acopGrisAbajo.png');
         this.load.image('acopIdle2', 'assets/personajes/sprites_Acop/Gris/idle/frente/acopGrisArriba.png');
-    
-        //Personaje2
-        //Movimiento
-         //Arriba
+
+        // PERSONAJE2 (SPRITES)
+        // ARRIBA
         this.load.image('personaje2UpMove1', 'assets/personajes/sprites_personaje2/Gris/walk/atras/personaje2GrisDerecha.png');
         this.load.image('personaje2UpMove2', 'assets/personajes/sprites_personaje2/Gris/walk/atras/personaje2GrisMedio.png');
         this.load.image('personaje2UpMove3', 'assets/personajes/sprites_personaje2/Gris/walk/atras/personaje2GrisIzquierda.png');
 
-        //Abajo
+        // ABAJO
         this.load.image('personaje2DownMove1', 'assets/personajes/sprites_personaje2/Gris/walk/frente/personaje2GrisDerecha.png');
         this.load.image('personaje2DownMove2', 'assets/personajes/sprites_personaje2/Gris/walk/frente/personaje2GrisMedio.png');
         this.load.image('personaje2DownMove3', 'assets/personajes/sprites_personaje2/Gris/walk/frente/personaje2GrisIzquierda.png');
-        
-        //Derecha
+
+        // DERECHA
         this.load.image('personaje2RightMove1', 'assets/personajes/sprites_personaje2/Gris/walk/derecha/personaje2GrisAndar1.png');
         this.load.image('personaje2RightMove2', 'assets/personajes/sprites_personaje2/Gris/walk/derecha/personaje2GrisAndarMedio.png');
         this.load.image('personaje2RightMove3', 'assets/personajes/sprites_personaje2/Gris/walk/derecha/personaje2GrisAndar2.png');
 
-        //Izquierda
+        // IZQUIERDA
         this.load.image('personaje2LeftMove1', 'assets/personajes/sprites_personaje2/Gris/walk/izquierda/personaje2GrisAndar1.png');
         this.load.image('personaje2LeftMove2', 'assets/personajes/sprites_personaje2/Gris/walk/izquierda/personaje2GrisAndarMedio.png');
         this.load.image('personaje2LeftMove3', 'assets/personajes/sprites_personaje2/Gris/walk/izquierda/personaje2GrisAndar2.png');
 
-        //Idle
+        // IDLE
         this.load.image('personaje2Idle1', 'assets/personajes/sprites_personaje2/Gris/idle/frente/personaje2GrisArriba.png');
         this.load.image('personaje2Idle2', 'assets/personajes/sprites_personaje2/Gris/idle/frente/personaje2GrisAbajo.png');
 
-        //Personaje3
-        //Movimiento
-         //Arriba
+        // PERSONAJE3 (SPRITES)
+        // ARRIBA
         this.load.image('personaje3UpMove1', 'assets/personajes/sprites_personaje3/ChicoColor/Walk/Chico_At1.png');
         this.load.image('personaje3UpMove2', 'assets/personajes/sprites_personaje3/ChicoColor/Walk/Chico_At2.png');
         this.load.image('personaje3UpMove3', 'assets/personajes/sprites_personaje3/ChicoColor/Walk/Chico_At3.png');
 
-        //Abajo
+        // ABAJO
         this.load.image('personaje3DownMove1', 'assets/personajes/sprites_personaje3/ChicoColor/Walk/Chico_Arr1.png');
         this.load.image('personaje3DownMove2', 'assets/personajes/sprites_personaje3/ChicoColor/Walk/Chico_Arr2.png');
         this.load.image('personaje3DownMove3', 'assets/personajes/sprites_personaje3/ChicoColor/Walk/Chico_Arr3.png');
-        
-        //Derecha
+
+        // DERECHA
         this.load.image('personaje3RightMove1', 'assets/personajes/sprites_personaje3/ChicoColor/Walk/Chico_Dch1.png');
         this.load.image('personaje3RightMove2', 'assets/personajes/sprites_personaje3/ChicoColor/Walk/Chico_Dch2.png');
         this.load.image('personaje3RightMove3', 'assets/personajes/sprites_personaje3/ChicoColor/Walk/Chico_Dch3.png');
 
-        //Izquierda
+        // IZQUIERDA
         this.load.image('personaje3LeftMove1', 'assets/personajes/sprites_personaje3/ChicoColor/Walk/Chico_Izq1.png');
         this.load.image('personaje3LeftMove2', 'assets/personajes/sprites_personaje3/ChicoColor/Walk/Chico_Izq2.png');
         this.load.image('personaje3LeftMove3', 'assets/personajes/sprites_personaje3/ChicoColor/Walk/Chico_Izq3.png');
 
-        //Idle
+        // IDLE
         this.load.image('personaje3Idle1', 'assets/personajes/sprites_personaje3/ChicoColor/Idle/ChicoArrA.png');
         this.load.image('personaje3Idle2', 'assets/personajes/sprites_personaje3/ChicoColor/Idle/ChicoArrB.png');
 
-
-        //Bombas
-        //Parpadeo
+        // BOMBAS - PARPADEO
         this.load.image('bomb1', 'assets/bombas/animacion2/animacion1Grande.png');
         this.load.image('bomb2', 'assets/bombas/animacion2/animacion2Grande.png');
 
-        //Explosion
+        // EXPLOSIONES (FRAMES)
         this.load.image('explosion1', 'assets/bombas/explosion/explosion1.png');
         this.load.image('explosion2', 'assets/bombas/explosion/explosion2.png');
         this.load.image('explosion3', 'assets/bombas/explosion/explosion3.png');
@@ -203,7 +201,7 @@ export class GameScene extends Phaser.Scene {
         this.load.image('explosion5', 'assets/bombas/explosion/explosion5.png');
         this.load.image('explosion6', 'assets/bombas/explosion/explosion6.png');
 
-        //Manchas
+        // MANCHAS
         this.load.image('stain1', 'assets/manchas/manchaAmarilla.png');
         this.load.image('decolored_stain1', 'assets/manchas/manchaAmarillaGris.png');
         this.load.image('stain2', 'assets/manchas/manchaNaranja.png');
@@ -211,20 +209,21 @@ export class GameScene extends Phaser.Scene {
         this.load.image('stain3', 'assets/manchas/manchaRoja.png');
         this.load.image('decolored_stain3', 'assets/manchas/manchaRojaGris.png');
 
-        //Corazones
+        // CORAZONES
         this.load.image('heart', 'assets/spriteCorazones/corazonColor.png');
         this.load.image('emptyHeart', 'assets/spriteCorazones/corazonVacio.png');
 
-        //PowerUps
+        // POWERUPS
         this.load.image('boostMoreBombs', 'assets/boost/boostBombas.png');
         this.load.image('boostBiggerExplosion', 'assets/boost/boostExplosionGrande.png');
         this.load.image('boostFasterExplosion', 'assets/boost/boostExploxionRapida.png');
         this.load.image('boostMoreLife', 'assets/boost/boostVida.png');
 
-        //Tutorial
+        // TUTORIAL
         this.load.image('tuto', 'assets/tutorialJuego/tutorialJuegoRelleno.png');
         this.load.image('escTuto',"assets/tutorialJuego/salirTuto.png");
 
+        // SONIDOS DE JUEGO
         this.load.audio('gameMusic', 'assets/efectosDeSonido/musicaGamePlay.mp3');
         this.load.audio('explosion', 'assets/efectosDeSonido/explosion2.mp3');
         this.load.audio('loseLife', 'assets/efectosDeSonido/perderVida.mp3');
@@ -233,61 +232,79 @@ export class GameScene extends Phaser.Scene {
         this.load.audio('powerUp', 'assets/efectosDeSonido/powerUp.mp3');
     }
 
+    // FUNCIÓN QUE SIRVE PARA CREAR OBJETOS DE ESCENA, MÚSICA, MAPA Y JUGADORES
     create() {
+        // CREA Y REPRODUCE MÚSICA DE GAMEPLAY EN LOOP
         this.gameplayMusic = this.sound.add('gameMusic', { loop: true, volume: 0.1 });
         this.gameplayMusic.play();
 
+        // CREA MAP MANAGER Y GENERA MAPA
         this.mapManager = new MapManager(this);
         this.mapManager.createMap();
 
+        // CREA TECLA ESCAPE
         this.escapeKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
 
+        // CREA ANIMACIONES
         this.createAnimations();
+        // CONFIGURA JUGADORES
         this.setUpPlayers();
 
-        this.esctutorial = this.add.image(275,100,'escTuto');
-        this.esctutorial.setScale(0.4);
-        this.esctutorial.setDepth(21);
-        
-        this.tutorial = this.add.image(512,378, 'tuto');
-        this.tutorial.setScale(1.5);
-        this.tutorial.setDepth(20);
+        // AÑADE INDICADORES DE TUTORIAL EN PANTALLA
+        this.esctutorial = this.add.image(275,100,'escTuto'); // ICONO ESC
+        this.esctutorial.setScale(0.4); // ESCALA
+        this.esctutorial.setDepth(21); // DEPTH
 
+        this.tutorial = this.add.image(512,378, 'tuto'); // IMAGEN DE TUTORIAL
+        this.tutorial.setScale(1.5); // ESCALA
+        this.tutorial.setDepth(20); // DEPTH
+
+        // FLAG QUE INDICA SI EL JUEGO HA COMENZADO (TRAS CERRAR EL TUTORIAL)
         this.gameStarted = false;
 
+        // EVENTO AL RESUMIR ESCENA
         this.events.on('resume', () => {
-            this.isPaused = false;
-            this.gameplayMusic.resume();
+            this.isPaused = false;           // RESETEA FLAG PAUSA
+            this.gameplayMusic.resume();     // REANUDA MÚSICA
         });
-        
+
+        // AÑADE COLISIONES ENTRE JUGADORES Y MUROS (EXTERIORES / INTERIORES / DESTRUCTIBLES)
         this.players.forEach(player => {
+            // COLISIÓN CON MUROS EXTERIORES
             this.physics.add.collider(player.sprite, this.mapManager.exteriorWalls);
+            // COLISIÓN CON MUROS INTERIORES
             this.physics.add.collider(player.sprite, this.mapManager.interiorWalls);
+            // COLISIÓN CON CADA MURO DESTRUCTIBLE (SPRITE)
             this.mapManager.destructibleWalls.forEach(wall => {
                 this.physics.add.collider(player.sprite, wall.sprite);
             });
         });
 
+        // UI
+        // TEXTO VIDA JUGADOR 1
         const player1Life = this.add.text(20, 16, 'Vida Jugador 1: ');
-        player1Life.setFontSize('32px');
-        player1Life.setStroke('#000000',3);
-        player1Life.setColor('#ff0000ff');
+        player1Life.setFontSize('32px'); // TAMAÑO TEXTO
+        player1Life.setStroke('#000000',3); // TRAZO
+        player1Life.setColor('#ff0000ff'); // COLOR
 
+        // TEXTO VIDA JUGADOR 2
         const player2Life = this.add.text(532, 16, 'Vida Jugador 2: ');
-        player2Life.setFontSize('32px');
-        player2Life.setStroke('#000000',3);
-        player2Life.setColor('#ff0000ff');
+        player2Life.setFontSize('32px'); // TAMAÑO TEXTO
+        player2Life.setStroke('#000000',3); // TRAZO
+        player2Life.setColor('#ff0000ff'); // COLOR
 
-        //this.physics.world.createDebugGraphic();
-        //this.physics.world.drawDebug = true;
+        // DEBUG UI
+        // this.physics.world.createDebugGraphic();
+        // this.physics.world.drawDebug = true;
     }
 
+    // FUNCIÓN QUE SIRVE PARA CONFIGURAR E INICIALIZAR LOS JUGADORES SEGÚN SELECCIÓN
     setUpPlayers() {
-        // Recuperar personajes seleccionados en CharacterSelectScene
-        const pj1Seleccion = this.registry.get('jugador1'); // ej: 'pacaC'
-        const pj2Seleccion = this.registry.get('jugador2'); // ej: 'acopC'
+        // SE OBTIENEN SELECCIONES PARA CADA JUGADOR
+        const pj1Seleccion = this.registry.get('jugador1'); // EJ: 'pacaC'
+        const pj2Seleccion = this.registry.get('jugador2'); // EJ: 'acopC'
 
-        // Mapeo cabeza -> tipo de personaje y animación idle
+        // MAPEO CABEZA -> TIPO Y IDLE (CONFIGURACIÓN DE PERSONAJES)
         const personajesMap = {
             'pacaC': { tipo: 'paca', idle: 'pacaIdle1' },
             'per3C': { tipo: 'personaje3', idle: 'personaje3Idle1' },
@@ -295,37 +312,53 @@ export class GameScene extends Phaser.Scene {
             'per2C': { tipo: 'personaje2', idle: 'personaje2Idle1' }
         };
 
+        // POSICIONES INICIALES EN EL GRID (CONVERSION A POSICIÓN DEL MUNDO)
         const posP1 = this.mapManager.fromGridToPos(1,1);
         const posP2 = this.mapManager.fromGridToPos(14,10);
 
+        // DATOS SEGÚN MAPEO
         const datosP1 = personajesMap[pj1Seleccion];
         const datosP2 = personajesMap[pj2Seleccion];
 
+        // CREA INSTANCIAS DE PLAYER EN ESCENA
         const jugador1 = new Player(this, 'player1', posP1.x, posP1.y, datosP1.idle, datosP1.tipo);
         const jugador2 = new Player(this, 'player2', posP2.x, posP2.y, datosP2.idle, datosP2.tipo);
 
+        // AÑADE JUGADORES AL MAPA
         this.players.set('player1', jugador1);
         this.players.set('player2', jugador2);
 
-        // Configuración de controles
+        // CONFIGURACIÓN DE CONTROLES
         const InputConfig = [
             {
+                // ID
                 playerId: 'player1',
+
+                // MOVIMIENTO
                 upKey : 'W',
                 downKey : 'S',
                 leftKey: 'A',
                 rightKey: 'D',
+
+                // BOMBA
                 bombKey: 'SPACE'
             },
             {
+                // ID
                 playerId: 'player2',
+
+                // MOVIMIENTO
                 upKey : 'UP',
                 downKey : 'DOWN',
                 leftKey: 'LEFT',
                 rightKey: 'RIGHT',
+
+                // BOMBA
                 bombKey: 'ENTER'
             }
         ];
+
+        // SE CREAN OBJETOS PARA LOS EVENTOS DE TECLADO
         this.inputMappings = InputConfig.map(config => {
             return {
                 playerId : config.playerId,
@@ -338,38 +371,43 @@ export class GameScene extends Phaser.Scene {
         });
     }
 
+    // FUNCIÓN QUE SIRVE PARA ACTUALIZAR EL ESTADO DEL JUEGO CADA FRAME
     update() {
-
+        // ESCAPE: PAUSA O INICIA JUEGO SEGÚN ESTADO
         if (Phaser.Input.Keyboard.JustDown(this.escapeKey)) {
+            // SI NO ESTÁ PAUSADO Y EL JUEGO YA SE INICIÓ
             if (!this.isPaused && this.gameStarted) {
-                this.scene.launch('MenuPause');
-                this.scene.pause();
-                this.isPaused = true;
-                this.gameplayMusic.pause();
+                this.scene.launch('MenuPause'); // LANZA ESCENA PAUSA
+                this.scene.pause();             // PAUSA ESCENA ACTUAL
+                this.isPaused = true;           // MARCA PAUSA
+                this.gameplayMusic.pause();     // PAUSA MÚSICA
             }
 
+            // SI EL JUEGO NO HABÍA COMENZADO, CIERRA TUTORIAL Y MARCA START
             if(!this.gameStarted){
-                this.tutorial.destroy();
-                this.esctutorial.destroy();
-                this.gameStarted = true;
+                this.tutorial.destroy(); // ELIMINA IMAGEN TUTORIAL
+                this.esctutorial.destroy(); // ELIMINA ICONO ESC
+                this.gameStarted = true; // MARCA QUE HA EMPEZADO JUEGO
             }
         }
 
-
+        // SI EL JUEGO ESTÁ INICIADO, PROCESA CONTROLES DE CADA JUGADOR
         if(this.gameStarted){
             this.inputMappings.forEach(mapping => {
+                // SE OBTIENE LA INSTANCIA DEL JUGADOR SEGÚN MAPPING
                 const player = this.players.get(mapping.playerId);
                 if (player) {
+                    // SE EJECUTA LA LÓGICA DE CONTROLES DEL JUGADOR (MOVIMIENTO, BOMBAS)
                     player.controls(mapping);
                 }
             });
         }
-
     }
 
+    // FUNCIÓN QUE SIRVE PARA CREAR TODAS LAS ANIMACIONES DE PERSONAJES Y BOMBAS
     createAnimations(){
 
-        //Paca
+        // PACA - ARRIBA
         this.anims.create({
             key: 'paca_walk_up',
             frames: [
@@ -377,13 +415,14 @@ export class GameScene extends Phaser.Scene {
                 { key: 'pacaUpMove2' },
                 { key: 'pacaUpMove3' }
             ],
-            frameRate: 8,
-            repeat: -1
+            frameRate: 8, // FRAME RATE
+            repeat: -1    // LOOP INFINITO
         });
 
+        // PACA - ABAJO
         this.anims.create({
             key: 'paca_walk_down',
-                frames: [
+            frames: [
                 { key: 'pacaDownMove1' },
                 { key: 'pacaDownMove2' },
                 { key: 'pacaDownMove3' }
@@ -392,6 +431,7 @@ export class GameScene extends Phaser.Scene {
             repeat: -1
         });
 
+        // PACA - DERECHA
         this.anims.create({
             key: 'paca_walk_right',
             frames: [
@@ -403,6 +443,7 @@ export class GameScene extends Phaser.Scene {
             repeat: -1
         });
 
+        // PACA - IZQUIERDA
         this.anims.create({
             key: 'paca_walk_left',
             frames: [
@@ -414,6 +455,7 @@ export class GameScene extends Phaser.Scene {
             repeat: -1
         });
 
+        // PACA - IDLE
         this.anims.create({
             key: 'paca_idle',
             frames: [
@@ -424,9 +466,7 @@ export class GameScene extends Phaser.Scene {
             repeat: -1
         });
 
-
-        //Acop
-
+        // ACOP - ARRIBA
         this.anims.create({
             key: 'acop_walk_up',
             frames: [
@@ -438,9 +478,10 @@ export class GameScene extends Phaser.Scene {
             repeat: -1
         });
 
+        // ACOP - ABAJO
         this.anims.create({
             key: 'acop_walk_down',
-                frames: [
+            frames: [
                 { key: 'acopDownMove1' },
                 { key: 'acopDownMove2' },
                 { key: 'acopDownMove3' }
@@ -449,6 +490,7 @@ export class GameScene extends Phaser.Scene {
             repeat: -1
         });
 
+        // ACOP - DERECHA
         this.anims.create({
             key: 'acop_walk_right',
             frames: [
@@ -460,6 +502,7 @@ export class GameScene extends Phaser.Scene {
             repeat: -1
         });
 
+        // ACOP - IZQUIERDA
         this.anims.create({
             key: 'acop_walk_left',
             frames: [
@@ -471,6 +514,7 @@ export class GameScene extends Phaser.Scene {
             repeat: -1
         });
 
+        // ACOP - IDLE
         this.anims.create({
             key: 'acop_idle',
             frames: [
@@ -481,8 +525,7 @@ export class GameScene extends Phaser.Scene {
             repeat: -1
         });
 
-        //Personaje 2
-
+        // PERSONAJE 2 - ARRIBA
         this.anims.create({
             key: 'personaje2_walk_up',
             frames: [
@@ -494,9 +537,10 @@ export class GameScene extends Phaser.Scene {
             repeat: -1
         });
 
+        // PERSONAJE 2 - ABAJO
         this.anims.create({
             key: 'personaje2_walk_down',
-                frames: [
+            frames: [
                 { key: 'personaje2DownMove1' },
                 { key: 'personaje2DownMove2' },
                 { key: 'personaje2DownMove3' }
@@ -505,6 +549,7 @@ export class GameScene extends Phaser.Scene {
             repeat: -1
         });
 
+        // PERSONAJE 2 - DERECHA
         this.anims.create({
             key: 'personaje2_walk_right',
             frames: [
@@ -516,6 +561,7 @@ export class GameScene extends Phaser.Scene {
             repeat: -1
         });
 
+        // PERSONAJE 2 - IZQUIERDA
         this.anims.create({
             key: 'personaje2_walk_left',
             frames: [
@@ -527,6 +573,7 @@ export class GameScene extends Phaser.Scene {
             repeat: -1
         });
 
+        // PERSONAJE 2 - IDLE
         this.anims.create({
             key: 'personaje2_idle',
             frames: [
@@ -537,8 +584,7 @@ export class GameScene extends Phaser.Scene {
             repeat: -1
         });
 
-        //Personaje 3
-
+        // PERSONAJE 3 - ARRIBA
         this.anims.create({
             key: 'personaje3_walk_up',
             frames: [
@@ -550,9 +596,10 @@ export class GameScene extends Phaser.Scene {
             repeat: -1
         });
 
+        // PERSONAJE 3 - ABAJO
         this.anims.create({
             key: 'personaje3_walk_down',
-                frames: [
+            frames: [
                 { key: 'personaje3DownMove1' },
                 { key: 'personaje3DownMove2' },
                 { key: 'personaje3DownMove3' }
@@ -561,6 +608,7 @@ export class GameScene extends Phaser.Scene {
             repeat: -1
         });
 
+        // PERSONAJE 3 - DERECHA
         this.anims.create({
             key: 'personaje3_walk_right',
             frames: [
@@ -572,6 +620,7 @@ export class GameScene extends Phaser.Scene {
             repeat: -1
         });
 
+        // PERSONAJE 3 - IZQUIERDA
         this.anims.create({
             key: 'personaje3_walk_left',
             frames: [
@@ -583,6 +632,7 @@ export class GameScene extends Phaser.Scene {
             repeat: -1
         });
 
+        // PERSONAJE 3 - IDLE
         this.anims.create({
             key: 'personaje3_idle',
             frames: [
@@ -592,10 +642,8 @@ export class GameScene extends Phaser.Scene {
             frameRate: 4,
             repeat: -1
         });
-    
 
-
-        //Bombas
+        // BOMBAS - ANIMACIÓN PREPARACIÓN (PARPADEO)
         this.anims.create({
             key: 'prepBomb',
             frames: [
@@ -606,6 +654,7 @@ export class GameScene extends Phaser.Scene {
             repeat: -1
         });
 
+        // BOMBAS - ANIMACIÓN EXPLOSIÓN (SE EJECUTA UNA VEZ Y SE OCULTA AL COMPLETAR)
         this.anims.create({
             key: 'explosionBomb',
             frames: [
@@ -618,10 +667,7 @@ export class GameScene extends Phaser.Scene {
             ],
             frameRate: 12,
             repeat: 0,
-            hideOnComplete: true
+            hideOnComplete: true // SE OCULTA EL SPRITE AL COMPLETAR ANIMACIÓN
         });
     }
-    
-
-    
 }

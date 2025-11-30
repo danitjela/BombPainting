@@ -1,122 +1,160 @@
+// SE IMPORTA PHASER
 import Phaser from 'phaser';
 
-
+// CLASE QUE SIRVE PARA GESTIONAR LA PANTALLA PRINCIPAL DEL MENÚ
 export class MenuScene extends Phaser.Scene {
+    // FUNCIÓN QUE SIRVE PARA CONSTRUIR LA ESCENA DEL MENÚ
     constructor() {
-        super('MenuScene');
+        super('MenuScene'); // CREA NOMBRE DE LA ESCENA
     }
 
+    // FUNCIÓN QUE SIRVE PARA CARGAR RECURSOS (IMÁGENES Y SONIDOS)
     preload(){
-        this.load.image('wallpaper', 'assets/fondoInicio.png') //Imagen fondo del menú de inicio
-        
-        this.load.image('gameTitle', 'assets/spritesInterfaz/tituloJuego.png') //Imagen título
+        // CARGA IMAGEN DE FONDO DEL MENÚ INICIAL
+        this.load.image('wallpaper', 'assets/fondoInicio.png');
 
-        this.load.image('offline', 'assets/spritesInterfaz/botonOffline.png') //Imagen botón jugar offline
-        this.load.image('offlineHover', 'assets/spritesInterfaz/botonOfflineAbierto.png') //Imagen botón jugar offline hover
+        // CARGA IMAGEN DEL TÍTULO DEL JUEGO
+        this.load.image('gameTitle', 'assets/spritesInterfaz/tituloJuego.png');
 
-        this.load.image('online', 'assets/spritesInterfaz/botonOnline.png') //Imagen botón jugar online
-        this.load.image('onlineHover', 'assets/spritesInterfaz/botonOnlineAbierto.png') //Imagen botón jugar online hover
+        // CARGA IMAGEN BOTÓN JUGAR OFFLINE (NORMAL)
+        this.load.image('offline', 'assets/spritesInterfaz/botonOffline.png');
+        // CARGA IMAGEN BOTÓN JUGAR OFFLINE (HOVER)
+        this.load.image('offlineHover', 'assets/spritesInterfaz/botonOfflineAbierto.png');
 
-        this.load.image('credits', 'assets/spritesInterfaz/botonCreditos.png') //Imagen botón créditos
-        this.load.image('creditsHover', 'assets/spritesInterfaz/botonCreditosAbierto.png') //Imagen botón créditos hover
+        // CARGA IMAGEN BOTÓN JUGAR ONLINE (NORMAL)
+        this.load.image('online', 'assets/spritesInterfaz/botonOnline.png');
+        // CARGA IMAGEN BOTÓN JUGAR ONLINE (HOVER)
+        this.load.image('onlineHover', 'assets/spritesInterfaz/botonOnlineAbierto.png');
 
-        this.load.image('exit', 'assets/spritesInterfaz/botonSalir.png') //Imagen botón salir
-        this.load.image('exitHover', 'assets/spritesInterfaz/botonSalirAbierto.png') //Imagen botón salir hover
+        // CARGA IMAGEN BOTÓN CRÉDITOS (NORMAL)
+        this.load.image('credits', 'assets/spritesInterfaz/botonCreditos.png');
+        // CARGA IMAGEN BOTÓN CRÉDITOS (HOVER)
+        this.load.image('creditsHover', 'assets/spritesInterfaz/botonCreditosAbierto.png');
 
-        this.load.image('comicButton', 'assets/botonComic/comicLibroCerrado.png') //Imagen botón comic 
-        this.load.image('comicButtonHover', 'assets/botonComic/comicLibroAbierto.png') //Imagen botón comic hover
+        // CARGA IMAGEN BOTÓN SALIR (NORMAL)
+        this.load.image('exit', 'assets/spritesInterfaz/botonSalir.png');
+        // CARGA IMAGEN BOTÓN SALIR (HOVER)
+        this.load.image('exitHover', 'assets/spritesInterfaz/botonSalirAbierto.png');
 
+        // CARGA IMAGEN BOTÓN CÓMIC (NORMAL)
+        this.load.image('comicButton', 'assets/botonComic/comicLibroCerrado.png');
+        // CARGA IMAGEN BOTÓN CÓMIC (HOVER)
+        this.load.image('comicButtonHover', 'assets/botonComic/comicLibroAbierto.png');
+
+        // CARGA MÚSICA DEL MENÚ
         this.load.audio('menuMusic', 'assets/efectosDeSonido/musicaMenu.mp3');
+        // CARGA EFECTOS DE SONIDO PARA BOTONES
         this.load.audio('button', 'assets/efectosDeSonido/boton.mp3');
         this.load.audio('buttonClick', 'assets/efectosDeSonido/botonClick.mp3');
     }
 
+    // FUNCIÓN QUE SIRVE PARA CREAR ELEMENTOS VISUALES Y ASIGNAR INTERACCIONES
     create() {
+        // REPRODUCCIÓN CONDICIONAL DE LA MÚSICA PRINCIPAL (EVITA DUPLICARLA)
         if (!this.sound.get('menuMusic')) {
+            // CREA AUDIO PRINCIPAL, CONFIGURA BUCLE Y VOLUMEN
             this.mainTheme = this.sound.add('menuMusic', { loop: true, volume: 0.4 });
+            // REPRODUCE LA MÚSICA DEL MENÚ
             this.mainTheme.play();
         }
 
-        let wallpaper = this.add.image(512, 384, 'wallpaper'); //Cargar imagen del fondo
-        wallpaper.setScale(2.0);
+        // CREA IMAGEN DE FONDO Y LA ESCALA
+        let wallpaper = this.add.image(512, 384, 'wallpaper'); // IMAGEN FONDO
+        wallpaper.setScale(2.0); // ESCALA A 2.0
 
-        this.add.image(540, 384, 'gameTitle'); //Cargar imagen título
+        // AÑADE IMAGEN DEL TÍTULO DEL JUEGO
+        this.add.image(540, 384, 'gameTitle'); // IMAGEN TÍTULO
 
-        // Botón del cómic (arriba derecha)
+        // CREA BOTÓN DEL CÓMIC (ARRIBA DERECHA) COMO IMAGEN INTERACTIVA
         const comicBtn = this.add.image(this.scale.width - 50, 50, 'comicButton')
-            .setInteractive({ useHandCursor: true })
-            .setScale(0.5); 
+            .setInteractive({ useHandCursor: true }) // HABILITA CURSOR MANO
+            .setScale(0.5); // ESCALA DEL BOTÓN
 
+        // HOVER EN BOTÓN CÓMIC: CAMBIA TEXTURA Y REPRODUCE EFECTO
         comicBtn.on('pointerover', () => {
-            comicBtn.setTexture('comicButtonHover');
-            this.sound.play('button');
+            comicBtn.setTexture('comicButtonHover'); // TEXTURA HOVER
+            this.sound.play('button'); // SONIDO HOVER
         });
+        // POINTER OUT EN BOTÓN CÓMIC: RESTAURA TEXTURA
         comicBtn.on('pointerout', () => {
-            comicBtn.setTexture('comicButton');
+            comicBtn.setTexture('comicButton'); // RESTAURA TEXTURA
         });
+        // POINTER DOWN EN BOTÓN CÓMIC: INICIA/REINICIA ESCENA DEL CÓMIC
         comicBtn.on('pointerdown', () => {
-            this.sound.play('buttonClick', {volume:0.5});
-            this.scene.stop('ComicScene');   // asegurarte de parar cualquier instancia anterior
-            this.scene.start('ComicScene');  // iniciar una nueva desde cero
+            this.sound.play('buttonClick', {volume:0.5}); // SONIDO CLICK
+            this.scene.stop('ComicScene');   // DETIENE CUALQUIER INSTANCIA ANTERIOR
+            this.scene.start('ComicScene');  // INICIA ESCENA CÓMIC
         });
 
-        //Boton jugar modo offline
+        // CREA BOTÓN JUGAR MODO OFFLINE
         const offlineBtn = this.add.image(512, 300, 'offline').setInteractive({ useHandCursor: true });
+        // HOVER OFFLINE: CAMBIA TEXTURA Y REPRODUCE SONIDO
         offlineBtn.on('pointerover', () => {
-            offlineBtn.setTexture('offlineHover');
-            this.sound.play('button');
+            offlineBtn.setTexture('offlineHover'); // TEXTURA HOVER
+            this.sound.play('button'); // SONIDO HOVER
         })
+        // POINTER OUT OFFLINE: RESTAURA TEXTURA
         offlineBtn.on('pointerout', () => {
-            offlineBtn.setTexture('offline');
+            offlineBtn.setTexture('offline'); // RESTAURA TEXTURA
         })
+        // CLICK OFFLINE: INICIA SELECCIÓN DE PERSONAJE
         offlineBtn.on('pointerdown', () => {
-            console.log('Game Init');
-            this.sound.play('buttonClick', {volume:0.5});
-            this.scene.start('CharacterSelectScene');
+            console.log('Game Init'); // LOG DEPURACIÓN
+            this.sound.play('buttonClick', {volume:0.5}); // SONIDO CLICK
+            this.scene.start('CharacterSelectScene'); // INICIA ESCENA DE SELECCIÓN
         })
 
-        //Botón jugar modo online
+        // CREA BOTÓN JUGAR MODO ONLINE
         const onlineBtn = this.add.image(512, 420, 'online').setInteractive({ useHandCursor: true });
+        // HOVER ONLINE: CAMBIA TEXTURA Y REPRODUCE SONIDO
         onlineBtn.on('pointerover', () => {
-            onlineBtn.setTexture('onlineHover');
-            this.sound.play('button');
+            onlineBtn.setTexture('onlineHover'); // TEXTURA HOVER
+            this.sound.play('button'); // SONIDO HOVER
         })
+        // POINTER OUT ONLINE: RESTAURA TEXTURA
         onlineBtn.on('pointerout', () => {
-            onlineBtn.setTexture('online');
+            onlineBtn.setTexture('online'); // RESTAURA TEXTURA
         })
+        // CLICK ONLINE: MENSAJE DE NO DISPONIBLE (POR AHORA)
         onlineBtn.on('pointerdown', () => {
-            this.sound.play('buttonClick', {volume:0.5});
-            console.log('No disponible');
+            this.sound.play('buttonClick', {volume:0.5}); // SONIDO CLICK
+            console.log('No disponible'); // LOG INDICANDO ESTADO
         })
 
-        //Botón créditos
+        // CREA BOTÓN CRÉDITOS
         const creditsBtn = this.add.image(512, 540, 'credits').setInteractive({ useHandCursor: true });
+        // HOVER CRÉDITOS: CAMBIA TEXTURA Y REPRODUCE SONIDO
         creditsBtn.on('pointerover', () => {
-            creditsBtn.setTexture('creditsHover');
-            this.sound.play('button');
+            creditsBtn.setTexture('creditsHover'); // TEXTURA HOVER
+            this.sound.play('button'); // SONIDO HOVER
         })
+        // POINTER OUT CRÉDITOS: RESTAURA TEXTURA
         creditsBtn.on('pointerout', () => {
-            creditsBtn.setTexture('credits');
+            creditsBtn.setTexture('credits'); // RESTAURA TEXTURA
         })
+        // CLICK CRÉDITOS: INICIA ESCENA DE CRÉDITOS
         creditsBtn.on('pointerdown', () => {
-            console.log('Credits Menu');
-            this.sound.play('buttonClick', {volume:0.5});
-            this.scene.start('MenuCredits');
+            console.log('Credits Menu'); // LOG DEPURACIÓN
+            this.sound.play('buttonClick', {volume:0.5}); // SONIDO CLICK
+            this.scene.start('MenuCredits'); // INICIA ESCENA CRÉDITOS
         })
 
-        //Botón salir del juego
-        const exitBtm = this.add.image(512, 660, 'exit').setInteractive({ useHandCursor: true });;
+        // CREA BOTÓN SALIR DEL JUEGO
+        const exitBtm = this.add.image(512, 660, 'exit').setInteractive({ useHandCursor: true }); // IMAGEN SALIR
+        // HOVER SALIR: CAMBIA TEXTURA Y REPRODUCE SONIDO
         exitBtm.on('pointerover', () => {
-            exitBtm.setTexture('exitHover');
-            this.sound.play('button');
+            exitBtm.setTexture('exitHover'); // TEXTURA HOVER
+            this.sound.play('button'); // SONIDO HOVER
         })
+        // POINTER OUT SALIR: RESTAURA TEXTURA
         exitBtm.on('pointerout', () => {
-            exitBtm.setTexture('exit');
+            exitBtm.setTexture('exit'); // RESTAURA TEXTURA
         })
+        // CLICK SALIR: DESTRUYE EL JUEGO COMPLETAMENTE
         exitBtm.on('pointerdown', () => {
-            console.log('Exit game');
-            this.sound.play('buttonClick', {volume:0.5});
-            this.game.destroy(true);
+            console.log('Exit game'); // LOG DEPURACIÓN
+            this.sound.play('buttonClick', {volume:0.5}); // SONIDO CLICK
+            this.game.destroy(true); // DESTRUYE INSTANCIA DEL JUEGO
         })
     }
 }

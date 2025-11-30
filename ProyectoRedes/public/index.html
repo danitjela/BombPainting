@@ -1,28 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BombPainting</title>
+  <!-- DOCTYPE Y LENGUAJE DEL DOCUMENTO -->
+  <meta charset="UTF-8"> <!-- SOPORTE DE TILDES -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- ADAPTA A PANTALLAS MÓVILES -->
+  <title>BombPainting</title> <!-- TÍTULO DE LA PÁGINA -->
+
   <style>
+    /* ESTILO GLOBAL DEL BODY */
     body {
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      background-color: #0f0f1e;
-      font-family: Arial, sans-serif;
+      margin: 0;                     /* RESETEA MÁRGENES POR DEFECTO */
+      padding: 0;                    /* RESETEA PADDING POR DEFECTO */
+      display: flex;                 /* ESTILO: DISEÑO FLEX PARA CENTRAR */
+      justify-content: center;       /* CENTRA HORIZONTALMENTE */
+      align-items: center;           /* CENTRA VERTICALMENTE */
+      min-height: 100vh;             /* ESTILO: ALTURA MÍNIMA = ALTO DE PANTALLA */
+      background-color: #0f0f1e;     /* ESTILO: COLOR DE FONDO OSCURO */
+      font-family: Arial, sans-serif;/* ESTILO: TIPOGRAFÍA */
     }
+
+    /* ESTILO DEL CONTENEDOR DEL JUEGO */
     #game-container {
-      box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.3); /* ESTILO: SOMBRA NEÓN */
     }
   </style>
 </head>
 <body>
+  <!-- CONTENEDOR DONDE SE MONTA EL JUEGO (PHASER) -->
   <div id="game-container"></div>
+
+  <!-- LIBRERÍA PHASER 3 (CDN) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.70.0/phaser.min.js"></script>
+
+  <!-- BUNDLE DEL JUEGO (CONTIENE LA LÓGICA/ESCENAS, BUILD LOCAL) -->
   <script src="bundle.js"></script>
 </body>
 </html>

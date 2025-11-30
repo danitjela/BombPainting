@@ -369,6 +369,18 @@ export class GameScene extends Phaser.Scene {
                 bombKeyObj: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes[config.bombKey]),
             }
         });
+        // EVENTO DE PHASER PARA PARAR LA MÚSICA DEL JUEGO SI LA PERSONA SE SALE DE LA ESCENA GAMESCENE
+        this.events.on('shutdown', () => {
+             if (this.gameplayMusic) {
+             this.gameplayMusic.stop(); // SE DETIENE LA MÚSICA
+        }
+});
+
+ 
+
+
+
+
     }
 
     // FUNCIÓN QUE SIRVE PARA ACTUALIZAR EL ESTADO DEL JUEGO CADA FRAME

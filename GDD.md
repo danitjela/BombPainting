@@ -138,7 +138,7 @@ Cuando una bomba explote, el terreno donde ha tenido lugar esa explosión tomar�
 
 <img src = "Bocetos/diagramaFlujo.png" width="800">
 
-Cuando se inicie el juego se verá el menú principal, desde el que se podrá acceder a otro menú para elegir el modo de juego, o si no, se podrá acceder a los créditos o salir. Si accedes a la interfaz de elección de modo de juego, luego se puede ir hasta la pantalla de elección de personaje. Si entras en partida, lo siguiente será la victoria de uno de los dos jugadores. Desde la victoria, se podrá volver a empezar otra partida, o volver al menú principal.
+Cuando se inicie el juego se verá el cómic y de ahí se pasará al menú de inicio, desde el que se podrá acceder a la partida en local, online, a los créditos, salir o volver a ver el cómic. Si se accede a la partida local, saldrá la elección de personajes, cuando los dos jugadores acepten, empezará la partida. Si entras en partida, lo siguiente será la victoria de uno de los dos jugadores. Además, se puede acceder al menú de pausa donde se puede volver al menú de inicio. Desde la victoria, únicamente se podrá volver al menú principal.
 
 ### Estilo visual
 
@@ -160,7 +160,7 @@ Durante las partidas habrá música de tensión. Mientras se encuentren en el me
 
 ### Efectos sonoros
 
-Los efectos sonoros tendrán lugar al explotar una bomba, romper un ladrillo, al coger una mejora, cuando un jugador pierda una vida, cuando un jugador gane y cuando se interactúe con los botones del menú.
+Los efectos sonoros tendrán lugar al poner una bomba, al explotar la bomba, al coger una mejora, cuando un jugador pierda una vida y cuando se interactúe con los botones del menú.
 
 ## 5. Jugabilidad
 
@@ -170,18 +170,18 @@ El objetivo del juego es eliminar al otro jugador mediante las bombas. Serán pa
 
 ### Controles
 
-Los controles son “W”, “A”, “S”, “D” para el movimiento del primer jugador, las flechas para el movimiento del segundo jugador, y en cuanto al posicionamiento de las bombas, el jugador 1 utilizará el “espacio”, y el jugador 2 el “0” del teclado numérico.
+Los controles son “W”, “A”, “S”, “D” para el movimiento del primer jugador, las flechas para el movimiento del segundo jugador, y en cuanto al posicionamiento de las bombas, el jugador 1 utilizará el “espacio”, y el jugador 2 el “enter”.
 
 ### Mecánicas
 
-La mecánica principal, será poner bombas. Mediante esas bombas, se puede destruir el terreno, o dañar al otro jugador. El jugador también se dañará a sí mismo si le golpea su propia bomba. Los jugadores tendrán 3 vidas, cada vez que se dañen, ganarán o perderán color, dependiendo del personaje que haya recibido el daño. Cuando se destruye el terreno, hay una probabilidad de que aparezca una mejora. Las mejoras son las siguientes:
+La mecánica principal, será poner bombas. Mediante esas bombas, se puede destruir el terreno, o dañar al otro jugador. El jugador también se dañará a sí mismo si le golpea su propia bomba. Los jugadores tendrán 3 vidas. Cuando se destruye el terreno, hay una probabilidad de que aparezca una mejora. Las mejoras son las siguientes:
 
 * Bombas con mayor alcance.  
 * Mayor cantidad de bombas puestas a la vez, de normal solo se podrá poner una.  
 * Explosión más rápida de las bombas.  
 * Vida máxima aumentada.
 
-Las bombas explotarán en forma de cruz e irán pintarán el suelo de color, de esta forma, habrá cambios visuales en el mapa, tanto por la destrucción del terreno, como por el cambio de color de este. 
+Las bombas explotarán en forma de cruz y pintarán el suelo dependiendo de que jugador pone la bomba, de esta forma, habrá cambios visuales en el mapa, tanto por la destrucción del terreno, como por el cambio de color de este. 
 
 ### Físicas
 
@@ -189,7 +189,7 @@ El jugador no podrá atravesar los bloques del mapa, aunque algunos de ellos pod
 
 ### Escenario
 
-El escenario será un cuadrado donde habrá bloques, algunos de ellos destruibles, que separen a los jugadores. Cada uno empezará en una esquina y se deberán encontrar para poder eliminarse. Al comenzar el nivel, el escenario estará en colores grisáceos y con el efecto de las explosiones cambiará a colores brillantes. 
+El escenario será un cuadrado donde habrá bloques, algunos de ellos destruibles, que separen a los jugadores. Cada uno empezará en una esquina y se deberán encontrar para poder eliminarse.
 
 ## 6. Narrativa
 

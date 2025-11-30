@@ -223,6 +223,7 @@ export class GameScene extends Phaser.Scene {
 
         //Tutorial
         this.load.image('tuto', 'assets/tutorialJuego/tutorialJuegoRelleno.png');
+        this.load.image('escTuto',"assets/tutorialJuego/salirTuto.png");
 
         this.load.audio('gameMusic', 'assets/efectosDeSonido/musicaGamePlay.mp3');
         this.load.audio('explosion', 'assets/efectosDeSonido/explosion2.mp3');
@@ -244,6 +245,10 @@ export class GameScene extends Phaser.Scene {
         this.createAnimations();
         this.setUpPlayers();
 
+        this.esctutorial = this.add.image(275,100,'escTuto');
+        this.esctutorial.setScale(0.4);
+        this.esctutorial.setDepth(21);
+        
         this.tutorial = this.add.image(512,378, 'tuto');
         this.tutorial.setScale(1.5);
         this.tutorial.setDepth(20);
@@ -345,6 +350,7 @@ export class GameScene extends Phaser.Scene {
 
             if(!this.gameStarted){
                 this.tutorial.destroy();
+                this.esctutorial.destroy();
                 this.gameStarted = true;
             }
         }

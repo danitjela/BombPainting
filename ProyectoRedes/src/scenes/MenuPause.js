@@ -8,8 +8,8 @@ export class MenuPause extends Phaser.Scene {
     }
 
     preload(){
-        this.load.image('background', 'assets/MenuPausa/ManchaPausa.png');
-        this.load.image('title', 'assets/MenuPausa/letrasPausa.png');
+        this.load.image('backgroundp', 'assets/MenuPausa/ManchaPausa.png');
+        this.load.image('titlep', 'assets/MenuPausa/letrasPausa.png');
 
         this.load.image('resumeBtn', 'assets/MenuPausa/botonContinuarSinPulsar.png');
         this.load.image('resumeBtnHover', 'assets/MenuPausa/botonContinuarPulsado.png');
@@ -27,8 +27,8 @@ export class MenuPause extends Phaser.Scene {
         this.mainTheme = this.sound.add('menuMusic', { loop: true, volume: 0.4 });
         this.mainTheme.play();
 
-        this.add.image(512, 378, 'background');
-        this.add.image(512, 400, 'title');
+        this.add.image(512, 378, 'backgroundp');
+        this.add.image(512, 400, 'titlep');
 
         const resumeBtn = this.add.image(512, 400, 'resumeBtn').setInteractive({ useHandCursor: true });
         resumeBtn.on('pointerover', () => {

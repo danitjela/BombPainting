@@ -19,6 +19,9 @@ export class Player2VictoryScene extends Phaser.Scene {
         // CARGA BOTÓN VOLVER GRIS (HOVER)
         this.load.image('backHover2', 'assets/letrasVictoria/botonVolverAbiertoGris.png');
 
+        //CARGA DEL BOCADILLO DE TEXTO DE ACOP
+        this.load.image('bocAcop','assets/letrasVictoria/bocadilloAcop.png');
+
         // CARGA FRAMES ANIMACIÓN ACOP
         this.load.image('acopWin1','assets/personajes/sprites_Acop/Win/Acop_win1.png');
         this.load.image('acopWin2','assets/personajes/sprites_Acop/Win/Acop_win2.png');
@@ -82,6 +85,11 @@ export class Player2VictoryScene extends Phaser.Scene {
         this.personaje3Sprite.play('personaje2_win'); // REPRODUCE ANIMACIÓN CHICA
         this.personaje3Sprite.setScale(2.5); // ESCALA SPRITE CHICA
 
+        //SE CREA EL SPRITE DEL BOCADILLO DE TEXTO
+        const bocadillo = this.add.image(150, 510, 'bocAcop');
+        bocadillo.setScale(0.5);
+
+        
         // SE CREA EL BOTÓN DE VOLVER
         const backButton = this.add.image(512, 470, 'back2').setInteractive({ useHandCursor: true }); // IMAGEN BOTÓN
         backButton.setScale(1.5); // ESCALA BOTÓN
@@ -94,7 +102,7 @@ export class Player2VictoryScene extends Phaser.Scene {
         })
         // POINTER OUT EN BOTÓN VOLVER: RESTAURA TEXTURA
         backButton.on('pointerout', () => {
-            backButton.setTexture('back'); // RESTAURA TEXTURA (NOTA: RESTAURA 'back' EN LUGAR DE 'back2')
+            backButton.setTexture('back2'); // RESTAURA TEXTURA
         })
         // CLICK EN BOTÓN VOLVER: REPRODUCE CLICK Y VUELVE AL MENÚ PRINCIPAL
         backButton.on('pointerdown', () => {

@@ -35,7 +35,7 @@ Arcade, social, estrategia
 	- Victoria del personaje 1.
 	- Victoria del personaje 2.
  
- - Mecánicas principales:
+- Mecánicas principales:
   	- Movimiento en cuatro direcciones.
 	- Colocación de bombas con temporizador.
 	- Explosiones en cruz.

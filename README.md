@@ -48,6 +48,6 @@ Arcade, social, estrategia
 
 [GDD](GDD.md)
 
-## Enlace al repositiorio de GitHub
+## Enlace al repositorio de GitHub
 
 [BombPainting](https://github.com/danitjela/BombPainting)

@@ -2,28 +2,49 @@
 
 **BombPainting**
 
-## Tem·tica 
+## Tem√°tica 
 
 Arcade, social, estrategia
 ## Grupo 2
 ### Integrantes del grupo:
-1. **Ester DÌaz Monzonis**. 
+1. **Ester D√≠az Monzonis**. 
 	- Correo universidad: [e.diazm.2023@alumnos.urjc.es](mailto:e.diazm.2023@alumnos.urjc.es)
 	- **Cuenta Github:** aester22
-2. **Aroa Quiroga MartÌnez**.			 
+2. **Aroa Quiroga Mart√≠nez**.			 
 	- Correo universidad: [a.quiroga.2023@alumnos.urjc.es](mailto:a.quiroga.2023@alumnos.urjc.es)
 	- **Cuenta Github:** aroa181
-3. **Sandra S·ez PiÒa**. 
+3. **Sandra S√°ez Pi√±a**. 
 	- Correo universidad: [s.saezp.2023@alumnos.urjc.es](mailto:s.saezp.2023@alumnos.urjc.es)
 	- **Cuenta Github:** SpolakK
-4. **Daniela Tocino JimÈnez**. 
+4. **Daniela Tocino Jim√©nez**. 
 	- Correo universidad: [d.tocino.2023@alumnos.urjc.es](mailto:d.tocino.2023@alumnos.urjc.es)
 	- **Cuenta Github:** danitjela
-5. **Ra˙l BenÌtez TiburÛn**. 
+5. **Ra√∫l Ben√≠tez Tibur√≥n**. 
 	- Correo universidad: [r.benitez.2023@alumnos.urjc.es](mailto:r.benitez.2023@alumnos.urjc.es) 
 	- **Cuenta Github:** Raul-BT
 
-## Enlace al GDD 
+## Novedades de la Fase 2
+- Implementaci√≥n completa del modo offline.
+- Pantallas implementadas:
+	- C√≥mic.
+	- Pantalla de inicio.
+	- Pantalla de elecci√≥n de personaje.
+	- Men√∫ de pausa.
+	- Juego principal.
+	- Cr√©ditos.
+	- Victoria del personaje 1.
+	- Victoria del personaje 2.
+ 
+ - Mec√°nicas principales:
+  	- Movimiento en cuatro direcciones.
+	- Colocaci√≥n de bombas con temporizador.
+	- Explosiones con en cruz.
+	- Muros indestructibles y cajas rompibles.
+	- Boost dentro de las cajas rompibles.
+	- Eliminar al rival mediante las explosiones.
+	- Vence el √∫ltimo jugador que quede en pie.
+   
+## Enlace al GDD actualizado
 
 [GDD](GDD.md)
 

@@ -38,7 +38,7 @@ Arcade, social, estrategia
  - Mecánicas principales:
   	- Movimiento en cuatro direcciones.
 	- Colocación de bombas con temporizador.
-	- Explosiones con en cruz.
+	- Explosiones en cruz.
 	- Muros indestructibles y cajas rompibles.
 	- Boost dentro de las cajas rompibles.
 	- Eliminar al rival mediante las explosiones.

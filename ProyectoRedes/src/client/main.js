@@ -8,6 +8,7 @@ import { MenuPause } from './scenes/MenuPause.js';
 import { MenuCredits } from './scenes/MenuCredits.js';
 import { Player1VictoryScene } from './scenes/Player1VictoryScene.js';
 import { Player2VictoryScene } from './scenes/Player2VictoryScene.js';
+import { ConnectionLostScene } from './scenes/ConnectionLostScene.js';
 
 // OBJETO QUE SIRVE PARA CONFIGURAR LA INSTANCIA DE PHASER
 const config = {
@@ -30,7 +31,8 @@ const config = {
         MenuPause,
         MenuCredits,
         Player1VictoryScene,
-        Player2VictoryScene
+        Player2VictoryScene,
+        ConnectionLostScene
     ],
     backgroundColor: '#1a1a2e',           // COLOR DE FONDO POR DEFECTO
 }

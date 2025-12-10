@@ -5,6 +5,7 @@ import { Bomb } from '../entities/Bomb';
 
 import { MapManager } from '../map/MapManager';
 import { DestructibleWall } from '../map/DestructibleWall';
+import { connectionManager } from '../services/ConnectionManager';
 
 // FUNCIÓN QUE SIRVE PARA GESTIONAR LA LÓGICA PRINCIPAL DEL JUEGO 
 export class GameScene extends Phaser.Scene {
@@ -296,6 +297,18 @@ export class GameScene extends Phaser.Scene {
         // DEBUG UI
         // this.physics.world.createDebugGraphic();
         // this.physics.world.drawDebug = true;
+
+        this.connectionListener = (data) => {
+            if(!data.connected && this.scene.isActive()){
+                this.onConnectionLost();
+            }
+        };
+        connectionManager.addListener(this.connectionListener);
+    }
+
+    onConnectionLost(){
+        this.scene.pause();
+        this.scene.launch('ConnectionLostScene', {previousScene: 'GameScene'});
     }
 
     // FUNCIÓN QUE SIRVE PARA CONFIGURAR E INICIALIZAR LOS JUGADORES SEGÚN SELECCIÓN

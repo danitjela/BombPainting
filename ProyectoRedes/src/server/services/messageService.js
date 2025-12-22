@@ -16,6 +16,8 @@ export function createMessageService(userService) {
   // TODO: Declarar variables privadas
   // - Array de mensajes
   // - Contador para IDs
+  let messages = [];
+  let nextId = 1;
 
   /**
    * Crea un nuevo mensaje
@@ -25,13 +27,22 @@ export function createMessageService(userService) {
    * @throws {Error} Si el email no existe
    */
   function createMessage(email, message) {
-    // TODO: Implementar
-    // 1. Verificar que el usuario existe (userService.getUserByEmail)
-    // 2. Si no existe, lanzar error
-    // 3. Crear objeto mensaje con id, email, message, timestamp
-    // 4. Agregar a la lista
-    // 5. Retornar el mensaje creado
-    throw new Error('createMessage() no implementado - TODO para estudiantes');
+    const user = userService.getUserByEmail(email);
+    if (!user) {
+      throw new Error('El usuario no existe');
+    }
+
+    const newMessage = {
+      id: String(nextId),
+      email,
+      message,
+      timestamp: new Date().toISOString()
+    };
+    nextId++;
+
+    messages.push(newMessage);
+
+    return newMessage;
   }
 
   /**
@@ -40,9 +51,9 @@ export function createMessageService(userService) {
    * @returns {Array} Array de mensajes
    */
   function getRecentMessages(limit = 50) {
-    // TODO: Implementar
-    // Retornar los últimos 'limit' mensajes, ordenados por timestamp
-    throw new Error('getRecentMessages() no implementado - TODO para estudiantes');
+    const lim = Number(limit) || 50;
+
+    return messages.slice(-lim);
   }
 
   /**
@@ -51,9 +62,15 @@ export function createMessageService(userService) {
    * @returns {Array} Mensajes nuevos desde ese timestamp
    */
   function getMessagesSince(since) {
-    // TODO: Implementar
-    // Filtrar mensajes cuyo timestamp sea mayor que 'since'
-    throw new Error('getMessagesSince() no implementado - TODO para estudiantes');
+    const sinceDate = new Date(since);
+
+    if (isNaN(sinceDate.getTime())) {
+      throw new Error('Timestamp inválido');
+    }
+
+    return messages.filter(
+      msg => new Date(msg.timestamp) > sinceDate
+    );
   }
 
   // Exponer la API pública del servicio

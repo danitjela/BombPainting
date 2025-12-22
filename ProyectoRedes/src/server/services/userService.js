@@ -46,9 +46,8 @@ export function createUserService() {
    * @returns {Array} Array de usuarios
    */
   function getAllUsers() {
-    // TODO: Implementar
-    // Retornar una copia del array de usuarios
-    throw new Error('getAllUsers() no implementado');
+    //Crea una copia del array y devuelve la copia para no pasar la referencia y evitar modificaciones
+    return [...users];
   }
 
   /**
@@ -67,10 +66,8 @@ export function createUserService() {
    * @returns {Object|null} Usuario encontrado o null
    */
   function getUserByEmail(email) {
-    // TODO: Implementar
-    // Buscar y retornar el usuario por email, o null si no existe
-    // IMPORTANTE: Esta función será usada por el chat para verificar emails
-    throw new Error('getUserByEmail() no implementado');
+    const user = users.find(u => u.email === email);
+    return user || null;
   }
 
   /**
@@ -80,13 +77,24 @@ export function createUserService() {
    * @returns {Object|null} Usuario actualizado o null si no existe
    */
   function updateUser(id, updates) {
-    // TODO: Implementar
-    // 1. Buscar el usuario por id
-    // 2. Si no existe, retornar null
-    // 3. Actualizar solo los campos permitidos (name, avatar, level)
-    // 4. NO permitir actualizar id, email, o createdAt
-    // 5. Retornar el usuario actualizado
-    throw new Error('updateUser() no implementado');
+    const user = users.find(u => u.id === id);
+    if (!user) {
+      return null;
+    }
+
+    if (updates.name !== undefined) {
+      user.name = updates.name;
+    }
+
+    if (updates.avatar !== undefined) {
+      user.avatar = updates.avatar;
+    }
+
+    if (updates.level !== undefined) {
+      user.level = updates.level;
+    }
+
+    return user;
   }
 
   /**
@@ -95,11 +103,14 @@ export function createUserService() {
    * @returns {boolean} true si se eliminó, false si no existía
    */
   function deleteUser(id) {
-    // TODO: Implementar
-    // 1. Buscar el índice del usuario
-    // 2. Si existe, eliminarlo del array
-    // 3. Retornar true si se eliminó, false si no existía
-    throw new Error('deleteUser() no implementado');
+    const index = users.findIndex(u => u.id === id);
+
+    if (index === -1) {
+      return false;
+    }
+
+    users.splice(index, 1);
+    return true;
   }
 
   // Exponer la API pública del servicio

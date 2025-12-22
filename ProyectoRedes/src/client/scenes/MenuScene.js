@@ -32,6 +32,9 @@ export class MenuScene extends Phaser.Scene {
         // CARGA IMAGEN BOTÓN CRÉDITOS (HOVER)
         this.load.image('creditsHover', 'assets/spritesInterfaz/botonCreditosAbierto.png');
 
+        // CARGA IMAGEN BOTÓN OPCIONES (NORMAL)
+        this.load.image('options', 'assets/menuAjustes/ruedaAjustes.png');
+
         // CARGA IMAGEN BOTÓN SALIR (NORMAL)
         this.load.image('exit', 'assets/spritesInterfaz/botonSalir.png');
         // CARGA IMAGEN BOTÓN SALIR (HOVER)
@@ -140,6 +143,25 @@ export class MenuScene extends Phaser.Scene {
             this.scene.start('MenuCredits'); // INICIA ESCENA CRÉDITOS
         })
 
+
+        // CREA BOTÓN OPCIONES
+        const optionsBtn = this.add.image(70, 378, 'options').setInteractive({ useHandCursor: true });
+        // HOVER CRÉDITOS: CAMBIA TEXTURA Y REPRODUCE SONIDO
+        optionsBtn.on('pointerover', () => {
+            optionsBtn.setScale(1.2); // TEXTURA HOVER
+            this.sound.play('button'); // SONIDO HOVER
+        })
+        // POINTER OUT CRÉDITOS: RESTAURA TEXTURA
+        optionsBtn.on('pointerout', () => {
+            optionsBtn.setScale(1.0); // RESTAURA TEXTURA
+        })
+        // CLICK CRÉDITOS: INICIA ESCENA DE CRÉDITOS
+        optionsBtn.on('pointerdown', () => {
+            console.log('Options Menu'); // LOG DEPURACIÓN
+            this.sound.play('buttonClick', {volume:0.5}); // SONIDO CLICK
+            this.scene.start('OptionsScene'); // INICIA ESCENA CRÉDITOS
+        })
+
         // CREA BOTÓN SALIR DEL JUEGO
         const exitBtm = this.add.image(512, 660, 'exit').setInteractive({ useHandCursor: true }); // IMAGEN SALIR
         // HOVER SALIR: CAMBIA TEXTURA Y REPRODUCE SONIDO
@@ -159,8 +181,9 @@ export class MenuScene extends Phaser.Scene {
         })
 
 
-        this.connectionText = this.add.text(400, 500, 'Servidor: Comprobando...', {
-            fontSize: '18px',
+        this.connectionText = this.add.text(240, 730, 'Servidor: Comprobando...', {
+            fontFamily: 'PixelFont',
+            fontSize: '24px',
             color: '#ffff00'
         }).setOrigin(0.5);
 

@@ -17,28 +17,60 @@ export class ConnectionLostScene extends Phaser.Scene {
     }
 
     create() {
-        // Fondo semi-transparente
-        this.add.rectangle(400, 300, 800, 600, 0x000000, 0.8);
+        this.add.rectangle(512, 378, 800, 600, 0x000000, 0.8);
 
         // Título
-        this.add.text(400, 200, 'CONEXIÓN PERDIDA', {
-            fontSize: '48px',
+        this.add.text(512, 200, 'CONEXIÓN PERDIDA', {
+            fontFamily: 'PixelFont',
+            fontSize: '60px',
             color: '#ff0000',
             fontStyle: 'bold'
         }).setOrigin(0.5);
 
         // Mensaje
-        this.statusText = this.add.text(400, 300, 'Intentando reconectar...', {
-            fontSize: '24px',
+        this.statusText = this.add.text(512, 350, 'Intentando reconectar...', {
+            fontFamily: 'PixelFont',
+            fontSize: '32px',
             color: '#ffff00'
         }).setOrigin(0.5);
 
         // Contador de intentos
         this.attemptCount = 0;
-        this.attemptText = this.add.text(400, 350, 'Intentos: 0', {
-            fontSize: '18px',
+        this.attemptText = this.add.text(512, 450, 'Intentos: 0', {
+            fontFamily: 'PixelFont',
+            fontSize: '24px',
             color: '#ffffff'
         }).setOrigin(0.5);
+
+        this.returnBtn = this.add.text(512, 550, 'Volver al menú', {
+            fontFamily: 'PixelFont',
+            fontSize: '48px',
+            color: '#00ff00'
+        }).setInteractive({ useHandCursor: true })
+        this.returnBtn.setOrigin(0.5);
+        this.returnBtn.visible = false;
+
+        this.returnBtn.on('pointerover', () => {
+            // CAMBIA TEXTURA A ESTADO HOVER
+            this.returnBtn.setColor('#195706ff');
+        })
+
+        this.returnBtn.on('pointerout', () => {
+            // RESTAURA TEXTURA NORMAL DEL BOTÓN
+            this.returnBtn.setColor('#00ff00');
+        })
+
+        this.returnBtn.on('pointerdown', () => {
+            // LOG PARA INDICAR RETORNO AL MENÚ
+            console.log('BACK To Menu');
+            // SE DETIENE LA ESCENA DE PAUSA
+            this.scene.stop();
+            // SE DETIENE LA ESCENA DEL JUEGO (POR SI ESTÁ ACTIVA)
+            this.scene.stop('GameScene');
+            // SE INICIA LA ESCENA PRINCIPAL DEL MENÚ
+            this.scene.start('MenuScene');
+        })
+
 
         // Indicador parpadeante
         this.dotCount = 0;
@@ -73,6 +105,9 @@ export class ConnectionLostScene extends Phaser.Scene {
         this.attemptCount++;
         this.attemptText.setText(`Intentos: ${this.attemptCount}`);
         await connectionManager.checkConnection();
+        if(this.attemptCount == 15){
+            this.returnBtn.visible = true;
+        }
     }
 
     onReconnected() {

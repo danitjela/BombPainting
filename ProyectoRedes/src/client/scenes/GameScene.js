@@ -283,14 +283,16 @@ export class GameScene extends Phaser.Scene {
 
         // UI
         // TEXTO VIDA JUGADOR 1
-        const player1Life = this.add.text(20, 16, 'Vida Jugador 1: ');
-        player1Life.setFontSize('32px'); // TAMAÑO TEXTO
+        const player1Life = this.add.text(14, 8, 'Vida Jugador 1: ');
+        player1Life.setFontFamily('PixelFont'); //FUENTE PIXEL
+        player1Life.setFontSize('42px'); // TAMAÑO TEXTO
         player1Life.setStroke('#000000',3); // TRAZO
         player1Life.setColor('#ff0000ff'); // COLOR
 
         // TEXTO VIDA JUGADOR 2
-        const player2Life = this.add.text(532, 16, 'Vida Jugador 2: ');
-        player2Life.setFontSize('32px'); // TAMAÑO TEXTO
+        const player2Life = this.add.text(524, 8, 'Vida Jugador 2: ');
+        player2Life.setFontFamily('PixelFont'); //FUENTE PIXEL
+        player2Life.setFontSize('42px'); // TAMAÑO TEXTO
         player2Life.setStroke('#000000',3); // TRAZO
         player2Life.setColor('#ff0000ff'); // COLOR
 

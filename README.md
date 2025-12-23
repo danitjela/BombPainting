@@ -23,27 +23,6 @@ Arcade, social, estrategia
 	- Correo universidad: [r.benitez.2023@alumnos.urjc.es](mailto:r.benitez.2023@alumnos.urjc.es) 
 	- **Cuenta Github:** Raul-BT
 
-## Novedades de la Fase 2
-- Implementación completa del modo offline.
-- Pantallas implementadas:
-	- Cómic.
-	- Pantalla de inicio.
-	- Pantalla de elección de personaje.
-	- Menú de pausa.
-	- Juego principal.
-	- Créditos.
-	- Victoria del personaje 1.
-	- Victoria del personaje 2.
- 
-- Mecánicas principales:
-  	- Movimiento en cuatro direcciones.
-	- Colocación de bombas con temporizador.
-	- Explosiones en cruz.
-	- Muros indestructibles y cajas rompibles.
-	- Boost dentro de las cajas rompibles.
-	- Eliminar al rival mediante las explosiones.
-	- Vence el último jugador que quede en pie.
-
 ## Novedades de la fase 3
 - Implementación de funcionalidades APIREST:
 	- Sistema de login con email.

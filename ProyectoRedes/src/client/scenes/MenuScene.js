@@ -146,20 +146,20 @@ export class MenuScene extends Phaser.Scene {
 
         // CREA BOTÓN OPCIONES
         const optionsBtn = this.add.image(70, 378, 'options').setInteractive({ useHandCursor: true });
-        // HOVER CRÉDITOS: CAMBIA TEXTURA Y REPRODUCE SONIDO
+        // HOVER OPCIONES: CAMBIA ESCALA Y REPRODUCE SONIDO
         optionsBtn.on('pointerover', () => {
-            optionsBtn.setScale(1.2); // TEXTURA HOVER
+            optionsBtn.setScale(1.2); // ESCALA HOVER
             this.sound.play('button'); // SONIDO HOVER
         })
-        // POINTER OUT CRÉDITOS: RESTAURA TEXTURA
+        // POINTER OUT OPCIONES: RESTAURA ESCALA
         optionsBtn.on('pointerout', () => {
-            optionsBtn.setScale(1.0); // RESTAURA TEXTURA
+            optionsBtn.setScale(1.0); // RESTAURA ESCALA
         })
-        // CLICK CRÉDITOS: INICIA ESCENA DE CRÉDITOS
+        // CLICK OPCIONES: INICIA ESCENA DE CRÉDITOS
         optionsBtn.on('pointerdown', () => {
             console.log('Options Menu'); // LOG DEPURACIÓN
             this.sound.play('buttonClick', {volume:0.5}); // SONIDO CLICK
-            this.scene.start('OptionsScene'); // INICIA ESCENA CRÉDITOS
+            this.scene.start('OptionsScene'); // INICIA ESCENA OPCIONES
         })
 
         // CREA BOTÓN SALIR DEL JUEGO

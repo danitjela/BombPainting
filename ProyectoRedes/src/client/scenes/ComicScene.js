@@ -139,7 +139,7 @@ export class ComicScene extends Phaser.Scene {
   _goNext() {
     // SI ESTAMOS EN LA ÚLTIMA PÁGINA, VUELVE AL MENU
     if (this.currentPage >= this.totalPages - 1) {
-      this.scene.start('MenuScene'); // MENU
+      this.scene.start('LoginScene'); // LOGIN
       return;
     }
     // MUESTRA LA SIGUIENTE PÁGINA

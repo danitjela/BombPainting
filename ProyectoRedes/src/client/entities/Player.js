@@ -108,7 +108,9 @@ export class Player {
                 }
             if(this.id == 'player1'){
                 this.scene.scene.start('Player2VictoryScene'); // PLAYER2 GANA
+                console.log('El jugador no gana nivel porque es invitado');
             }else{
+                this.scene.levelUpUser();
                 this.scene.scene.start('Player1VictoryScene') // PLAYER1 GANA
             }
         }

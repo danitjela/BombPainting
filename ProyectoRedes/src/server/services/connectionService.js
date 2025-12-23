@@ -11,7 +11,18 @@ export function createConnectionService() {
 
   // Limpiar sesiones inactivas periódicamente
   const cleanupInterval = setInterval(() => {
-    // Implementar
+
+    //TIEMPO ACTUAL
+    const current = Date.now();
+
+    //RECORRE EL ARRAY DE CONNECTEDSESSIONS
+    for (const [sessionId, timestamp] of connectedSessions.entries()){
+      //SI EL TIEMPO DESDE LA ULTIMA VEZ QUE HABLÓ ES MENOR QUE CONNECTION_TIMEOUT
+      if(current-timestamp > CONNECTION_TIMEOUT){
+        //LO ELIMINA DEL MAP
+        connectedSessions.delete(sessionId);
+      }
+    }
   }, CLEANUP_INTERVAL);
 
   return {

@@ -7,6 +7,30 @@
  */
 
 export function createUserController(userService) {
+
+  async function login(req, res, next){
+    try{
+      const { email } = req.body;
+      if (!email) {
+        return res.status(400).json({
+          error: 'El email es obligatorio'
+        });
+      }
+      const user = userService.getUserByEmail(email);
+
+      if(!user) {
+        return res.status(400).json({
+          error: 'Usuario no encontrado'
+        });
+      }
+
+      res.status(200).json(user);
+    }catch(error){
+      next(error);
+    }
+  }
+
+
   /**
    * POST /api/users - Crear nuevo usuario
    */
@@ -119,6 +143,7 @@ export function createUserController(userService) {
     getAll,
     getById,
     update,
-    remove
+    remove,
+    login
   };
 }

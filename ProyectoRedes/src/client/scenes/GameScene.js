@@ -431,6 +431,34 @@ export class GameScene extends Phaser.Scene {
         }
     }
 
+    levelUpUser(){
+        const user = this.registry.get('user');
+
+        if(!user){
+            console.error('No hay usuario');
+            return;
+        }
+
+        const levelUp = user.level + 1;
+
+        fetch(`http://localhost:3000/api/users/${user.id}`,{
+            method: 'PUT',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({level: levelUp})
+        }).then(res =>{
+            if(!res.ok){
+                throw new Error('Error al subir de nivel');
+            }
+            return res.json();
+        }).then(updatedUser => {
+            console.log('Nivel actualizado', updatedUser.level);
+
+            this.registry.set('user', updatedUser);
+        }).catch(error =>{
+            console.error(error);
+        });
+    }
+
     // FUNCIÓN QUE SIRVE PARA CREAR TODAS LAS ANIMACIONES DE PERSONAJES Y BOMBAS
     createAnimations(){
 

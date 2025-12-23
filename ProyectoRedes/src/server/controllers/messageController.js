@@ -17,6 +17,8 @@ export function createMessageController(messageService) {
    * POST /api/messages - Enviar un nuevo mensaje
    * Body: {email, message}
    */
+
+  //FUNCIÓN SIGUIENDO LA ESTRUCTURA DE USERCONTROLLER
   async function create(req, res, next) {
     try {
       const { email, message } = req.body;
@@ -42,8 +44,11 @@ export function createMessageController(messageService) {
    * GET /api/messages - Obtener mensajes
    * Query params: ?limit=N o ?since=timestamp
    */
+
+  //FUNCIÓN QUE DEVUELVE LOS MENSAJES DADO UN LIMITE DE MENSAJES O UN TIEMPO
   async function getMessages(req, res, next) {
     try {
+      //BODY
       const { since, limit } = req.query;
       let messages;
 

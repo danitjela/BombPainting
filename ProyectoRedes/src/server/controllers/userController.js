@@ -8,22 +8,27 @@
 
 export function createUserController(userService) {
 
+  //FUNCIÓN LOGIN IMPLEMENTADA PARA LA PANTALLA DE LOGIN
   async function login(req, res, next){
     try{
+      //BODY CON EL EMAIL
       const { email } = req.body;
       if (!email) {
         return res.status(400).json({
           error: 'El email es obligatorio'
         });
       }
+      //LLAMA A GETUSERBYEMAIL
       const user = userService.getUserByEmail(email);
 
+      //SI NO LO ENCUENTRA O NO EXISTE
       if(!user) {
         return res.status(400).json({
           error: 'Usuario no encontrado'
         });
       }
 
+      //SI LO ENCUENTA, DEVUELVE EL USUARIO
       res.status(200).json(user);
     }catch(error){
       next(error);
@@ -46,6 +51,7 @@ export function createUserController(userService) {
         });
       }
 
+      //SE CREA EL USUARIO CON LOS PARÁMETROS DEL BODY
       const newUser = userService.createUser({ email, name, avatar, level });
 
       res.status(201).json(newUser);
@@ -62,6 +68,7 @@ export function createUserController(userService) {
    */
   async function getAll(req, res, next) {
     try {
+      //DEVUELVE TODOS LOS USUARIOS
       const users = userService.getAllUsers();
       res.status(200).json(users);
     } catch (error) {
@@ -99,6 +106,8 @@ export function createUserController(userService) {
    */
   async function update(req, res, next) {
     try {
+
+      //ACTUALIZA EL USUARIO MEDIANTE LOS PARÁMETROS DADOS. UTILIZADO CUANDO GANA UNA PARTIDA PARA AUMENTAR EL NIVEL
       const { id } = req.params;
       const updates = req.body;
 
@@ -120,6 +129,7 @@ export function createUserController(userService) {
    * DELETE /api/users/:id - Eliminar un usuario
    */
   async function remove(req, res, next) {
+    //ELIMINA EL USUARIO DADO SU ID
     try {
       const { id } = req.params;
 

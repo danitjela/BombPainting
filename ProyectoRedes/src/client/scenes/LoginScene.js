@@ -23,6 +23,9 @@ export class LoginScene extends Phaser.Scene {
             color:'#ff0000'
         }).setOrigin(0.5);
 
+
+        //CAJA DE TEXTO DONDE EL USUARIO PUEDE INTRODUCIR EL CORREO ELECTRÓNICO.
+        //FUNCIÓN DE HTML
         this.emailInput = document.createElement('input'); 
         this.emailInput.type = 'email'; 
         this.emailInput.placeholder = 'Introduce tu email'; 
@@ -36,6 +39,7 @@ export class LoginScene extends Phaser.Scene {
 
         document.body.appendChild(this.emailInput);
 
+        //BOTÓN PARA VERIFICAR SI EL CORREO INTRODUCIDO ES VÁLIDO
         const goInBtn = this.add.text(512, 400, 'Entrar',{
             fontFamily:'PixelFont',
             fontSize: '48px',
@@ -66,6 +70,7 @@ export class LoginScene extends Phaser.Scene {
             this.login()
         })
 
+        //TEXTO DE ERROR QUE SE MODIFICA SEGÚN EL ERROR DEVUELTO
         this.errorText = this.add.text(512, 500, '',{
             fontFamily: 'PixelFont',
             fontSize: '32px',
@@ -74,10 +79,12 @@ export class LoginScene extends Phaser.Scene {
     }
 
     async login(){
+        //GUARDA EL VALOR INTRODUCIDO POR EL USUARIO
         const email = this.emailInput.value;
 
         console.log('Email introducido: ', email);
 
+        //MÉTODO LOGIN DE APIREST
         try {
             const res = await fetch('/api/users/login',{
                 method: 'POST',
@@ -86,11 +93,14 @@ export class LoginScene extends Phaser.Scene {
             });
 
             const data = await res.json();
+
+            //SI DA ERROR SE ACTUALIZA EL TEXTO DE ERROR
             if(!res.ok){
                 this.errorText.setText(data.error);
                 return;
             }
 
+            //SI EL USUARIO ES CORRECTO, GUARDA EL USUARIO, ELIMINA LA CAJA DE TEXTO DE HTML, Y SE PASA A MENUSCENE
             this.registry.set('user', data);
 
             this.emailInput.remove();

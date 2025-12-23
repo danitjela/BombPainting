@@ -110,7 +110,7 @@ export class Player {
                 this.scene.scene.start('Player2VictoryScene'); // PLAYER2 GANA
                 console.log('El jugador no gana nivel porque es invitado');
             }else{
-                this.scene.levelUpUser();
+                this.scene.levelUpUser(); //EL USUARIO ASOCIADO AL JUGADOR 1, SUBE DE NIVEL
                 this.scene.scene.start('Player1VictoryScene') // PLAYER1 GANA
             }
         }

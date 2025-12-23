@@ -432,15 +432,19 @@ export class GameScene extends Phaser.Scene {
     }
 
     levelUpUser(){
+        //RECOGE EL USUARIO
         const user = this.registry.get('user');
 
+        //COMPRUEBA QUE RECOGE EL USUARIO, DEBERÍA RECOGERLO SIEMPRE, YA QUE ES NECESARIO PARA HACER EL LOG IN
         if(!user){
             console.error('No hay usuario');
             return;
         }
 
+        //GUARDA EN UNA VARIABLE EL NIVEL DEL USUARIO + 1
         const levelUp = user.level + 1;
 
+        //ACTUALIZA EL VALOR GUARDADO EN LEVEL DEL USUARIO
         fetch(`http://localhost:3000/api/users/${user.id}`,{
             method: 'PUT',
             headers: {'Content-Type': 'application/json'},
@@ -453,6 +457,7 @@ export class GameScene extends Phaser.Scene {
         }).then(updatedUser => {
             console.log('Nivel actualizado', updatedUser.level);
 
+            //GUARDA EL NUEVO USUARIO
             this.registry.set('user', updatedUser);
         }).catch(error =>{
             console.error(error);

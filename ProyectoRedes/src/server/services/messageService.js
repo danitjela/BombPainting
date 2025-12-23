@@ -62,12 +62,16 @@ export function createMessageService(userService) {
    * @returns {Array} Mensajes nuevos desde ese timestamp
    */
   function getMessagesSince(since) {
+    //FUNCIÓN PARA COMPLEMENTAR GETMESSAGES
+    //TIEMPO PARA COMPARAR
     const sinceDate = new Date(since);
-
+    
+    //SI NO ES UN TIMESTAMP VÁLIDO
     if (isNaN(sinceDate.getTime())) {
       throw new Error('Timestamp inválido');
     }
 
+    //DEVUELVE LOS MENSAJES POSTERIORES A LA FECHA INTRODUCIDA FECHA
     return messages.filter(
       msg => new Date(msg.timestamp) > sinceDate
     );

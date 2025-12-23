@@ -65,6 +65,8 @@ export function createUserService() {
    * @param {string} email - Email del usuario
    * @returns {Object|null} Usuario encontrado o null
    */
+
+  //DEVUELVE EL USUARIO DADO UN EMAIL, SI NO LO ENCUENTRA DEVUELVE NULL
   function getUserByEmail(email) {
     const user = users.find(u => u.email === email);
     return user || null;
@@ -77,23 +79,28 @@ export function createUserService() {
    * @returns {Object|null} Usuario actualizado o null si no existe
    */
   function updateUser(id, updates) {
+    //GUARDA EL USUARIO QUE VA A CAMBIAR MEDIANTE EL UPDATE
     const user = users.find(u => u.id === id);
     if (!user) {
       return null;
     }
 
+    //SI MODIFICA EL CAMPO NAME, LO MODIFICA EN EL USUARIO GUARDADO
     if (updates.name !== undefined) {
       user.name = updates.name;
     }
 
+    //SI MODIFICA EL CAMPO AVATAR, LO MODIFICA EN EL USUARIO GUARDADO
     if (updates.avatar !== undefined) {
       user.avatar = updates.avatar;
     }
 
+    //SI MODIFICA EL CAMPO LEVEL, LO MODIFICA EN EL USUARIO GUARDADO
     if (updates.level !== undefined) {
       user.level = updates.level;
     }
 
+    //DEVUELVE EL USUARIO MODIFICADO
     return user;
   }
 
@@ -103,12 +110,15 @@ export function createUserService() {
    * @returns {boolean} true si se eliminó, false si no existía
    */
   function deleteUser(id) {
+    //DADO EL ID, LO BUSCA ENTRE LOS USUARIOS GUARDADOS
     const index = users.findIndex(u => u.id === id);
 
+    //SI NO LO CONTIENE
     if (index === -1) {
       return false;
     }
 
+    //SI LO CONTIENE, BORRA 1 DESDE EL ID DADO, ES DECIR, EL DEL ID
     users.splice(index, 1);
     return true;
   }

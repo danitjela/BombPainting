@@ -14,6 +14,7 @@ export function createUserRoutes(userController) {
   router.post('/', userController.create);
 
   // POST /api/users - Login
+  // SE HA AÑADIDO LA RUTA DE LOGIN PARA HACER LA PANTALLA DE LOGIN
   router.post('/login', userController.login);
 
   // GET /api/users - Obtener todos los usuarios

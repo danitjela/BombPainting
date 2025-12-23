@@ -43,6 +43,16 @@ Arcade, social, estrategia
 	- Boost dentro de las cajas rompibles.
 	- Eliminar al rival mediante las explosiones.
 	- Vence el último jugador que quede en pie.
+
+## Novedades de la fase 3
+- Implementación de funcionalidades APIREST:
+	- Sistema de login con email.
+	- Aumento de nivel tras la victoria del jugador 1.
+	- Jugadores conectados al servidor.
+
+- Pantallas implementadas:
+	- Pantalla de login.
+	- Pantalla de ajustes, solicitada para la fase 2.
    
 ## Enlace al GDD actualizado
 

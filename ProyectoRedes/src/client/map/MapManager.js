@@ -245,4 +245,11 @@ export class MapManager{
         // RETORNA COORDENADAS OBJETO 
         return { x: gridX, y: gridY };
     }
+
+    destroyDestructibleWall(gridX, gridY) { 
+        const wall = this.destructibleWalls.find(w => w.gridX === gridX && w.gridY === gridY); 
+        if (!wall) return; 
+        wall.sprite.destroy(); 
+        this.destructibleWalls = this.destructibleWalls.filter(w => w !== wall); 
+    }
 }

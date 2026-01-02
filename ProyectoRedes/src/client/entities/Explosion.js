@@ -44,7 +44,9 @@ export class Explosion {
         // SE AÑADE SOLAPAMIENTO ENTRE CADA JUGADOR Y LA MANCHA PARA CAUSAR DAÑO
         this.scene.players.forEach(player => {
             this.scene.physics.add.overlap(player.sprite, stain, () => {
-                player.takeDamage(); // SE LLAMA AL MÉTODO DE DAÑO DEL JUGADOR
+                if(this.scene.mode === 'local'){
+                    player.takeDamage(); // SE LLAMA AL MÉTODO DE DAÑO DEL JUGADOR
+                }
             });
         });
 

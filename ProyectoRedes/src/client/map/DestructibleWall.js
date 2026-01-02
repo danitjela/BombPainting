@@ -36,26 +36,28 @@ export class DestructibleWall{
             this.scene.mapManager.destructibleWalls.filter(w => w !== this);
 
         // PROBABILIDAD DEL 50% DE GENERAR UN POWERUP
-        if (Math.random() < 0.5) {
-            // VALOR ALEATORIO ENTRE 0 Y 3 PARA ELEGIR TIPO DE POWERUP
-            const randomValue = Math.floor(Math.random() * 4);
-            switch(randomValue){
-                case 0:
-                    // CREA POWERUP DE MÁS BOMBAS EN LA POSICIÓN DEL MURO
-                    new PowerUp(this.scene, this.x, this.y, 'moreBombs');
-                    break;
-                case 1:
-                    // CREA POWERUP DE EXPLOSIÓN MÁS GRANDE
-                    new PowerUp(this.scene, this.x, this.y, 'biggerExplosion');
-                    break;
-                case 2:
-                    // CREA POWERUP DE ACTIVACIÓN DE BOMBAS MÁS RÁPIDA
-                    new PowerUp(this.scene, this.x, this.y, 'fasterExplosion');
-                    break;
-                case 3:
-                    // CREA POWERUP DE VIDA
-                    new PowerUp(this.scene, this.x, this.y, 'moreLife');
-                    break;
+        if (this.scene.mode === 'local'){
+            if (Math.random() < 0.5) {
+                // VALOR ALEATORIO ENTRE 0 Y 3 PARA ELEGIR TIPO DE POWERUP
+                const randomValue = Math.floor(Math.random() * 4);
+                switch(randomValue){
+                    case 0:
+                        // CREA POWERUP DE MÁS BOMBAS EN LA POSICIÓN DEL MURO
+                        new PowerUp(this.scene, this.x, this.y, 'moreBombs');
+                        break;
+                    case 1:
+                        // CREA POWERUP DE EXPLOSIÓN MÁS GRANDE
+                        new PowerUp(this.scene, this.x, this.y, 'biggerExplosion');
+                        break;
+                    case 2:
+                        // CREA POWERUP DE ACTIVACIÓN DE BOMBAS MÁS RÁPIDA
+                        new PowerUp(this.scene, this.x, this.y, 'fasterExplosion');
+                        break;
+                    case 3:
+                        // CREA POWERUP DE VIDA
+                        new PowerUp(this.scene, this.x, this.y, 'moreLife');
+                        break;
+                }
             }
         }
     }

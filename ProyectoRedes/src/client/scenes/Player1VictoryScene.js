@@ -38,6 +38,7 @@ export class Player1VictoryScene extends Phaser.Scene {
 
     // FUNCIÓN QUE SIRVE PARA CREAR ANIMACIONES, SPRITES, AUDIO Y BOTÓN DE VOLVER
     create(){
+        this.sound.stopAll();
         // CREA ANIMACIÓN PARA PACA
         this.anims.create({
             key: 'paca_win',

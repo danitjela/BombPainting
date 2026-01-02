@@ -2,41 +2,31 @@
 
 **BombPainting**
 
-## Tem√°tica 
+## Tem·tica 
 
 Arcade, social, estrategia
 ## Grupo 2
 ### Integrantes del grupo:
-1. **Ester D√≠az Monzonis**. 
+1. **Ester DÌaz Monzonis**. 
 	- Correo universidad: [e.diazm.2023@alumnos.urjc.es](mailto:e.diazm.2023@alumnos.urjc.es)
 	- **Cuenta Github:** aester22
-2. **Aroa Quiroga Mart√≠nez**.			 
+2. **Aroa Quiroga MartÌnez**.			 
 	- Correo universidad: [a.quiroga.2023@alumnos.urjc.es](mailto:a.quiroga.2023@alumnos.urjc.es)
 	- **Cuenta Github:** aroa181
-3. **Sandra S√°ez Pi√±a**. 
+3. **Sandra S·ez PiÒa**. 
 	- Correo universidad: [s.saezp.2023@alumnos.urjc.es](mailto:s.saezp.2023@alumnos.urjc.es)
 	- **Cuenta Github:** SpolakK
-4. **Daniela Tocino Jim√©nez**. 
+4. **Daniela Tocino JimÈnez**. 
 	- Correo universidad: [d.tocino.2023@alumnos.urjc.es](mailto:d.tocino.2023@alumnos.urjc.es)
 	- **Cuenta Github:** danitjela
-5. **Ra√∫l Ben√≠tez Tibur√≥n**. 
+5. **Ra˙l BenÌtez TiburÛn**. 
 	- Correo universidad: [r.benitez.2023@alumnos.urjc.es](mailto:r.benitez.2023@alumnos.urjc.es) 
 	- **Cuenta Github:** Raul-BT
 
-## Novedades de la fase 3
-- Implementaci√≥n de funcionalidades APIREST:
-	- Sistema de login con email.
-	- Aumento de nivel tras la victoria del jugador 1.
-	- Jugadores conectados al servidor.
-
-- Pantallas implementadas:
-	- Pantalla de login.
-	- Pantalla de ajustes, solicitada para la fase 2.
-   
-## Enlace al GDD actualizado
+## Enlace al GDD 
 
 [GDD](GDD.md)
 
-## Enlace al repositorio de GitHub
+## Enlace al repositiorio de GitHub
 
 [BombPainting](https://github.com/danitjela/BombPainting)

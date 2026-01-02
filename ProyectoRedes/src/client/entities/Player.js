@@ -108,9 +108,7 @@ export class Player {
                 }
             if(this.id == 'player1'){
                 this.scene.scene.start('Player2VictoryScene'); // PLAYER2 GANA
-                console.log('El jugador no gana nivel porque es invitado');
             }else{
-                this.scene.levelUpUser(); //EL USUARIO ASOCIADO AL JUGADOR 1, SUBE DE NIVEL
                 this.scene.scene.start('Player1VictoryScene') // PLAYER1 GANA
             }
         }
@@ -140,5 +138,53 @@ export class Player {
 
         // SE AÑADE AL ARRAY DE VIDAS
         this.lifes.push(this.heart);
+    }
+
+    // FUNCIÓN PARA EL MODO ONLINE QUE ACTUALIZA EL SPRITE EN FUNCIÓN DE LA DIRECCIÓN Y LA POSICIÓN
+    applyNetworkState(state) {
+
+        this.sprite.x = state.x; 
+        this.sprite.y = state.y;
+
+        // Dirección / animación
+        if (state.facing) {
+            this.facing = state.facing;
+            this.sprite.anims.play(`${this.name}_walk_${this.facing}`, true);
+        } else {
+            this.sprite.anims.play(`${this.name}_idle`, true);
+        }
+    }
+
+    // FUNCIÓN PARA EL MODO ONLINE QUE AJUSTA LOS PARÁMETROS DE LOS BOOST EN EL CLIENTE EN FUNCIÓN DE LAS STATS DEL SERVIDOR
+    applyServerStats(stats) {
+
+        if (stats.maxBombs !== undefined) {
+            this.baseQuantityUpgrade = stats.maxBombs;
+        }
+
+        if (stats.explosionRange !== undefined) {
+            this.baseExplosionRange = stats.explosionRange;
+        }
+
+        if (stats.activationSpeed !== undefined) {
+            this.baseBombActivationUpgrade = stats.activationSpeed;
+        }
+
+        if (stats.lifes !== undefined) {
+            this.syncLifesFromServer(stats.lifes);
+        }
+    }
+
+    // FUNCIÓN PARA ACTUALIZAR EN EL CLIENTE LA VIDA EN BASE A LA VIDA DEL SERVIDOR DE LOS JUGADDORES
+    syncLifesFromServer(serverLifes) {
+        this.baseLifes = serverLifes;
+
+        for (let i = 0; i < this.lifes.length; i++) {
+            if (i < serverLifes) {
+                this.lifes[i].setTexture('heart');
+            } else {
+                this.lifes[i].setTexture('emptyHeart');
+            }
+        }
     }
 }

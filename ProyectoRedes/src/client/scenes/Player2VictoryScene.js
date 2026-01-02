@@ -40,6 +40,7 @@ export class Player2VictoryScene extends Phaser.Scene {
 
     // FUNCIÓN QUE SIRVE PARA CREAR ANIMACIONES, SPRITES, AUDIO Y BOTÓN DE VOLVER
     create(){
+        this.sound.stopAll();
         // ANIMACIÓN PARA ACOP
         this.anims.create({
             key: 'acop_win',

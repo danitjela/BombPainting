@@ -15,16 +15,6 @@ export default {
   },
   mode: 'development',
   devtool: 'inline-source-map',
-  module: {
-    rules: [
-      {
-        test: /\.m?js$/,
-        resolve: {
-          fullySpecified: false
-        }
-      }
-    ]
-  },
   devServer: {
     static: './dist',
     hot: true,

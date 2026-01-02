@@ -4,9 +4,18 @@ import { GameScene } from './GameScene';
 
 // CLASE QUE SIRVE PARA GESTIONAR EL MENÚ DE PAUSA
 export class MenuPause extends Phaser.Scene {
+    mode;
+    ws;
     // FUNCIÓN QUE SIRVE PARA CONSTRUIR LA ESCENA DE PAUSA
     constructor() {
         super('MenuPause'); // CREA NOMBRE DE LA ESCENA
+    }
+
+    init(data){
+        this.mode = data.mode;
+        if(data.ws){
+            this.ws = data.ws;
+        }
     }
 
     // FUNCIÓN QUE SIRVE PARA CARGAR RECURSOS NECESARIOS (IMÁGENES Y SONIDOS)
@@ -96,6 +105,14 @@ export class MenuPause extends Phaser.Scene {
 
         // FUNCIÓN QUE SIRVE PARA VOLVER AL MENÚ PRINCIPAL AL HACER CLICK
         menuBtn.on('pointerdown', () => {
+
+            // SI EL MODO DE JUEGO ES ONLINE, SE AVISA AL SERVIDOR DE QUE EL JUGADOR SE HA SALIDO
+            if (this.mode === 'online') {
+                this.ws.send(JSON.stringify({
+                type: 'playerLeave'
+                }));
+            }
+
             // LOG PARA INDICAR RETORNO AL MENÚ
             console.log('BACK To Menu');
             // SE REPRODUCE SONIDO DE CLICK
@@ -105,7 +122,9 @@ export class MenuPause extends Phaser.Scene {
             // SE DETIENE LA ESCENA DEL JUEGO (POR SI ESTÁ ACTIVA)
             this.scene.stop('GameScene');
             // SE INICIA LA ESCENA PRINCIPAL DEL MENÚ
-            this.scene.start('MenuScene');
+            if(this.mode === 'local'){
+                this.scene.start('MenuScene');
+            }
             // SE REPRODUCE LA MÚSICA DEL MENÚ (ASEGURA QUE SUENE EN LA NUEVA ESCENA)
             this.mainTheme.play();
         })

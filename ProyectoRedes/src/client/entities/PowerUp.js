@@ -43,10 +43,22 @@ export class PowerUp{
         this.scene.players.forEach(player => {
             // CONFIGURA OVERLAP ENTRE EL SPRITE DEL JUGADOR Y EL POWERUP
             this.scene.physics.add.overlap(player.sprite, this.sprite, () => {
-                // APLICA EL BOOST AL JUGADOR
-                this.applyBoost(player);
-                // DESTRUYE EL SPRITE DEL POWERUP TRAS RECOGERLO
-                this.sprite.destroy();
+                if(this.scene.mode === 'local'){
+                    // APLICA EL BOOST AL JUGADOR
+                    this.applyBoost(player);
+                    // DESTRUYE EL SPRITE DEL POWERUP TRAS RECOGERLO
+                    this.sprite.destroy();
+                }else{
+                    const gridPos = this.scene.mapManager.fromPosToGrid(this.x, this.y);
+
+                    this.scene.ws.send(JSON.stringify({
+                        type: 'powerupPickup',
+                        x: gridPos.x,
+                        y: gridPos.y
+                    }));
+
+                    this.sprite.destroy();
+                }
             });
         });
     }

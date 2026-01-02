@@ -1,6 +1,5 @@
 // SE IMPORTA PHASER
 import Phaser from 'phaser';
-import { connectionManager } from '../services/ConnectionManager';
 
 // CLASE QUE SIRVE PARA GESTIONAR LA PANTALLA PRINCIPAL DEL MENÚ
 export class MenuScene extends Phaser.Scene {
@@ -32,7 +31,7 @@ export class MenuScene extends Phaser.Scene {
         // CARGA IMAGEN BOTÓN CRÉDITOS (HOVER)
         this.load.image('creditsHover', 'assets/spritesInterfaz/botonCreditosAbierto.png');
 
-        // CARGA IMAGEN BOTÓN OPCIONES (NORMAL)
+        //CARGA IMAGEN BOTÓN AJUSTES (NORMAL)
         this.load.image('options', 'assets/menuAjustes/ruedaAjustes.png');
 
         // CARGA IMAGEN BOTÓN SALIR (NORMAL)
@@ -54,13 +53,11 @@ export class MenuScene extends Phaser.Scene {
 
     // FUNCIÓN QUE SIRVE PARA CREAR ELEMENTOS VISUALES Y ASIGNAR INTERACCIONES
     create() {
-        // REPRODUCCIÓN CONDICIONAL DE LA MÚSICA PRINCIPAL (EVITA DUPLICARLA)
-        if (!this.sound.get('menuMusic')) {
-            // CREA AUDIO PRINCIPAL, CONFIGURA BUCLE Y VOLUMEN
-            this.mainTheme = this.sound.add('menuMusic', { loop: true, volume: 0.4 });
-            // REPRODUCE LA MÚSICA DEL MENÚ
-            this.mainTheme.play();
-        }
+        this.sound.stopAll();
+        // CREA AUDIO PRINCIPAL, CONFIGURA BUCLE Y VOLUMEN
+        this.mainTheme = this.sound.add('menuMusic', { loop: true, volume: 0.4 });
+        // REPRODUCE LA MÚSICA DEL MENÚ
+        this.mainTheme.play();
 
         // CREA IMAGEN DE FONDO Y LA ESCALA
         let wallpaper = this.add.image(512, 384, 'wallpaper'); // IMAGEN FONDO
@@ -119,10 +116,26 @@ export class MenuScene extends Phaser.Scene {
         onlineBtn.on('pointerout', () => {
             onlineBtn.setTexture('online'); // RESTAURA TEXTURA
         })
-        // CLICK ONLINE: MENSAJE DE NO DISPONIBLE (POR AHORA)
+        // CLICK ONLINE
         onlineBtn.on('pointerdown', () => {
             this.sound.play('buttonClick', {volume:0.5}); // SONIDO CLICK
-            console.log('No disponible'); // LOG INDICANDO ESTADO
+
+            // CREA EL WEBSOCKET
+            const wsUrl = `ws://${window.location.host}`;
+
+            const ws = new WebSocket(wsUrl);
+
+            // CUANDO EL WEBSOCKET SE CONECTA, LANZA LA ESCENA WAITINGROOM
+            ws.onopen = () => {
+                console.log('Conectando al servidor');
+
+                this.scene.launch('WaitingRoomScene', { ws });
+                this.scene.pause();
+            };
+
+            ws.onerror = (error) => {
+                console.error(error);
+            };
         })
 
         // CREA BOTÓN CRÉDITOS
@@ -142,7 +155,6 @@ export class MenuScene extends Phaser.Scene {
             this.sound.play('buttonClick', {volume:0.5}); // SONIDO CLICK
             this.scene.start('MenuCredits'); // INICIA ESCENA CRÉDITOS
         })
-
 
         // CREA BOTÓN OPCIONES
         const optionsBtn = this.add.image(70, 378, 'options').setInteractive({ useHandCursor: true });
@@ -179,45 +191,5 @@ export class MenuScene extends Phaser.Scene {
             this.sound.play('buttonClick', {volume:0.5}); // SONIDO CLICK
             this.game.destroy(true); // DESTRUYE INSTANCIA DEL JUEGO
         })
-
-
-        this.connectionText = this.add.text(240, 730, 'Servidor: Comprobando...', {
-            fontFamily: 'PixelFont',
-            fontSize: '24px',
-            color: '#ffff00'
-        }).setOrigin(0.5);
-
-        // Listener para cambios de conexión
-        this.connectionListener = (data) => {
-            this.updateConnectionDisplay(data);
-        };
-        connectionManager.addListener(this.connectionListener);
-
-    }
-
-    updateConnectionDisplay(data) {
-        // Solo actualizar si el texto existe (la escena está creada)
-        if (!this.connectionText || !this.scene || !this.scene.isActive('MenuScene')) {
-            return;
-        }
-
-        try {
-            if (data.connected) {
-                this.connectionText.setText(`Servidor: ${data.count} usuario(s) conectado(s)`);
-                this.connectionText.setColor('#00ff00');
-            } else {
-                this.connectionText.setText('Servidor: Desconectado');
-                this.connectionText.setColor('#ff0000');
-            }
-        } catch (error) {
-            console.error('[MenuScene] Error updating connection display:', error);
-        }
-    }
-
-    shutdown() {
-        // Remover el listener
-        if (this.connectionListener) {
-            connectionManager.removeListener(this.connectionListener);
-        }
     }
 }

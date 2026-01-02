@@ -167,7 +167,9 @@ export class CharacterSelectScene extends Phaser.Scene {
                 // DETIENE TODOS LOS SONIDOS
                 this.sound.stopAll();
                 // CAMBIA A LA ESCENA DE JUEGO
-                this.scene.start('GameScene');
+                this.scene.start('GameScene', {
+                    mode: 'local'
+                });
             });
         }
     }

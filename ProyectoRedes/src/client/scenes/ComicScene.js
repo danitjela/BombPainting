@@ -33,11 +33,6 @@ export class ComicScene extends Phaser.Scene {
 
   // FUNCIÓN QUE SIRVE PARA CREAR ELEMENTOS VISUALES, BOTONES Y ASIGNAR EVENTOS
   create() {
-    // Forzar la carga de la fuente personalizada
-    this.add.text(-1000, -1000, 'font-load', {
-    fontFamily: 'PixelFont',
-    fontSize: '32px'
-    });
     // CREA INSTANCIAS DE SONIDO PARA USO EN BOTONES
     this.buttonClickSound = this.sound.add('buttonClick', {volume:0.5});
     this.buttonHoverSound = this.sound.add('button');
@@ -139,7 +134,7 @@ export class ComicScene extends Phaser.Scene {
   _goNext() {
     // SI ESTAMOS EN LA ÚLTIMA PÁGINA, VUELVE AL MENU
     if (this.currentPage >= this.totalPages - 1) {
-      this.scene.start('LoginScene'); // LOGIN
+      this.scene.start('MenuScene'); // MENU
       return;
     }
     // MUESTRA LA SIGUIENTE PÁGINA

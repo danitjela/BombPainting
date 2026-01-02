@@ -5,7 +5,6 @@ import { Bomb } from '../entities/Bomb';
 
 import { MapManager } from '../map/MapManager';
 import { DestructibleWall } from '../map/DestructibleWall';
-import { connectionManager } from '../services/ConnectionManager';
 
 // FUNCIÓN QUE SIRVE PARA GESTIONAR LA LÓGICA PRINCIPAL DEL JUEGO 
 export class GameScene extends Phaser.Scene {
@@ -17,7 +16,13 @@ export class GameScene extends Phaser.Scene {
     }
 
     // FUNCIÓN QUE SIRVE PARA INICIALIZAR ESTRUCTURAS ANTES DE CARGAR RECURSOS
-    init() {
+    init(data) {
+        this.mode = data.mode;
+        if(this.mode === 'online'){
+            this.ws = data.ws,
+            this.roomId = data.roomId,
+            this.role = data.role
+        }
         // CREA MAPA DE JUGADORES
         this.players = new Map();
         // ARRAY DE MAPEOS DE INPUT
@@ -235,6 +240,7 @@ export class GameScene extends Phaser.Scene {
 
     // FUNCIÓN QUE SIRVE PARA CREAR OBJETOS DE ESCENA, MÚSICA, MAPA Y JUGADORES
     create() {
+        this.sound.stopAll();
         // CREA Y REPRODUCE MÚSICA DE GAMEPLAY EN LOOP
         this.gameplayMusic = this.sound.add('gameMusic', { loop: true, volume: 0.1 });
         this.gameplayMusic.play();
@@ -248,20 +254,29 @@ export class GameScene extends Phaser.Scene {
 
         // CREA ANIMACIONES
         this.createAnimations();
-        // CONFIGURA JUGADORES
-        this.setUpPlayers();
+
+        // CONFIGURA JUGADORES DEPENDIENDO DEL MODO DE JUEGO
+        if(this.mode === 'local'){
+            this.setUpPlayers();
+        }else{
+            this.setUpPlayersOnline();
+        }
 
         // AÑADE INDICADORES DE TUTORIAL EN PANTALLA
-        this.esctutorial = this.add.image(275,100,'escTuto'); // ICONO ESC
-        this.esctutorial.setScale(0.4); // ESCALA
-        this.esctutorial.setDepth(21); // DEPTH
+        if(this.mode === 'local'){
+            this.esctutorial = this.add.image(275,100,'escTuto'); // ICONO ESC
+            this.esctutorial.setScale(0.4); // ESCALA
+            this.esctutorial.setDepth(21); // DEPTH
 
-        this.tutorial = this.add.image(512,378, 'tuto'); // IMAGEN DE TUTORIAL
-        this.tutorial.setScale(1.5); // ESCALA
-        this.tutorial.setDepth(20); // DEPTH
+            this.tutorial = this.add.image(512,378, 'tuto'); // IMAGEN DE TUTORIAL
+            this.tutorial.setScale(1.5); // ESCALA
+            this.tutorial.setDepth(20); // DEPTH
 
-        // FLAG QUE INDICA SI EL JUEGO HA COMENZADO (TRAS CERRAR EL TUTORIAL)
-        this.gameStarted = false;
+            // FLAG QUE INDICA SI EL JUEGO HA COMENZADO (TRAS CERRAR EL TUTORIAL)
+            this.gameStarted = false;
+        }else{
+            this.gameStarted = true;
+        }
 
         // EVENTO AL RESUMIR ESCENA
         this.events.on('resume', () => {
@@ -283,34 +298,20 @@ export class GameScene extends Phaser.Scene {
 
         // UI
         // TEXTO VIDA JUGADOR 1
-        const player1Life = this.add.text(14, 8, 'Vida Jugador 1: ');
-        player1Life.setFontFamily('PixelFont'); //FUENTE PIXEL
-        player1Life.setFontSize('42px'); // TAMAÑO TEXTO
+        const player1Life = this.add.text(20, 16, 'Vida Jugador 1: ');
+        player1Life.setFontSize('32px'); // TAMAÑO TEXTO
         player1Life.setStroke('#000000',3); // TRAZO
         player1Life.setColor('#ff0000ff'); // COLOR
 
         // TEXTO VIDA JUGADOR 2
-        const player2Life = this.add.text(524, 8, 'Vida Jugador 2: ');
-        player2Life.setFontFamily('PixelFont'); //FUENTE PIXEL
-        player2Life.setFontSize('42px'); // TAMAÑO TEXTO
+        const player2Life = this.add.text(532, 16, 'Vida Jugador 2: ');
+        player2Life.setFontSize('32px'); // TAMAÑO TEXTO
         player2Life.setStroke('#000000',3); // TRAZO
         player2Life.setColor('#ff0000ff'); // COLOR
 
         // DEBUG UI
         // this.physics.world.createDebugGraphic();
         // this.physics.world.drawDebug = true;
-
-        this.connectionListener = (data) => {
-            if(!data.connected && this.scene.isActive()){
-                this.onConnectionLost();
-            }
-        };
-        connectionManager.addListener(this.connectionListener);
-    }
-
-    onConnectionLost(){
-        this.scene.pause();
-        this.scene.launch('ConnectionLostScene', {previousScene: 'GameScene'});
     }
 
     // FUNCIÓN QUE SIRVE PARA CONFIGURAR E INICIALIZAR LOS JUGADORES SEGÚN SELECCIÓN
@@ -386,16 +387,10 @@ export class GameScene extends Phaser.Scene {
         });
         // EVENTO DE PHASER PARA PARAR LA MÚSICA DEL JUEGO SI LA PERSONA SE SALE DE LA ESCENA GAMESCENE
         this.events.on('shutdown', () => {
-             if (this.gameplayMusic) {
-             this.gameplayMusic.stop(); // SE DETIENE LA MÚSICA
-        }
-});
-
- 
-
-
-
-
+            if (this.gameplayMusic) {
+                this.gameplayMusic.stop(); // SE DETIENE LA MÚSICA
+            }
+        });
     }
 
     // FUNCIÓN QUE SIRVE PARA ACTUALIZAR EL ESTADO DEL JUEGO CADA FRAME
@@ -404,7 +399,18 @@ export class GameScene extends Phaser.Scene {
         if (Phaser.Input.Keyboard.JustDown(this.escapeKey)) {
             // SI NO ESTÁ PAUSADO Y EL JUEGO YA SE INICIÓ
             if (!this.isPaused && this.gameStarted) {
-                this.scene.launch('MenuPause'); // LANZA ESCENA PAUSA
+                if(this.mode === 'online'){
+                    // LANZA ESCENA PAUSA
+                    // SI ES ONLINE SE PASA EL MODO DE JUEGO Y EL WEBSOCKET
+                    this.scene.launch('MenuPause',{
+                        mode: 'online',
+                        ws: this.ws
+                    });
+                }else{
+                    this.scene.launch('MenuPause',{
+                        mode: 'local'
+                    });
+                }
                 this.scene.pause();             // PAUSA ESCENA ACTUAL
                 this.isPaused = true;           // MARCA PAUSA
                 this.gameplayMusic.pause();     // PAUSA MÚSICA
@@ -419,7 +425,7 @@ export class GameScene extends Phaser.Scene {
         }
 
         // SI EL JUEGO ESTÁ INICIADO, PROCESA CONTROLES DE CADA JUGADOR
-        if(this.gameStarted){
+        if(this.gameStarted && this.mode === 'local'){
             this.inputMappings.forEach(mapping => {
                 // SE OBTIENE LA INSTANCIA DEL JUGADOR SEGÚN MAPPING
                 const player = this.players.get(mapping.playerId);
@@ -429,39 +435,41 @@ export class GameScene extends Phaser.Scene {
                 }
             });
         }
-    }
 
-    levelUpUser(){
-        //RECOGE EL USUARIO
-        const user = this.registry.get('user');
+        // SI EL MODO DE JUEGO ES ONLINE, SE AJUSTAN SUS  CONTROLES
+        if(this.gameStarted && this.mode === 'online'){
+            const mapping = this.inputMappings[0];
+            const player = this.players.get(this.role);
 
-        //COMPRUEBA QUE RECOGE EL USUARIO, DEBERÍA RECOGERLO SIEMPRE, YA QUE ES NECESARIO PARA HACER EL LOG IN
-        if(!user){
-            console.error('No hay usuario');
-            return;
-        }
+            if (!player) return;
+            // VARIABLE PARA CONTROLAR SU DIRECCIÓN
+            let dir = null;
+            // VARIABLE PARA SABER SI PONE UNA BOMBA
+            let bomb = false;
 
-        //GUARDA EN UNA VARIABLE EL NIVEL DEL USUARIO + 1
-        const levelUp = user.level + 1;
+            // MAPEO DE DIRECCIONES
+            if (mapping.leftKeyObj.isDown) { dir = 'left'; }
+            else if (mapping.rightKeyObj.isDown) { dir = 'right'; }
+            else if (mapping.upKeyObj.isDown) { dir = 'up'; }
+            else if (mapping.downKeyObj.isDown) { dir = 'down'; } 
+            if (Phaser.Input.Keyboard.JustDown(mapping.bombKeyObj)) bomb = true;
 
-        //ACTUALIZA EL VALOR GUARDADO EN LEVEL DEL USUARIO
-        fetch(`http://localhost:3000/api/users/${user.id}`,{
-            method: 'PUT',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({level: levelUp})
-        }).then(res =>{
-            if(!res.ok){
-                throw new Error('Error al subir de nivel');
+            // ENVÍA AL SERVIDOR LA DIRECCIÓN
+            this.ws.send(JSON.stringify({
+                type: 'playerMove',
+                dir
+            }));
+            
+            // SI PONE UNA BOMBA, SE LO ENVÍA AL SERVIDOR
+            if (bomb) {
+                // SONIDO ALEATORIO ESPECIAL
+                (Math.random() < 1/20 ? this.sound.play('specialBomb') : this.sound.play('bomb'));
+                this.ws.send(JSON.stringify({
+                    type: 'bombPlaced',
+                    bomb
+                }));
             }
-            return res.json();
-        }).then(updatedUser => {
-            console.log('Nivel actualizado', updatedUser.level);
-
-            //GUARDA EL NUEVO USUARIO
-            this.registry.set('user', updatedUser);
-        }).catch(error =>{
-            console.error(error);
-        });
+        }
     }
 
     // FUNCIÓN QUE SIRVE PARA CREAR TODAS LAS ANIMACIONES DE PERSONAJES Y BOMBAS
@@ -729,5 +737,222 @@ export class GameScene extends Phaser.Scene {
             repeat: 0,
             hideOnComplete: true // SE OCULTA EL SPRITE AL COMPLETAR ANIMACIÓN
         });
+    }
+
+
+    setUpPlayersOnline() {
+
+        if (!this.ws) {
+            console.error('setUpPlayersOnline llamado sin WebSocket');
+            return;
+        }
+
+        // LISTENER QUE ESCUCHA LAS LLAMADAS DEL SERVIDOR
+        this.gameHandler = (event) => {
+            const msg = JSON.parse(event.data);
+
+            switch (msg.type) {
+                // SI LA PARTIDA EMPIEZA, SE CONFIGURAN LOS JUGADORES
+                case 'gameInit':
+                    this.createOnlinePlayers(msg.players);
+                    this.configureLocalInput();
+                    this.gameStarted = true;
+                    break;
+
+                // SI SE ACTUALIZAN LAS POSICIONES DE LOS JUGADORES, APLICA LOS CAMBIOS
+                case 'stateUpdate':
+                    msg.players.forEach(p => {
+                        const player = this.players.get(p.id);
+                        if (player) {
+                            player.applyNetworkState(p);
+                        }
+                    });
+                    break;
+
+                // SI UN JUGADOR PONE UNA BOMBA, NOTIFICA AL SERVIDOR, Y EL SERVIDO PASA LOS PARÁMETROS DE LA BOMBA
+                case 'bombSpawned': 
+                    const owner = this.players.get(msg.owner); 
+                    new Bomb( 
+                        this, 
+                        msg.x, 
+                        msg.y, 
+                        msg.activationSpeed, 
+                        msg.explosionRange, 
+                        owner 
+                    );
+                    break;
+                
+                // SI SE DESTRUYE UN MURO, EL SERVIDOR NOTIFICA AL JUGADOR
+                case 'blockDestroyed': 
+                    this.mapManager.destroyDestructibleWall(msg.x, msg.y);
+                    break;
+                
+                // SI APARECE UN POWERUP, EL SERVIDOR LE DICE AL CLIENTE DONDE ESTÁ
+                case 'powerupSpawned': 
+                    this.time.delayedCall(500, () => {
+                        this.spawnPowerup(msg.x, msg.y, msg.powerupType);
+                    });
+                    break;
+                
+                // SI EL JUGADOR RECOGE UN POWERUP, EL SERVIDOR LE DICE AL CLIENTE LO QUE DEBE HACER
+                case "powerupCollected":
+                    this.sound.play('powerUp', {volume: 0.5});
+
+                    this.removePowerup(msg.x, msg.y);
+
+                    const player = this.players.get(msg.playerId);
+                    if (player) {
+                        player.applyServerStats(msg.stats);
+                    }
+                    break;
+
+                // SU EL JUGADOR RECIBE DAÑO, EL CLIENTE ACTUALIZA LOS VALORES
+                case "playerDamaged":
+                    this.sound.play('loseLife', { volume: 0.3 });
+                    const damagedPlayer = this.players.get(msg.playerId);
+                    if (!damagedPlayer) return;
+
+                    damagedPlayer.syncLifesFromServer(msg.lifes);
+                    break;
+
+                // SI ALGÚN JUGADOR MUERE, SE LE NOTIFICA AL CLIENTE PARA QUE TERMINE LA PARTIDA
+                case "playerDied":
+                    const deadPlayerId = msg.playerId;
+
+                    const winnerId = deadPlayerId === 'player1' ? 'player2' : 'player1';
+
+                    // ELIMINA EL LISTENER DEL JUEGO Y CIERRA EL WEBSOCKET
+                    this.ws.removeEventListener('message', this.gameHandler);
+                    this.ws.close();
+                    this.ws = null;
+
+                    if (winnerId === 'player1') {
+                        this.scene.start('Player1VictoryScene');
+                    } else {
+                        this.scene.start('Player2VictoryScene');
+                    }
+                    break;
+
+                case 'playerDisconnected':
+                    this.scene.stop()
+                    this.scene.start('MenuScene');
+                    //this.handlePlayerDisconnected();
+                    break;
+            }
+        };
+        this.ws.addEventListener('message', this.gameHandler);
+
+        // CUANDO SE HA CREADO EL LISTENER, AVISA AL SERVIDOR DE QUE EL JUGADOR YA ESTÁ LISTO PARA EMPEZAR LA PARTIDA
+        this.ws.send(JSON.stringify({ type: 'readyForGame' }));
+    }
+
+    // FUNCIÓN PARA CREAR LOS PERSONAJES
+    createOnlinePlayers(playersData) {
+
+
+        const personajesMapOnline = {
+            'paca': { idle: 'pacaIdle1' },
+            'acop': { idle: 'acopIdle1' }
+        };
+
+        
+
+        // RECIBE LOS DATOS DE LOS JUGADORES Y LOS PINTA EN PANTALLA
+        playersData.forEach(p => {
+
+            const texture = personajesMapOnline[p.name];
+
+            const player = new Player(
+                this,
+                p.id,
+                p.x,
+                p.y,
+                texture.idle,
+                p.name
+            );
+
+            this.players.set(p.id, player);
+        });
+    }
+
+    // CREA LOS CONTROLES PARA LOS JUGADORES. AL SER ONLINE, AMBOS UTILIZAN WASD Y ESPACIO
+    configureLocalInput() {
+        const config = {
+            player1: {
+                upKey : 'W',
+                downKey : 'S',
+                leftKey: 'A',
+                rightKey: 'D',
+                bombKey: 'SPACE'
+            },
+            player2: {
+                upKey : 'W',
+                downKey : 'S',
+                leftKey: 'A',
+                rightKey: 'D',
+                bombKey: 'SPACE'
+            }
+        };
+
+        const myConfig = config[this.role];
+
+        if (!myConfig) {
+            console.error('Rol desconocido:', this.role);
+            return;
+        }
+
+        // SE CREAN LOS IMPUTS DE LOS CONTROLES
+        this.inputMappings = [{
+            playerId: this.role,
+            upKeyObj   : this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes[myConfig.upKey]),
+            downKeyObj : this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes[myConfig.downKey]),
+            leftKeyObj : this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes[myConfig.leftKey]),
+            rightKeyObj: this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes[myConfig.rightKey]),
+            bombKeyObj : this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes[myConfig.bombKey])
+        }];
+    }
+
+    // FUNCIÓN QUE HACE EL QUE CLIENTE RENDERIE LOS POWERUPS EN FUNCIÓN DE LA POSICIÓN Y EL TIPO
+    spawnPowerup(x, y, type) {
+        const worldX = x * 64 + 32;
+        const worldY = y * 64 + 32;
+
+        const texture = {
+            bombs: "boostMoreBombs",
+            range: "boostBiggerExplosion",
+            speed: "boostFasterExplosion",
+            life: "boostMoreLife"
+        }[type];
+
+        const sprite = this.physics.add.sprite(worldX, worldY, texture);
+        sprite.setDepth(5);
+        sprite.setScale(0.5);
+        sprite.body.setAllowGravity(false);
+        sprite.body.setImmovable(true);
+
+        if (!this.powerups) this.powerups = new Map();
+        this.powerups.set(`${x},${y}`, sprite);
+
+        sprite.setData("picked", false);
+
+        this.players.forEach(player => {
+            this.physics.add.overlap(player.sprite, sprite, () => {
+                if (sprite.getData("picked")) return;
+                sprite.setData("picked", true);
+                this.ws.send(JSON.stringify({
+                    type: "powerupPickup",
+                    x,
+                    y
+                }));
+            });
+        });
+    }
+    
+    // FUNCIÓN PARA QUE EL CLIENTE BORRE UN POWERUP QUE SE HA COGIDO
+    removePowerup(x, y) { 
+        const key = `${x},${y}`; 
+        const sprite = this.powerups?.get(key); 
+        if (sprite) sprite.destroy(); 
+        this.powerups?.delete(key); 
     }
 }

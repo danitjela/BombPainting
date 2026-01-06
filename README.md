@@ -2,26 +2,32 @@
 
 **BombPainting**
 
-## Temática 
+## Temï¿½tica 
 
 Arcade, social, estrategia
 ## Grupo 2
 ### Integrantes del grupo:
-1. **Ester Díaz Monzonis**. 
+1. **Ester Dï¿½az Monzonis**. 
 	- Correo universidad: [e.diazm.2023@alumnos.urjc.es](mailto:e.diazm.2023@alumnos.urjc.es)
 	- **Cuenta Github:** aester22
-2. **Aroa Quiroga Martínez**.			 
+2. **Aroa Quiroga Martï¿½nez**.			 
 	- Correo universidad: [a.quiroga.2023@alumnos.urjc.es](mailto:a.quiroga.2023@alumnos.urjc.es)
 	- **Cuenta Github:** aroa181
-3. **Sandra Sáez Piña**. 
+3. **Sandra Sï¿½ez Piï¿½a**. 
 	- Correo universidad: [s.saezp.2023@alumnos.urjc.es](mailto:s.saezp.2023@alumnos.urjc.es)
 	- **Cuenta Github:** SpolakK
-4. **Daniela Tocino Jiménez**. 
+4. **Daniela Tocino Jimï¿½nez**. 
 	- Correo universidad: [d.tocino.2023@alumnos.urjc.es](mailto:d.tocino.2023@alumnos.urjc.es)
 	- **Cuenta Github:** danitjela
-5. **Raúl Benítez Tiburón**. 
+5. **Raï¿½l Benï¿½tez Tiburï¿½n**. 
 	- Correo universidad: [r.benitez.2023@alumnos.urjc.es](mailto:r.benitez.2023@alumnos.urjc.es) 
 	- **Cuenta Github:** Raul-BT
+
+## Cambios aÃ±adidos en la fase 4
+- Se ha aÃ±adido la posibilidad de jugar partidas en lÃ­nea con jugadores de una misma red.
+- Se ha aÃ±adido la escena de Waiting Room para conectar dos clientes diferentes.
+- Se han aÃ±adido las clases de servidor gameRoom y matchmaking que gestionan la partida en lÃ­nea y el funcionamiento del encuentro de partida entre clientes.
+- Se han aÃ±adido mÃ©todos a algunas de las clases del cliente para esuchar los eventos del servidor. SÃ³lo funcionarÃ¡n si la partida es en lÃ­nea. El modo local funciona como hasta ahora.
 
 ## Enlace al GDD 
 
